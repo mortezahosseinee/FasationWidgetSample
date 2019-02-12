@@ -1,0 +1,22 @@
+<resources>
+
+    <string name="app_name">FasationBottomNavigation</string>
+
+    <string name="image_view_content_description_first_image_view">firstImageView</string>
+    <string name="image_view_content_description_badge_first_image_view">firstImageView</string>
+
+    <string name="image_view_content_description_second_image_view">secondImageView</string>
+    <string name="image_view_content_description_badge_second_image_view">secondImageView</string>
+
+    <string name="image_view_content_description_third_image_view">thirdImageView</string>
+    <string name="image_view_content_description_badge_third_image_view">thirdImageView</string>
+
+    <string name="image_view_content_description_fourth_image_view">fourthImageView</string>
+    <string name="image_view_content_description_badge_fourth_image_view">fourthImageView</string>
+
+    <string name="image_view_content_description_fifth_image_view">fifthImageView</string>
+    <string name="image_view_content_description_badge_fifth_image_view">fifthImageView</string>
+
+    <string name="image_view_content_description_img_navigation_background_selected_item">background of selected item</string>
+
+</resources>

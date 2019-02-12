@@ -4,11 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     tools:context=".MainActivity">
 
     <ir.fasation.widget.FasationBottomNavigation
+        android:id="@+id/fasation_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:fifth_image_src="@drawable/ic_drawer_menu"
+        app:fifth_item_icon_height="18"
+        app:fifth_item_icon_width="24"
+        app:first_image_src="@drawable/ic_layer"
+        app:first_item_icon_height="24"
+        app:first_item_icon_width="22"
+        app:fourth_image_src="@drawable/ic_notification"
+        app:fourth_item_icon_height="24"
+        app:fourth_item_icon_width="21"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:second_image_src="@drawable/ic_route"
+        app:second_item_icon_height="24"
+        app:second_item_icon_width="24"
+        app:third_image_src="@drawable/ic_search"
+        app:third_item_icon_height="24"
+        app:third_item_icon_width="24" />
 
 </android.support.constraint.ConstraintLayout>

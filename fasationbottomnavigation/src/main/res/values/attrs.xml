@@ -2,14 +2,26 @@
 
     <declare-styleable name="FasationBottomNavigation">
 
-        <attr name="fasation_background_color" format="color" />
-        <attr name="fasation_height" format="dimension" />
+        <attr name="first_image_src" format="reference" />
+        <attr name="second_image_src" format="reference" />
+        <attr name="third_image_src" format="reference" />
+        <attr name="fourth_image_src" format="reference" />
+        <attr name="fifth_image_src" format="reference" />
 
-        <attr name="fasation_bottom_navigation_first_image_src" format="reference"/>
-        <attr name="fasation_bottom_navigation_second_image_src" format="reference"/>
-        <attr name="fasation_bottom_navigation_third_image_src" format="reference"/>
-        <attr name="fasation_bottom_navigation_fourth_image_src" format="reference"/>
-        <attr name="fasation_bottom_navigation_fifth_image_src" format="reference"/>
+        <attr name="first_item_icon_width" format="integer" />
+        <attr name="first_item_icon_height" format="integer" />
+
+        <attr name="second_item_icon_width" format="integer" />
+        <attr name="second_item_icon_height" format="integer" />
+
+        <attr name="third_item_icon_width" format="integer" />
+        <attr name="third_item_icon_height" format="integer" />
+
+        <attr name="fourth_item_icon_width" format="integer" />
+        <attr name="fourth_item_icon_height" format="integer" />
+
+        <attr name="fifth_item_icon_width" format="integer" />
+        <attr name="fifth_item_icon_height" format="integer" />
 
     </declare-styleable>
 

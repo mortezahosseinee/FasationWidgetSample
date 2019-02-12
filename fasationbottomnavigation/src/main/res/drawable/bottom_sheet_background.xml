@@ -6,6 +6,7 @@
             android:shape="rectangle">
 
             <solid android:color="@color/fasation_bottom_navigation_background_color" />
+
             <corners
                 android:bottomLeftRadius="0dp"
                 android:bottomRightRadius="0dp"

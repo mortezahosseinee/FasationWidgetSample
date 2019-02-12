@@ -5,21 +5,11 @@
         <attr name="fasation_background_color" format="color" />
         <attr name="fasation_height" format="dimension" />
 
-        <!--normal icon size when show icon and text together-->
-        <attr name="fasation_normal_active_item_icon_mix_size" format="dimension" />
-        <attr name="fasation_normal_inactive_item_icon_mix_size" format="dimension" />
-
-        <!--normal icon size when show icon without text-->
-        <attr name="fasation_normal_active_item_icon_only_size" format="dimension" />
-        <attr name="fasation_normal_inactive_item_icon_only_size" format="dimension" />
-
-        <attr name="fasation_active_item_background_color" format="color" />
-        <attr name="fasation_inactive_item_background_color" format="color" />
-
-        <attr name="fasation_active_item_icon_color" format="color" />
-        <attr name="fasation_inactive_item_icon_color" format="color" />
-
-        <attr name="fasation_item_text_size" format="dimension" />
+        <attr name="fasation_bottom_navigation_first_image_src" format="reference"/>
+        <attr name="fasation_bottom_navigation_second_image_src" format="reference"/>
+        <attr name="fasation_bottom_navigation_third_image_src" format="reference"/>
+        <attr name="fasation_bottom_navigation_fourth_image_src" format="reference"/>
+        <attr name="fasation_bottom_navigation_fifth_image_src" format="reference"/>
 
     </declare-styleable>
 

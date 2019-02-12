@@ -1,4 +1,4 @@
-package fasation.bottom.navigation
+package ir.fasation.widget
 
 import android.annotation.SuppressLint
 import android.content.Context

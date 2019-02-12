@@ -1,4 +1,4 @@
-package fasation.bottom.navigation
+package ir.fasation.widget
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
@@ -18,52 +18,57 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, attrs
         View.OnClickListener {
 
     //region Declare Constants
+    private val attrs = attrs
+
     private val SET_BIGGER_SIZE = true
     private val SET_SMALLER_SIZE = false
+
+    private val NOT_DEFINED = -777
+    private val defaultItemIconSize = 24 //dp
     //endregion Declare Constants
 
     //region Declare Variables
-    private val emptyRelativeLayoutHeight = 40 //dp
-    private val defaultItemPadding = 8 //dp
+    private var emptyRelativeLayoutHeight = 40 //dp
+    private var defaultItemPadding = 8 //dp
     private var defaultItemOffset = 0 //dp
     private var selectedItemHorizontallyOffset: Int = 0
 
-    private val imageBiggerScale = 100.0f / 80
+    private var imageBiggerScale = 100.0f / 80
 
-    private val defaultItemIconSize = 24 //dp
-
-    private val defaultSelectedItemIndex = 2
+    private var defaultSelectedItemIndex = 2
     private var drawableSelectedItemIndex = 2
     private var lastSelectedIndex = -1
     private var newSelectedIndex = defaultSelectedItemIndex
+    private var horizontallyOffset: Int = 0
 
     private var bezierWidth = 0
     private var bezierHeight = 0
 
-    private val firstItemIconWidth = 22 //dp
-    private val firstItemIconHeight = defaultItemIconSize //dp
-    private val firstItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - firstItemIconHeight * imageBiggerScale / 2 //dp
+    private var firstItemIconWidth = defaultItemIconSize //dp
+    private var firstItemIconHeight = defaultItemIconSize //dp
+    private var firstItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - firstItemIconHeight * imageBiggerScale / 2 //dp
 
-    private val secondItemIconWidth = 24 //dp
-    private val secondItemIconHeight = defaultItemIconSize //dp
-    private val secondItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - secondItemIconHeight * imageBiggerScale / 2 //dp
+    private var secondItemIconWidth = defaultItemIconSize //dp
+    private var secondItemIconHeight = defaultItemIconSize //dp
+    private var secondItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - secondItemIconHeight * imageBiggerScale / 2 //dp
 
-    private val thirdItemIconWidth = defaultItemIconSize //dp
-    private val thirdItemIconHeight = defaultItemIconSize //dp
-    private val thirdItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - thirdItemIconHeight * imageBiggerScale / 2 //dp
+    private var thirdItemIconWidth = defaultItemIconSize //dp
+    private var thirdItemIconHeight = defaultItemIconSize //dp
+    private var thirdItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - thirdItemIconHeight * imageBiggerScale / 2 //dp
 
-    private val fourthItemIconWidth = 21 //dp
-    private val fourthItemIconHeight = defaultItemIconSize //dp
-    private val fourthItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - fourthItemIconHeight * imageBiggerScale / 2 //dp
+    private var fourthItemIconWidth = 21 //dp
+    private var fourthItemIconHeight = defaultItemIconSize //dp
+    private var fourthItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - fourthItemIconHeight * imageBiggerScale / 2 //dp
 
-    private val fifthItemIconWidth = defaultItemIconSize //dp
-    private val fifthItemIconHeight = 18 //dp
-    private val fifthItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - fifthItemIconHeight * imageBiggerScale / 2 //dp
+    private var fifthItemIconWidth = defaultItemIconSize //dp
+    private var fifthItemIconHeight = 18 //dp
+    private var fifthItemOffset = emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - fifthItemIconHeight * imageBiggerScale / 2 //dp
 
-    private val centerMainWidth = 0.90
-    private val leftMainWidth = (1.0 - centerMainWidth) / 2.0
+    private var centerMainWidth = 0.90
+    private var leftMainWidth = (1.0 - centerMainWidth) / 2.0
 
     private var defaultItemSelectedStatus = false
+
     private var firstItemSolidStatus = false
     private var secondItemSolidStatus = false
     private var thirdItemSolidStatus = false
@@ -114,7 +119,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, attrs
     //endregion Declare Views
 
     //region Custom Attributes
-    private var horizontallyOffset: Int = 0
+    private var fasation_bottom_navigation_first_image_src = NOT_DEFINED
+    private var fasation_bottom_navigation_second_image_src = NOT_DEFINED
+    private var fasation_bottom_navigation_third_image_src = NOT_DEFINED
+    private var fasation_bottom_navigation_fourth_image_src = NOT_DEFINED
+    private var fasation_bottom_navigation_fifth_image_src = NOT_DEFINED
     //endregion Custom Attributes
 
     //region Constructor
@@ -159,6 +168,71 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, attrs
 
         val rootView = View.inflate(context, R.layout.fasation_bottom_navigation, this)
 
+        attrs?.let {
+            val typedArray = context.obtainStyledAttributes(it, R.styleable.FasationBottomNavigation, 0, 0)
+
+            fasation_bottom_navigation_first_image_src =
+                    typedArray.getResourceId(R.styleable.FasationBottomNavigation_fasation_bottom_navigation_first_image_src, R.drawable.ic_default)
+
+            fasation_bottom_navigation_second_image_src =
+                    typedArray.getResourceId(R.styleable.FasationBottomNavigation_fasation_bottom_navigation_second_image_src, R.drawable.ic_default)
+
+            fasation_bottom_navigation_third_image_src =
+                    typedArray.getResourceId(R.styleable.FasationBottomNavigation_fasation_bottom_navigation_third_image_src, R.drawable.ic_default)
+
+            fasation_bottom_navigation_fourth_image_src =
+                    typedArray.getResourceId(R.styleable.FasationBottomNavigation_fasation_bottom_navigation_fourth_image_src, R.drawable.ic_default)
+
+            fasation_bottom_navigation_fifth_image_src =
+                    typedArray.getResourceId(R.styleable.FasationBottomNavigation_fasation_bottom_navigation_fifth_image_src, R.drawable.ic_default)
+
+//            fasation_background_color = typedArray.getColor(
+//                    com.example.relativebottomnavigation.R.styleable.FasationRelativeBottomNavigation_fasation_background_color,
+//                    resources.getColor(com.example.relativebottomnavigation.R.color.fasation_background_color));
+//
+//            fasation_height = typedArray.getColor(
+//                    com.example.relativebottomnavigation.R.styleable.FasationRelativeBottomNavigation_fasation_height,
+//                    resources.getDimensionPixelSize(com.example.relativebottomnavigation.R.dimen.fasation_height));
+//
+//            fasation_normal_active_item_icon_mix_size = typedArray.getDimensionPixelSize(
+//                    R.styleable.FasationRelativeBottomNavigation_fasation_normal_active_item_icon_mix_size,
+//                    resources.getDimensionPixelSize(com.example.relativebottomnavigation.R.dimen.fasation_normal_active_item_icon_mix_size));
+//
+//            fasation_normal_inactive_item_icon_mix_size = typedArray.getDimensionPixelSize(
+//                    R.styleable.FasationRelativeBottomNavigation_fasation_normal_inactive_item_icon_mix_size,
+//                    resources.getDimensionPixelSize(com.example.relativebottomnavigation.R.dimen.fasation_normal_inactive_item_icon_mix_size));
+//
+//            fasation_normal_active_item_icon_only_size = typedArray.getDimensionPixelSize(
+//                    R.styleable.FasationRelativeBottomNavigation_fasation_normal_active_item_icon_only_size,
+//                    resources.getDimensionPixelSize(com.example.relativebottomnavigation.R.dimen.fasation_normal_active_item_icon_only_size));
+//
+//            fasation_normal_inactive_item_icon_only_size = typedArray.getDimensionPixelSize(
+//                    R.styleable.FasationRelativeBottomNavigation_fasation_normal_inactive_item_icon_only_size,
+//                    resources.getDimensionPixelSize(com.example.relativebottomnavigation.R.dimen.fasation_normal_inactive_item_icon_only_size));
+//
+//            fasation_active_item_background_color = typedArray.getColor(
+//                    com.example.relativebottomnavigation.R.styleable.FasationRelativeBottomNavigation_fasation_active_item_background_color,
+//                    resources.getColor(com.example.relativebottomnavigation.R.color.fasation_active_item_background_color));
+//
+//            fasation_inactive_item_background_color = typedArray.getColor(
+//                    com.example.relativebottomnavigation.R.styleable.FasationRelativeBottomNavigation_fasation_inactive_item_background_color,
+//                    resources.getColor(com.example.relativebottomnavigation.R.color.fasation_inactive_item_background_color));
+//
+//            fasation_active_item_icon_color = typedArray.getColor(
+//                    com.example.relativebottomnavigation.R.styleable.FasationRelativeBottomNavigation_fasation_active_item_icon_color,
+//                    resources.getColor(com.example.relativebottomnavigation.R.color.fasation_active_item_icon_color));
+//
+//            fasation_inactive_item_icon_color = typedArray.getColor(
+//                    com.example.relativebottomnavigation.R.styleable.FasationRelativeBottomNavigation_fasation_inactive_item_icon_color,
+//                    resources.getColor(com.example.relativebottomnavigation.R.color.fasation_inactive_item_icon_color));
+//
+//            fasation_item_text_size = typedArray.getDimensionPixelSize(
+//                    R.styleable.FasationRelativeBottomNavigation_fasation_item_text_size,
+//                    resources.getDimensionPixelSize(com.example.relativebottomnavigation.R.dimen.fasation_item_text_size));
+//
+            typedArray.recycle()
+        }
+
         emptyRelativeLayout = rootView.findViewById(R.id.relative_layout_empty)
         centerContent = buildBezierView()
 
@@ -193,6 +267,16 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, attrs
         thirdImageView!!.setOnClickListener(this)
         fourthImageView!!.setOnClickListener(this)
         fifthImageView!!.setOnClickListener(this)
+
+        refreshView()
+    }
+
+    private fun refreshView() {
+        firstImageView?.setImageDrawable(ContextCompat.getDrawable(context, fasation_bottom_navigation_first_image_src))
+        secondImageView?.setImageDrawable(ContextCompat.getDrawable(context, fasation_bottom_navigation_second_image_src))
+        thirdImageView?.setImageDrawable(ContextCompat.getDrawable(context, fasation_bottom_navigation_third_image_src))
+        fourthImageView?.setImageDrawable(ContextCompat.getDrawable(context, fasation_bottom_navigation_fourth_image_src))
+        fifthImageView?.setImageDrawable(ContextCompat.getDrawable(context, fasation_bottom_navigation_fifth_image_src))
     }
 
     fun initDefaultItem(defaultSelectedItemPosition: Int) {
@@ -400,12 +484,12 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, attrs
 
     private fun getDrawableIdBasedIndex(index: Int): Int {
         when (index) {
-            0 -> return R.drawable.ic_layer
-            1 -> return R.drawable.ic_route
-            2 -> return R.drawable.ic_search
-            3 -> return R.drawable.ic_notification
-            4 -> return R.drawable.ic_drawer_menu
-            else -> return -1
+            0 -> return fasation_bottom_navigation_first_image_src
+            1 -> return fasation_bottom_navigation_second_image_src
+            2 -> return fasation_bottom_navigation_third_image_src
+            3 -> return fasation_bottom_navigation_fourth_image_src
+            4 -> return fasation_bottom_navigation_fifth_image_src
+            else -> return R.drawable.ic_default
         }
     }
 

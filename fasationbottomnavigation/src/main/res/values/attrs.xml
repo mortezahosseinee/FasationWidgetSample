@@ -23,6 +23,11 @@
         <attr name="fifth_item_icon_width" format="integer" />
         <attr name="fifth_item_icon_height" format="integer" />
 
+        <attr name="icon_active_color" format="color" />
+        <attr name="icon_inactive_color" format="color" />
+
+        <attr name="default_selected_item_index" format="integer" />
+
     </declare-styleable>
 
 </resources>

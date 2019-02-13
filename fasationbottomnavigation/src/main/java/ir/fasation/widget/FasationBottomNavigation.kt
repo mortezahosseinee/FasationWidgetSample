@@ -22,7 +22,6 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         private val BIGGER_SIZE = true
         private val SMALLER_SIZE = false
 
-        private val NOT_DEFINED = -777
         private val defaultItemIconSize = 24 //dp
         //endregion Declare Constants
     }
@@ -34,10 +33,9 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private var defaultItemOffset = 0f  //dp
     private var selectedItemHorizontallyOffset: Int = 0
 
-    private var defaultSelectedItemIndex = 2
     private var drawableSelectedItemIndex = 2
     private var lastSelectedIndex = -1
-    private var newSelectedIndex = defaultSelectedItemIndex
+    private var newSelectedIndex = 2
     private var horizontallyOffset: Int = 0
 
     private var bezierWidth = 0
@@ -83,11 +81,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     //endregion Declare Views
 
     //region Custom Attributes
-    private var fasationBottomNavigationFirstImageSrc = NOT_DEFINED
-    private var fasationBottomNavigationSecondImageSrc = NOT_DEFINED
-    private var fasationBottomNavigationThirdImageSrc = NOT_DEFINED
-    private var fasationBottomNavigationFourthImageSrc = NOT_DEFINED
-    private var fasationBottomNavigationFifthImageSrc = NOT_DEFINED
+    private var fasationBottomNavigationFirstImageSrc = R.drawable.ic_default
+    private var fasationBottomNavigationSecondImageSrc = R.drawable.ic_default
+    private var fasationBottomNavigationThirdImageSrc = R.drawable.ic_default
+    private var fasationBottomNavigationFourthImageSrc = R.drawable.ic_default
+    private var fasationBottomNavigationFifthImageSrc = R.drawable.ic_default
 
     private var fasationBottomNavigationFirstItemIconWidth = defaultItemIconSize
     private var fasationBottomNavigationFirstItemIconHeight = defaultItemIconSize
@@ -103,6 +101,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
     private var fasationBottomNavigationFifthItemIconWidth = defaultItemIconSize
     private var fasationBottomNavigationFifthItemIconHeight = defaultItemIconSize
+
+    private var fasationBottomNavigationIconActiveColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_active_item_icon_color)
+    private var fasationBottomNavigationIconInactiveColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_inactive_item_icon_color)
+
+    private var fasationBottomNavigationDefaultSelectedItemIndex = 2
     //endregion Custom Attributes
 
     //region Constructor
@@ -117,7 +120,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         super.onDraw(canvas)
 
         if (!defaultItemSelectedStatus)
-            initDefaultItem(defaultSelectedItemIndex)
+            initDefaultItem(fasationBottomNavigationDefaultSelectedItemIndex)
         defaultItemSelectedStatus = true
 
         drawSelectedItemBackground(canvas, drawableSelectedItemIndex)
@@ -145,11 +148,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     //region Declare Methods
     private fun initMain(context: Context) {
         View.inflate(context, R.layout.fasation_bottom_navigation, this)
-        initArrtibutes()
+        initAttributes()
         initViews()
     }
 
-    private fun initArrtibutes() {
+    private fun initAttributes() {
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.FasationBottomNavigation, 0, 0)
 
@@ -193,6 +196,14 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
             fasationBottomNavigationFifthItemIconHeight =
                     typedArray.getInt(R.styleable.FasationBottomNavigation_fifth_item_icon_height, defaultItemIconSize)
 
+            fasationBottomNavigationIconActiveColor =
+                    typedArray.getColor(R.styleable.FasationBottomNavigation_icon_active_color, resources.getColor(R.color.fasation_bottom_navigation_active_item_icon_color))
+            fasationBottomNavigationIconInactiveColor =
+                    typedArray.getColor(R.styleable.FasationBottomNavigation_icon_inactive_color, resources.getColor(R.color.fasation_bottom_navigation_inactive_item_icon_color))
+
+            fasationBottomNavigationDefaultSelectedItemIndex =
+                    typedArray.getInteger(R.styleable.FasationBottomNavigation_default_selected_item_index, 2)
+
             typedArray.recycle()
         }
     }
@@ -234,6 +245,19 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
                 emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - fasationBottomNavigationFifthItemIconHeight * imageBiggerScale / 2
 
         besideMainWidth = (1.0 - centerMainWidth) / 2.0
+
+        VectorChildFinder(context!!, getDrawableIdBasedIndex(0), image_navigation_items_first)
+                .findPathByName("main_path").fillColor = if (fasationBottomNavigationDefaultSelectedItemIndex == 0) fasationBottomNavigationIconActiveColor else fasationBottomNavigationIconInactiveColor
+        VectorChildFinder(context!!, getDrawableIdBasedIndex(1), image_navigation_items_second)
+                .findPathByName("main_path").fillColor = if (fasationBottomNavigationDefaultSelectedItemIndex == 1) fasationBottomNavigationIconActiveColor else fasationBottomNavigationIconInactiveColor
+        VectorChildFinder(context!!, getDrawableIdBasedIndex(2), image_navigation_items_third)
+                .findPathByName("main_path").fillColor = if (fasationBottomNavigationDefaultSelectedItemIndex == 2) fasationBottomNavigationIconActiveColor else fasationBottomNavigationIconInactiveColor
+        VectorChildFinder(context!!, getDrawableIdBasedIndex(3), image_navigation_items_fourth)
+                .findPathByName("main_path").fillColor = if (fasationBottomNavigationDefaultSelectedItemIndex == 3) fasationBottomNavigationIconActiveColor else fasationBottomNavigationIconInactiveColor
+        VectorChildFinder(context!!, getDrawableIdBasedIndex(4), image_navigation_items_fifth)
+                .findPathByName("main_path").fillColor = if (fasationBottomNavigationDefaultSelectedItemIndex == 4) fasationBottomNavigationIconActiveColor else fasationBottomNavigationIconInactiveColor
+
+        handleItemClick(fasationBottomNavigationDefaultSelectedItemIndex)
     }
 
     private fun handleItemClick(selectedItemIndex: Int) {
@@ -270,7 +294,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
                 moveDeSelectedItemAnimator!!.end()
 
             val mLayoutParams = lastSelectedParentView!!.layoutParams as ConstraintLayout.LayoutParams
-            moveDeSelectedItemAnimator = ValueAnimator.ofInt(mLayoutParams.bottomMargin, convertDpToPx(defaultItemOffset.toFloat()))
+            moveDeSelectedItemAnimator = ValueAnimator.ofInt(mLayoutParams.bottomMargin, convertDpToPx(defaultItemOffset))
             moveDeSelectedItemAnimator!!.addUpdateListener { valueAnimator ->
                 mLayoutParams.bottomMargin = valueAnimator.animatedValue as Int
                 lastSelectedParentView!!.requestLayout()
@@ -425,11 +449,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
         if (lastSelectedIndex != -1) {
             vector = VectorChildFinder(context!!, getDrawableIdBasedIndex(lastSelectedIndex), lastSelectedImageView!!)
-            vector.findPathByName("main_path").fillColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_inactive_item_icon_color)
+            vector.findPathByName("main_path").fillColor = fasationBottomNavigationIconInactiveColor
         }
 
         vector = VectorChildFinder(context!!, getDrawableIdBasedIndex(newSelectedIndex), newSelectedImageView!!)
-        vector.findPathByName("main_path").fillColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_active_item_icon_color)
+        vector.findPathByName("main_path").fillColor = fasationBottomNavigationIconActiveColor
     }
 
     private fun buildBezierView(): BezierView {
@@ -437,10 +461,8 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         bezierView.build(bezierWidth, bezierHeight, false)
         return bezierView
     }
-    //endregion Declare Methods
 
-    //region public methods
-    fun initDefaultItem(defaultSelectedItemPosition: Int) {
+    private fun initDefaultItem(defaultSelectedItemPosition: Int) {
         newSelectedIndex = defaultSelectedItemPosition
         prepareSelectItemAnimation()
         setItemsIconColor()
@@ -456,9 +478,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
         horizontallyOffset = (besideMainWidth * relative_layout_empty!!.width).toInt()
     }
+    //endregion Declare Methods
 
+    //region public methods
     fun setItemSolidStatus(index: Int, solidStatus: Boolean) {
-        if (index == defaultSelectedItemIndex || index < 0 || index > 4)
+        if (index == fasationBottomNavigationDefaultSelectedItemIndex || index < 0 || index > 4)
             return
 
         when (index) {

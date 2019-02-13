@@ -1,4 +1,4 @@
-package com.example.fasation.bottom.myapplication;
+package ir.fasation.widget.sample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

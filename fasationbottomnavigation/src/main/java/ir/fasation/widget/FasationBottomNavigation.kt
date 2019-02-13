@@ -4,7 +4,11 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
@@ -106,6 +110,8 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private var fasationBottomNavigationIconInactiveColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_inactive_item_icon_color)
 
     private var fasationBottomNavigationDefaultSelectedItemIndex = 2
+
+    private var fasationBottomNavigationBackgroundColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_background_color)
     //endregion Custom Attributes
 
     //region Constructor
@@ -204,6 +210,9 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
             fasationBottomNavigationDefaultSelectedItemIndex =
                     typedArray.getInteger(R.styleable.FasationBottomNavigation_default_selected_item_index, 2)
 
+            fasationBottomNavigationBackgroundColor =
+                    typedArray.getColor(R.styleable.FasationBottomNavigation_background_color, resources.getColor(R.color.fasation_bottom_navigation_background_color))
+
             typedArray.recycle()
         }
     }
@@ -257,7 +266,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         VectorChildFinder(context!!, getDrawableIdBasedIndex(4), image_navigation_items_fifth)
                 .findPathByName("main_path").fillColor = if (fasationBottomNavigationDefaultSelectedItemIndex == 4) fasationBottomNavigationIconActiveColor else fasationBottomNavigationIconInactiveColor
 
-        handleItemClick(fasationBottomNavigationDefaultSelectedItemIndex)
+        changeBackgroundColor()
     }
 
     private fun handleItemClick(selectedItemIndex: Int) {
@@ -478,9 +487,35 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
         horizontallyOffset = (besideMainWidth * relative_layout_empty!!.width).toInt()
     }
+
+    private fun changeSelectedItemBackgroundPosition() {
+        val set = ConstraintSet()
+        set.connect(image_navigation_background_selected_item.id, ConstraintSet.END, guide_line_third.id, ConstraintSet.START)
+        set.connect(image_navigation_background_selected_item.id, ConstraintSet.START, guide_line_second.id, ConstraintSet.END)
+        set.applyTo(main_view)
+    }
     //endregion Declare Methods
 
     //region public methods
+    fun changeBackgroundColor() {
+        centerContent?.setBackgroundColor(fasationBottomNavigationBackgroundColor)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            (relative_layout_empty.background as GradientDrawable).setColor(fasationBottomNavigationBackgroundColor)
+    }
+
+    fun changeSelectedItemBackgroundColor() {
+//        val layers = getResources().getDrawable(R.drawable.background_selected_item) as LayerDrawable
+//        val gradientDrawable = ContextCompat.getDrawable(context, R.drawable.rounded_corner_front) as GradientDrawable
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) gradientDrawable .setColor(fasationBottomNavigationBackgroundColor)
+//        relative_layout_empty.setBackgroundDrawable(gradientDrawable)
+//
+//        centerContent?.setBackgroundColor(fasationBottomNavigationBackgroundColor)
+//
+//        layers.setDrawableByLayerId(R.id.front_item, )
+//        layers.addLayer()
+    }
+
     fun setItemSolidStatus(index: Int, solidStatus: Boolean) {
         if (index == fasationBottomNavigationDefaultSelectedItemIndex || index < 0 || index > 4)
             return

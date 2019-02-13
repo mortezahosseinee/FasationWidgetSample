@@ -78,6 +78,16 @@ internal class BezierView @JvmOverloads constructor(context: Context, background
 
         canvas.drawPath(path, paint)
     }
+
+    /**
+     * Change bezier view background color
+     *
+     * @param backgroundColor Target color
+     */
+    override fun setBackgroundColor(backgroundColor: Int) {
+        this.backgroundColor = backgroundColor
+        invalidate()
+    }
     //endregion Callbacks
 
     //region Declare Methods
@@ -92,16 +102,6 @@ internal class BezierView @JvmOverloads constructor(context: Context, background
         this.bezierWidth = bezierWidth
         this.bezierHeight = bezierHeight
         this.isLinear = isLinear
-    }
-
-    /**
-     * Change bezier view background color
-     *
-     * @param backgroundColor Target color
-     */
-    fun changeBackgroundColor(backgroundColor: Int) {
-        this.backgroundColor = backgroundColor
-        invalidate()
     }
     //endregion Declare Methods
 

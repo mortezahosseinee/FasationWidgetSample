@@ -27,6 +27,7 @@
         <attr name="icon_inactive_color" format="color" />
 
         <attr name="default_selected_item_index" format="integer" />
+        <attr name="background_color" format="color" />
 
     </declare-styleable>
 

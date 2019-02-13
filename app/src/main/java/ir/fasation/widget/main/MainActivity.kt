@@ -1,8 +1,7 @@
-package ir.fasation.widget.sample
+package ir.fasation.widget.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.example.fasation.bottom.myapplication.R
 
 class MainActivity : AppCompatActivity() {
 

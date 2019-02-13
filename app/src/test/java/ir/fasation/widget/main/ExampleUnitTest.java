@@ -1,4 +1,4 @@
-package ir.fasation.widget.sample;
+package ir.fasation.widget.main;
 
 import org.junit.Test;
 

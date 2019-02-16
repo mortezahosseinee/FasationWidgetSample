@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
@@ -203,15 +202,18 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
                     typedArray.getInt(R.styleable.FasationBottomNavigation_fifth_item_icon_height, defaultItemIconSize)
 
             fasationBottomNavigationIconActiveColor =
-                    typedArray.getColor(R.styleable.FasationBottomNavigation_icon_active_color, resources.getColor(R.color.fasation_bottom_navigation_active_item_icon_color))
+                    typedArray.getColor(R.styleable.FasationBottomNavigation_icon_active_color,
+                            ContextCompat.getColor(context, R.color.fasation_bottom_navigation_active_item_icon_color))
             fasationBottomNavigationIconInactiveColor =
-                    typedArray.getColor(R.styleable.FasationBottomNavigation_icon_inactive_color, resources.getColor(R.color.fasation_bottom_navigation_inactive_item_icon_color))
+                    typedArray.getColor(R.styleable.FasationBottomNavigation_icon_inactive_color,
+                            ContextCompat.getColor(context, R.color.fasation_bottom_navigation_inactive_item_icon_color))
 
             fasationBottomNavigationDefaultSelectedItemIndex =
                     typedArray.getInteger(R.styleable.FasationBottomNavigation_default_selected_item_index, 2)
 
             fasationBottomNavigationBackgroundColor =
-                    typedArray.getColor(R.styleable.FasationBottomNavigation_background_color, resources.getColor(R.color.fasation_bottom_navigation_background_color))
+                    typedArray.getColor(R.styleable.FasationBottomNavigation_background_color,
+                            ContextCompat.getColor(context, R.color.fasation_bottom_navigation_background_color))
 
             typedArray.recycle()
         }

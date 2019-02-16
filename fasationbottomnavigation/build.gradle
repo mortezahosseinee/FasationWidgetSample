@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 28
@@ -24,6 +26,34 @@ android {
 
 }
 
+ext {
+    bintrayRepo = 'fasation_widget'
+    bintrayName = 'fasationbottomnavigation'
+
+    publishedGroupId = 'ir.fasation.widget'
+    libraryName = 'FasationBottomNavigation'
+    artifact = 'fasationbottomnavigation'
+
+    libraryDescription = 'This view is a bottom navigation has fix number of items until now, it is developing.'
+
+    siteUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample.git'
+    gitUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId1 = 'mortezahosseinee'
+    developerName1 = 'Morteza Hosseinee'
+    developerEmail1 = 'mortezahosseinee@gmail.com'
+
+    developerId2 = 'AliKhoshraftar'
+    developerName2 = 'Ali Khoshraftar'
+    developerEmail2 = 'alikhoshraftar@live.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -36,3 +66,15 @@ repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
 }
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+    }
+}
+
+apply from: 'installer.gradle'

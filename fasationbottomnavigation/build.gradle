@@ -23,7 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 ext {
@@ -42,12 +41,12 @@ ext {
     libraryVersion = '1.0.0'
 
     developerId = 'mortezahosseinee'
-    developerName = 'morteza hosseini'
+    developerName = 'Morteza Hosseini'
     developerEmail = 'mortezahosseinee@gmail.com'
 
-//    developerId2 = 'AliKhoshraftar'
-//    developerName2 = Ali Khoshraftar
-//    developerEmail2 = 'alikhoshraftar@live.com'
+    developerId2 = 'AliKhoshraftar'
+    developerName2 = 'Ali Khoshraftar'
+    developerEmail2 = 'alikhoshraftar@live.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -56,8 +55,8 @@ ext {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.github.devsideal:VectorChildFinder:1.0.0'
 }
@@ -77,6 +76,5 @@ buildscript {
     }
 }
 
-//apply from: 'installer.gradle'
 apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
 apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'

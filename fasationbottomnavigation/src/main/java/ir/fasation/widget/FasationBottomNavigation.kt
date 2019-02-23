@@ -55,11 +55,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
     private var defaultItemSelectedStatus = false
 
-    private var firstItemSolidStatus = false
-    private var secondItemSolidStatus = false
-    private var thirdItemSolidStatus = false
-    private var fourthItemSolidStatus = false
-    private var fifthItemSolidStatus = false
+    private var firstItemFloatingStatus = true
+    private var secondItemFloatingStatus = true
+    private var thirdItemFloatingStatus = true
+    private var fourthItemFloatingStatus = true
+    private var fifthItemFloatingStatus = true
     //endregion Declare Variables
 
     //region Declare Objects
@@ -132,7 +132,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     }
 
     private fun drawSelectedItemBackground(canvas: Canvas, index: Int) {
-        if (index != -1 && !isItemSolid(index)) {
+        if (index != -1 && isItemFloating(index)) {
             centerContent!!.setStartX(horizontallyOffset + index * bezierWidth)
             centerContent!!.draw(canvas)
             prepareSelectedItemBackgroundAnimation()
@@ -273,12 +273,12 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
     private fun handleItemClick(selectedItemIndex: Int) {
         if (newSelectedIndex != selectedItemIndex) {
-            if (!isItemSolid(newSelectedIndex))
+            if (isItemFloating(newSelectedIndex))
                 lastSelectedIndex = newSelectedIndex
 
             newSelectedIndex = selectedItemIndex
 
-            if (!isItemSolid(newSelectedIndex)) {
+            if (isItemFloating(newSelectedIndex)) {
                 drawableSelectedItemIndex = selectedItemIndex
                 handleItemAnimations()
             }
@@ -326,7 +326,8 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
                 moveSelectedItemAnimator!!.end()
 
             val mLayoutParams = newSelectedParentView!!.layoutParams as ConstraintLayout.LayoutParams
-            moveSelectedItemAnimator = ValueAnimator.ofInt(mLayoutParams.bottomMargin, convertDpToPx(getSelectedItemOffsetBasedIndex(newSelectedIndex)))
+            moveSelectedItemAnimator = ValueAnimator.ofInt(mLayoutParams.bottomMargin,
+                    convertDpToPx(getSelectedItemOffsetBasedIndex(newSelectedIndex)))
             moveSelectedItemAnimator!!.addUpdateListener { valueAnimator ->
                 mLayoutParams.bottomMargin = valueAnimator.animatedValue as Int
                 newSelectedParentView!!.requestLayout()
@@ -340,20 +341,25 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private fun prepareSelectedItemBackgroundAnimation() {
 
         val xCurrentPosition = image_navigation_background_selected_item!!.left.toFloat()
-        val xNewPosition = (selectedItemHorizontallyOffset + newSelectedIndex.toDouble() * relative_layout_empty!!.width.toDouble() * centerMainWidth / 5).toFloat()
+        val xNewPosition = (selectedItemHorizontallyOffset + newSelectedIndex.toDouble() *
+                relative_layout_empty!!.width.toDouble() * centerMainWidth / 5).toFloat()
 
-        moveSelectedItemBackgroundAnimator = ObjectAnimator.ofFloat(image_navigation_background_selected_item, View.TRANSLATION_X, xNewPosition - xCurrentPosition)
+        moveSelectedItemBackgroundAnimator = ObjectAnimator.ofFloat(
+                image_navigation_background_selected_item,
+                View.TRANSLATION_X, xNewPosition - xCurrentPosition)
         moveSelectedItemBackgroundAnimator!!.duration = 200
     }
 
     private fun setImageSizeAnimation(view: View?, duration: Int, finalSizeStatus: Boolean) {
         if (finalSizeStatus == SMALLER_SIZE) {
             lastSelectedViewReSizeAnimation = ResizeAnimation(view!!,
-                    convertDpToPx(getIconWidthBasedIndex(lastSelectedIndex).toFloat()), convertDpToPx(getIconHeightBasedIndex(lastSelectedIndex).toFloat()))
+                    convertDpToPx(getIconWidthBasedIndex(lastSelectedIndex).toFloat()),
+                    convertDpToPx(getIconHeightBasedIndex(lastSelectedIndex).toFloat()))
             lastSelectedViewReSizeAnimation!!.duration = duration.toLong()
         } else if (finalSizeStatus == BIGGER_SIZE) {
             newSelectedViewReSizeAnimation = ResizeAnimation(view!!,
-                    (convertDpToPx(getIconWidthBasedIndex(newSelectedIndex).toFloat()) * imageBiggerScale).toInt(), (convertDpToPx(getIconHeightBasedIndex(newSelectedIndex).toFloat()) * imageBiggerScale).toInt())
+                    (convertDpToPx(getIconWidthBasedIndex(newSelectedIndex).toFloat()) * imageBiggerScale).toInt(),
+                    (convertDpToPx(getIconHeightBasedIndex(newSelectedIndex).toFloat()) * imageBiggerScale).toInt())
             newSelectedViewReSizeAnimation!!.duration = duration.toLong()
         }
     }
@@ -367,79 +373,79 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     }
 
     private fun getParentViewBasedIndex(index: Int): View? {
-        when (index) {
-            0 -> return constraint_layout_navigation_items_first
-            1 -> return constraint_layout_navigation_items_second
-            2 -> return constraint_layout_navigation_items_third
-            3 -> return constraint_layout_navigation_items_fourth
-            4 -> return constraint_layout_navigation_items_fifth
-            else -> return null
+        return when (index) {
+            0 -> constraint_layout_navigation_items_first
+            1 -> constraint_layout_navigation_items_second
+            2 -> constraint_layout_navigation_items_third
+            3 -> constraint_layout_navigation_items_fourth
+            4 -> constraint_layout_navigation_items_fifth
+            else -> null
         }
     }
 
     private fun getBadgeImageViewBasedIndex(index: Int): View? {
-        when (index) {
-            0 -> return image_badge_navigation_items_first
-            1 -> return image_badge_navigation_items_second
-            2 -> return image_badge_navigation_items_third
-            3 -> return image_badge_navigation_items_fourth
-            4 -> return image_badge_navigation_items_fifth
-            else -> return null
+        return when (index) {
+            0 -> image_badge_navigation_items_first
+            1 -> image_badge_navigation_items_second
+            2 -> image_badge_navigation_items_third
+            3 -> image_badge_navigation_items_fourth
+            4 -> image_badge_navigation_items_fifth
+            else -> null
         }
     }
 
     private fun getIconWidthBasedIndex(index: Int): Int {
-        when (index) {
-            0 -> return fasationBottomNavigationFirstItemIconWidth
-            1 -> return fasationBottomNavigationSecondItemIconWidth
-            2 -> return fasationBottomNavigationFourthItemIconWidth
-            3 -> return fasationBottomNavigationThirdItemIconWidth
-            4 -> return fasationBottomNavigationFifthItemIconWidth
-            else -> return -1
+        return when (index) {
+            0 -> fasationBottomNavigationFirstItemIconWidth
+            1 -> fasationBottomNavigationSecondItemIconWidth
+            2 -> fasationBottomNavigationFourthItemIconWidth
+            3 -> fasationBottomNavigationThirdItemIconWidth
+            4 -> fasationBottomNavigationFifthItemIconWidth
+            else -> -1
         }
     }
 
     private fun getIconHeightBasedIndex(index: Int): Int {
-        when (index) {
-            0 -> return fasationBottomNavigationFirstItemIconHeight
-            1 -> return fasationBottomNavigationSecondItemIconHeight
-            2 -> return fasationBottomNavigationFourthItemIconHeight
-            3 -> return fasationBottomNavigationThirdItemIconHeight
-            4 -> return fasationBottomNavigationFifthItemIconHeight
-            else -> return -1
+        return when (index) {
+            0 -> fasationBottomNavigationFirstItemIconHeight
+            1 -> fasationBottomNavigationSecondItemIconHeight
+            2 -> fasationBottomNavigationFourthItemIconHeight
+            3 -> fasationBottomNavigationThirdItemIconHeight
+            4 -> fasationBottomNavigationFifthItemIconHeight
+            else -> -1
         }
     }
 
     private fun getSelectedItemOffsetBasedIndex(index: Int): Float {
-        when (index) {
-            0 -> return firstItemOffset
-            1 -> return secondItemOffset
-            2 -> return thirdItemOffset
-            3 -> return fourthItemOffset
-            4 -> return fifthItemOffset
-            else -> return -1f
+        return when (index) {
+            0 -> firstItemOffset
+            1 -> secondItemOffset
+            2 -> thirdItemOffset
+            3 -> fourthItemOffset
+            4 -> fifthItemOffset
+            else -> -1f
         }
     }
 
     private fun getImageViewViewBasedIndex(index: Int): ImageView? {
-        when (index) {
-            0 -> return image_navigation_items_first
-            1 -> return image_navigation_items_second
-            2 -> return image_navigation_items_third
-            3 -> return image_navigation_items_fourth
-            4 -> return image_navigation_items_fifth
-            else -> return null
+        return when (index) {
+            0 -> image_navigation_items_first
+            1 -> image_navigation_items_second
+            2 -> image_navigation_items_third
+            3 -> image_navigation_items_fourth
+            4 -> image_navigation_items_fifth
+            else -> null
         }
     }
 
     private fun getDrawableIdBasedIndex(index: Int): Int {
-        when (index) {
-            0 -> return fasationBottomNavigationFirstImageSrc
-            1 -> return fasationBottomNavigationSecondImageSrc
-            2 -> return fasationBottomNavigationThirdImageSrc
-            3 -> return fasationBottomNavigationFourthImageSrc
-            4 -> return fasationBottomNavigationFifthImageSrc
-            else -> return R.drawable.ic_default
+        return when (index) {
+            0 -> fasationBottomNavigationFirstImageSrc
+            1 -> fasationBottomNavigationSecondImageSrc
+            2 -> fasationBottomNavigationThirdImageSrc
+            3 -> fasationBottomNavigationFourthImageSrc
+            4 -> fasationBottomNavigationFifthImageSrc
+            else -> R.drawable.ic_default
         }
     }
 
@@ -460,11 +466,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
         if (lastSelectedIndex != -1) {
             vector = VectorChildFinder(context!!, getDrawableIdBasedIndex(lastSelectedIndex), lastSelectedImageView!!)
-            vector.findPathByName("main_path").fillColor = fasationBottomNavigationIconInactiveColor
+            vector.findPathByName("main_path")!!.fillColor = fasationBottomNavigationIconInactiveColor
         }
 
         vector = VectorChildFinder(context!!, getDrawableIdBasedIndex(newSelectedIndex), newSelectedImageView!!)
-        vector.findPathByName("main_path").fillColor = fasationBottomNavigationIconActiveColor
+        vector.findPathByName("main_path")!!.fillColor = fasationBottomNavigationIconActiveColor
     }
 
     private fun buildBezierView(): BezierView {
@@ -478,7 +484,8 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         prepareSelectItemAnimation()
         setItemsIconColor()
         runAnimationOnClickItem()
-        selectedItemHorizontallyOffset = (image_navigation_background_selected_item!!.left - 2.0 * relative_layout_empty!!.width.toDouble() * centerMainWidth / 5).toInt()
+        selectedItemHorizontallyOffset = (image_navigation_background_selected_item!!.left - 2.0 *
+                relative_layout_empty!!.width.toDouble() * centerMainWidth / 5).toInt()
 
         bezierWidth = (centerMainWidth * relative_layout_empty!!.width / 5).toInt()
         bezierHeight = height - relative_layout_empty!!.height - convertDpToPx(8f)
@@ -494,11 +501,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         val set = ConstraintSet()
         set.connect(image_navigation_background_selected_item.id, ConstraintSet.END, guide_line_third.id, ConstraintSet.START)
         set.connect(image_navigation_background_selected_item.id, ConstraintSet.START, guide_line_second.id, ConstraintSet.END)
-        set.applyTo(main_view as ConstraintLayout?)
+        set.applyTo(main_view)
     }
     //endregion Declare Methods
 
-    //region public methods
+    //region Public Methods
     fun changeBackgroundColor() {
         centerContent?.setBackgroundColor(fasationBottomNavigationBackgroundColor)
 
@@ -518,40 +525,40 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 //        layers.addLayer()
     }
 
-    fun setItemSolidStatus(index: Int, solidStatus: Boolean) {
-        if (index == fasationBottomNavigationDefaultSelectedItemIndex || index < 0 || index > 4)
+    fun setItemFloatingStatus(index: Int, floatingStatus: Boolean) {
+        if (index == fasationBottomNavigationDefaultSelectedItemIndex || index !in 0..4)
             return
 
         when (index) {
-            0 -> firstItemSolidStatus = solidStatus
-            1 -> secondItemSolidStatus = solidStatus
-            2 -> thirdItemSolidStatus = solidStatus
-            3 -> fourthItemSolidStatus = solidStatus
-            4 -> fifthItemSolidStatus = solidStatus
+            0 -> firstItemFloatingStatus = floatingStatus
+            1 -> secondItemFloatingStatus = floatingStatus
+            2 -> thirdItemFloatingStatus = floatingStatus
+            3 -> fourthItemFloatingStatus = floatingStatus
+            4 -> fifthItemFloatingStatus = floatingStatus
         }
     }
 
-    fun isItemSolid(index: Int): Boolean {
+    fun isItemFloating(index: Int): Boolean {
         if (index < 0 || index > 4)
             return false
 
-        when (index) {
-            0 -> return firstItemSolidStatus
-            1 -> return secondItemSolidStatus
-            2 -> return thirdItemSolidStatus
-            3 -> return fourthItemSolidStatus
-            4 -> return fifthItemSolidStatus
-            else -> return false
+        return when (index) {
+            0 -> firstItemFloatingStatus
+            1 -> secondItemFloatingStatus
+            2 -> thirdItemFloatingStatus
+            3 -> fourthItemFloatingStatus
+            4 -> fifthItemFloatingStatus
+            else -> false
         }
     }
 
     fun enableBadgeOnItem(badgeIndex: Int) {
-        if (badgeIndex >= 0 && badgeIndex <= 4)
+        if (badgeIndex in 0..4)
             getBadgeImageViewBasedIndex(badgeIndex)!!.visibility = View.VISIBLE
     }
 
     fun disableBadgeOnItem(badgeIndex: Int) {
-        if (badgeIndex >= 0 && badgeIndex <= 4)
+        if (badgeIndex in 0..4)
             getBadgeImageViewBasedIndex(badgeIndex)!!.visibility = View.GONE
     }
 
@@ -575,5 +582,5 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         if (defaultItemSelectedStatus)
             this.listener!!.onFasationBottomNavigationItemClick(newSelectedIndex)
     }
-    //endregion public methods
+    //endregion Public Methods
 }

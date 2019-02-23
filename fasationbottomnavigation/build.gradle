@@ -27,27 +27,27 @@ android {
 }
 
 ext {
-    bintrayRepo = 'fasation_widget'
+    bintrayRepo = 'CustomWidget'
     bintrayName = 'fasationbottomnavigation'
 
     publishedGroupId = 'ir.fasation.widget'
-    libraryName = 'FasationBottomNavigation'
+    libraryName = 'ir.fasation.widget'
     artifact = 'fasationbottomnavigation'
 
     libraryDescription = 'This view is a bottom navigation has fix number of items until now, it is developing.'
 
-    siteUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample.git'
+    siteUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample'
     gitUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample.git'
 
     libraryVersion = '1.0.0'
 
-    developerId1 = 'mortezahosseinee'
-    developerName1 = 'Morteza Hosseinee'
-    developerEmail1 = 'mortezahosseinee@gmail.com'
+    developerId = 'mortezahosseinee'
+    developerName = 'morteza hosseini'
+    developerEmail = 'mortezahosseinee@gmail.com'
 
-    developerId2 = 'AliKhoshraftar'
-    developerName2 = 'Ali Khoshraftar'
-    developerEmail2 = 'alikhoshraftar@live.com'
+//    developerId2 = 'AliKhoshraftar'
+//    developerName2 = Ali Khoshraftar
+//    developerEmail2 = 'alikhoshraftar@live.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -72,9 +72,11 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 
-apply from: 'installer.gradle'
+//apply from: 'installer.gradle'
+apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
+apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'

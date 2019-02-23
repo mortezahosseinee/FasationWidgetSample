@@ -5,8 +5,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.support.v4.content.ContextCompat
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 
 @SuppressLint("ViewConstructor")
 internal class BezierView @JvmOverloads constructor(context: Context, backgroundColor: Int = 0) : RelativeLayout(context) {

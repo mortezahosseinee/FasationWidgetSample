@@ -6,13 +6,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import com.devs.vectorchildfinder.VectorChildFinder
 import kotlinx.android.synthetic.main.fasation_bottom_navigation.view.*
 
@@ -494,7 +494,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         val set = ConstraintSet()
         set.connect(image_navigation_background_selected_item.id, ConstraintSet.END, guide_line_third.id, ConstraintSet.START)
         set.connect(image_navigation_background_selected_item.id, ConstraintSet.START, guide_line_second.id, ConstraintSet.END)
-        set.applyTo(main_view)
+        set.applyTo(main_view as ConstraintLayout?)
     }
     //endregion Declare Methods
 

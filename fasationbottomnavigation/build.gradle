@@ -4,6 +4,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
+ext {
+    PUBLISH_GROUP_ID = 'fasation.widget.ir'
+    PUBLISH_ARTIFACT_ID = 'fasationbottomnavigation'
+    PUBLISH_VERSION = '1.0'
+}
+
 android {
     compileSdkVersion 28
 
@@ -26,12 +32,12 @@ android {
 }
 
 ext {
-    bintrayRepo = 'CustomWidget'
-    bintrayName = 'fasationbottomnavigation'
+    bintrayRepo = 'FasationWidget'
+    bintrayName = 'FasationBottomNavigation'
 
     publishedGroupId = 'ir.fasation.widget'
-    libraryName = 'ir.fasation.widget'
-    artifact = 'fasationbottomnavigation'
+    libraryName = 'FasationBottomNavigation'
+    artifact = 'FasationBottomNavigation'
 
     libraryDescription = 'This view is a bottom navigation has fix number of items until now, it is developing.'
 

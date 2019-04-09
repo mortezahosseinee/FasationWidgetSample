@@ -1,1 +1,1 @@
-include ':app', ':fasationbottomnavigation'
+include ':app', ':fasationbottomnavigation', ':fasationtextview'

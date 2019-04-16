@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">fasationtextview</string>
+    <string name="app_name">fasationedittext</string>
+    <string name="content_description_left_image">left image</string>
+    <string name="content_description_right_image">right image</string>
 </resources>

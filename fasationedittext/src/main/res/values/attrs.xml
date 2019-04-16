@@ -5,6 +5,7 @@
         <attr name="secure_password_drawable" format="reference" />
         <attr name="un_secure_password_drawable" format="reference" />
         <attr name="right_drawable" format="reference" />
+        <attr name="clear_action_drawable" format="reference" />
         <attr name="android:text" format="string" />
         <attr name="normal_color" format="color" />
         <attr name="active_color" format="color" />
@@ -12,11 +13,16 @@
         <attr name="invalid_color" format="color" />
         <attr name="border_width" format="dimension" />
         <attr name="clear_action_position" format="enum" >
-            <enum name="LEFT" value="0"/>
-            <enum name="RIGHT" value="1"/>
+            <enum name="Left" value="0" />
+            <enum name="Right" value="1" />
         </attr>
         <attr name="android:inputType"/>
-        <attr name="status" format="string"/>
+        <attr name="status" format="enum">
+            <enum name="Normal" value="0" />
+            <enum name="Active" value="1" />
+            <enum name="Valid" value="2" />
+            <enum name="Invalid" value="3" />
+        </attr>
 
     </declare-styleable>
 

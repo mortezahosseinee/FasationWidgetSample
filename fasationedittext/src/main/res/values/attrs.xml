@@ -1,0 +1,23 @@
+<resources>
+
+    <declare-styleable name="FasationEditText">
+
+        <attr name="secure_password_drawable" format="reference" />
+        <attr name="un_secure_password_drawable" format="reference" />
+        <attr name="right_drawable" format="reference" />
+        <attr name="android:text" format="string" />
+        <attr name="normal_color" format="color" />
+        <attr name="active_color" format="color" />
+        <attr name="valid_color" format="color" />
+        <attr name="invalid_color" format="color" />
+        <attr name="border_width" format="dimension" />
+        <attr name="clear_action_position" format="enum" >
+            <enum name="LEFT" value="0"/>
+            <enum name="RIGHT" value="1"/>
+        </attr>
+        <attr name="android:inputType"/>
+        <attr name="status" format="string"/>
+
+    </declare-styleable>
+
+</resources>

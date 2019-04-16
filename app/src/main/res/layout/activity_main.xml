@@ -7,6 +7,18 @@
     android:background="#000"
     tools:context="ir.fasation.widget.main.MainActivity">
 
+    <ir.fasation.widget.FasationEditText
+        android:id="@+id/fasation_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:status="active"
+        app:normal_color="@color/colorAccent"
+        app:border_width="1dp"
+        app:background_color="@color/fasation_bottom_navigation_background_color"
+        android:text="hello"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ir.fasation.widget.FasationBottomNavigation
         android:id="@+id/fasation_bottom_navigation"
         android:layout_width="match_parent"

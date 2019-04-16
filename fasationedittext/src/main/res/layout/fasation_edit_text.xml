@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_corner_background"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_fasation_text_view_left"
+        android:id="@+id/img_fasation_edit_text_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_secure"
+        tools:src="@drawable/ic_secure"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txv_fasation_text_view_main"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_fasation_edit_text_main"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@null"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/img_fasation_text_view_right"
-        app:layout_constraintStart_toEndOf="@+id/img_fasation_text_view_left"
+        app:layout_constraintEnd_toStartOf="@+id/img_fasation_edit_text_right"
+        app:layout_constraintStart_toEndOf="@+id/img_fasation_edit_text_left"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Sample Text" />
+         />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_fasation_text_view_right"
+        android:id="@+id/img_fasation_edit_text_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_default"
+        tools:src="@drawable/ic_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -1,6 +1,7 @@
 package ir.fasation.widget
 
 import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.text.Editable
 import android.text.InputType
@@ -11,6 +12,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
+
 
 class FasationEditText @JvmOverloads constructor(context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
         ConstraintLayout(context, attrs, defStyleAttr),
@@ -42,10 +44,16 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private var fasationEditTextInputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
     private var fasationEditTextNormalColor = ContextCompat.getColor(context, R.color.grey)
     private var fasationEditTextActiveColor = ContextCompat.getColor(context, R.color.grey)
-    private var fasationEditTextValidColor = ContextCompat.getColor(context, R.color.green)
-    private var fasationEditTextInvalidColor = ContextCompat.getColor(context, R.color.red)
+    private var fasationEditTextValidColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
+    private var fasationEditTextInvalidColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
+    private var fasationEditTextColor = ContextCompat.getColor(context, android.R.color.black)
     private var fasationEditTextBorderWidth = 1f //dp
     private var fasationEditTextClearActionPosition = 1
+    private var fasationEditTextHeight = 14f //dp
+    private var fasationEditTextSize = 14f //sp
+    private var fasationEditTextErrorTextColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
+    private var fasationEditTextErrorTextSize = 14f //sp
+    private var fasationEditTextErrorTextFont = ""
     //endregion Custom Attributes
 
     //region Constructor
@@ -155,7 +163,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     }
     //endregion Main Callbacks
 
-    //region Declare Methods
+    //region Private Methods
     private fun initMain(context: Context) {
         View.inflate(context, R.layout.fasation_edit_text, this)
         initAttributes()
@@ -200,20 +208,41 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             fasationEditTextInvalidColor =
                     typedArray.getColor(R.styleable.FasationEditText_invalid_color, fasationEditTextInvalidColor)
 
+            fasationEditTextColor =
+                    typedArray.getColor(R.styleable.FasationEditText_text_color, fasationEditTextColor)
+
             fasationEditTextBorderWidth =
                     typedArray.getDimension(R.styleable.FasationEditText_border_width, fasationEditTextBorderWidth)
 
             fasationEditTextClearActionPosition =
                     typedArray.getInteger(R.styleable.FasationEditText_clear_action_position, fasationEditTextClearActionPosition)
 
+            fasationEditTextHeight =
+                    typedArray.getDimension(R.styleable.FasationEditText_text_height, fasationEditTextHeight)
+
+            fasationEditTextSize =
+                    typedArray.getDimension(R.styleable.FasationEditText_text_size, edt_fasation_edit_text_main.textSize)
+
+            fasationEditTextErrorTextColor =
+                    typedArray.getColor(R.styleable.FasationEditText_error_text_color, fasationEditTextErrorTextColor)
+
+            fasationEditTextErrorTextSize =
+                    typedArray.getDimension(R.styleable.FasationEditText_error_text_size, fasationEditTextErrorTextSize)
+
+            fasationEditTextErrorTextFont =
+                    typedArray.getString(R.styleable.FasationEditText_error_text_font)
+                            ?: fasationEditTextErrorTextFont
+
             typedArray.recycle()
         }
     }
 
-    //region Private Methods
     private fun initViews() {
         initialInputType = fasationEditTextInputType
         edt_fasation_edit_text_main.inputType = fasationEditTextInputType
+
+        img_fasation_edit_text_left.visibility = INVISIBLE
+        img_fasation_edit_text_right.visibility = INVISIBLE
 
         if (!(initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
                         initialInputType == InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
@@ -221,32 +250,32 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                         initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD)) {
             if (fasationEditTextStatus == 1) {
                 if (fasationEditTextClearActionPosition == 1)
-                    img_fasation_edit_text_left.visibility = View.INVISIBLE
+                    img_fasation_edit_text_left.visibility = INVISIBLE
                 else
-                    img_fasation_edit_text_right.visibility = View.INVISIBLE
+                    img_fasation_edit_text_right.visibility = INVISIBLE
             } else {
                 if (fasationEditTextRightImageSrc == -777)
-                    img_fasation_edit_text_right.visibility = View.INVISIBLE
+                    img_fasation_edit_text_right.visibility = INVISIBLE
                 else {
                     img_fasation_edit_text_right!!.setImageDrawable(ContextCompat.getDrawable(context, fasationEditTextRightImageSrc))
-                    img_fasation_edit_text_right.visibility = View.VISIBLE
+                    img_fasation_edit_text_right.visibility = VISIBLE
                 }
             }
         } else {
             if (fasationEditTextClearActionPosition == 1) {
                 img_fasation_edit_text_left!!.setImageDrawable(ContextCompat.getDrawable(context, fasationEditTextSecurePasswordImageSrc)) //Set left image drawable
-                img_fasation_edit_text_left.visibility = View.VISIBLE
+                img_fasation_edit_text_left.visibility = VISIBLE
 
                 if (fasationEditTextStatus != 1)
                     if (fasationEditTextRightImageSrc == -777)
-                        img_fasation_edit_text_right.visibility = View.INVISIBLE
+                        img_fasation_edit_text_right.visibility = INVISIBLE
                     else {
                         img_fasation_edit_text_right!!.setImageDrawable(ContextCompat.getDrawable(context, fasationEditTextRightImageSrc))
-                        img_fasation_edit_text_right.visibility = View.VISIBLE
+                        img_fasation_edit_text_right.visibility = VISIBLE
                     }
             } else {
                 img_fasation_edit_text_right!!.setImageDrawable(ContextCompat.getDrawable(context, fasationEditTextSecurePasswordImageSrc)) //Set left image drawable
-                img_fasation_edit_text_right.visibility = View.VISIBLE
+                img_fasation_edit_text_right.visibility = VISIBLE
             }
         }
 
@@ -254,23 +283,25 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         img_fasation_edit_text_right!!.setOnClickListener(this) // Set right drawable CLickListener on this view
 
         edt_fasation_edit_text_main.setText(fasationEditTextMainText)
-        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length) //Set Cursor end of text
+        edt_fasation_edit_text_main.textSize = convertPxToSp(fasationEditTextSize)
+        edt_fasation_edit_text_main.setTextColor(fasationEditTextColor)
         edt_fasation_edit_text_main.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                setError("چه خبرته؟")
                 if (fasationEditTextStatus == 1)
-                    if (!edt_fasation_edit_text_main.text.isNullOrBlank()) {
+                    if (!edt_fasation_edit_text_main.text.isNullOrEmpty()) {
                         if (fasationEditTextClearActionPosition == 0) {
-                            img_fasation_edit_text_left.setImageResource(R.drawable.ic_clear)
-                            img_fasation_edit_text_left.visibility = View.VISIBLE
+                            img_fasation_edit_text_left.setImageResource(fasationEditTextClearActionImageSrc)
+                            img_fasation_edit_text_left.visibility = VISIBLE
                         } else {
-                            img_fasation_edit_text_right.setImageResource(R.drawable.ic_clear)
-                            img_fasation_edit_text_right.visibility = View.VISIBLE
+                            img_fasation_edit_text_right.setImageResource(fasationEditTextClearActionImageSrc)
+                            img_fasation_edit_text_right.visibility = VISIBLE
                         }
                     } else {
                         if (fasationEditTextClearActionPosition == 0)
-                            img_fasation_edit_text_left.visibility = View.INVISIBLE
+                            img_fasation_edit_text_left.visibility = INVISIBLE
                         else
-                            img_fasation_edit_text_right.visibility = View.INVISIBLE
+                            img_fasation_edit_text_right.visibility = INVISIBLE
                     }
             }
 
@@ -281,7 +312,36 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             }
         })
 
+        if (fasationEditTextHeight >= convertDpToPx(14f)) {
+            val params = edt_fasation_edit_text_main.layoutParams
+            params.height = fasationEditTextHeight.toInt()
+            edt_fasation_edit_text_main.layoutParams = params
+            edt_fasation_edit_text_main.requestLayout()
+        }
+
+        if (fasationEditTextStatus == 1 && !edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+            if (fasationEditTextClearActionPosition == 0) {
+                img_fasation_edit_text_left.setImageResource(fasationEditTextClearActionImageSrc)
+                img_fasation_edit_text_left.visibility = VISIBLE
+            } else {
+                img_fasation_edit_text_right.setImageResource(fasationEditTextClearActionImageSrc)
+                img_fasation_edit_text_right.visibility = VISIBLE
+            }
+        }
+
         updateEditTextStatus()
+
+        if (fasationEditTextErrorTextFont.isNotEmpty())
+            txv_fasation_edit_text_error.typeface = Typeface.createFromAsset(context.assets, fasationEditTextErrorTextFont)
+
+        txv_fasation_edit_text_error.visibility = GONE
+        txv_fasation_edit_text_error.text = null
+        txv_fasation_edit_text_error.setTextColor(fasationEditTextErrorTextColor)
+
+        if (fasationEditTextErrorTextSize >= 14f)
+            txv_fasation_edit_text_error.textSize = convertPxToSp(fasationEditTextErrorTextSize)
+
+        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length) //Set Cursor end of text
     }
 
     private fun updateEditTextStatus() {
@@ -293,16 +353,16 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         }
     }
 
-    private fun setEditTextBorderColor(color: Int) {
+    fun setEditTextBorderColor(color: Int) {
         val drawable = ContextCompat.getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
-        drawable.setStroke(convertDpToPx(fasationEditTextBorderWidth), color)
+        drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
         invalidateDrawable(drawable)
-        this.background = drawable
+        ctl_fasation_edit_text_main.background = drawable
         invalidate()
     }
 
-    private fun setEditTextBorderWidth() {
-        val drawable = background as GradientDrawable
+    fun setEditTextBorderWidth() {
+        val drawable = ctl_fasation_edit_text_main.background as GradientDrawable
         val tempColor = when (fasationEditTextStatus) {
             0 -> fasationEditTextNormalColor
             1 -> fasationEditTextActiveColor
@@ -310,7 +370,17 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             3 -> fasationEditTextInvalidColor
             else -> fasationEditTextNormalColor
         }
-        drawable.setStroke(convertDpToPx(fasationEditTextBorderWidth), tempColor)
+        drawable.setStroke(fasationEditTextBorderWidth.toInt(), tempColor)
+    }
+
+    fun setError(message: String) {
+        txv_fasation_edit_text_error.text = message
+        txv_fasation_edit_text_error.visibility = VISIBLE
+    }
+
+    fun clearError() {
+        txv_fasation_edit_text_error.text = null
+        txv_fasation_edit_text_error.visibility = INVISIBLE
     }
 
     /**
@@ -322,6 +392,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
      */
     private fun convertDpToPx(dp: Float): Int {
         return (dp * context!!.resources.displayMetrics.density).toInt()
+    }
+
+    private fun convertPxToSp(px: Float): Float {
+        return px / resources.displayMetrics.scaledDensity
     }
     //endregion Private Methods
 

@@ -1,47 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
     tools:context="ir.fasation.widget.main.MainActivity">
 
-    <ir.fasation.widget.FasationEditText
-        android:id="@+id/fasation_text_view"
+    <FrameLayout
+        android:id="@+id/frm_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:border_width="1dp"
-        android:text="مرتضی حسینی"
-        app:text_size="14sp"
-        app:text_height="14dp"
-        app:error_text_color="@android:color/holo_red_dark"
-        app:background_color="@color/fasation_bottom_navigation_background_color"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ir.fasation.widget.FasationBottomNavigation
-        android:id="@+id/fasation_bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:background_color="@color/fasation_bottom_navigation_background_color"
-        app:fifth_image_src="@drawable/ic_fifth"
-        app:fifth_item_icon_height="24"
-        app:fifth_item_icon_width="24"
-        app:first_image_src="@drawable/ic_first"
-        app:first_item_icon_height="24"
-        app:first_item_icon_width="24"
-        app:fourth_image_src="@drawable/ic_fourth"
-        app:fourth_item_icon_height="24"
-        app:fourth_item_icon_width="24"
-        app:icon_active_color="@color/fasation_bottom_navigation_active_item_icon_color"
-        app:icon_inactive_color="@color/fasation_bottom_navigation_inactive_item_icon_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:second_image_src="@drawable/ic_second"
-        app:second_item_icon_height="24"
-        app:second_item_icon_width="24"
-        app:third_image_src="@drawable/ic_third"
-        app:third_item_icon_height="24"
-        app:third_item_icon_width="24" />
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

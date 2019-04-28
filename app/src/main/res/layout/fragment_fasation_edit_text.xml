@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ir.fasation.widget.main.FasationEditTextFragment">
+
+    <ir.fasation.widget.FasationEditText
+        android:id="@+id/fasation_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="مرتضی حسینی"
+        app:background_color="@color/fasation_bottom_navigation_background_color"
+        app:border_width="1dp"
+        app:error_text_color="@android:color/holo_red_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:text_height="14dp"
+        app:text_size="14sp" />
+
+</FrameLayout>

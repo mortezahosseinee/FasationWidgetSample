@@ -1,6 +1,6 @@
 package ir.fasation.widget
 
-enum class ClearActionPosition(i: Int) {
+enum class Position(i: Int) {
     Left(0),
     Right(1);
 }

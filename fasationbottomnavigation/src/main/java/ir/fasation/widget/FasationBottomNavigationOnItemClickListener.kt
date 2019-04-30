@@ -1,5 +1,5 @@
 package ir.fasation.widget
 
-interface FasationBottomNavigationItemsClickListener {
+interface FasationBottomNavigationOnItemClickListener {
     fun onFasationBottomNavigationItemClick(i: Int)
 }

@@ -63,6 +63,8 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     //endregion Declare Variables
 
     //region Declare Objects
+    private var listener: FasationBottomNavigationOnItemClickListener? = null
+
     private var moveSelectedItemBackgroundAnimator: ObjectAnimator? = null
 
     private var moveDeSelectedItemAnimator: ValueAnimator? = null
@@ -80,7 +82,6 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private var newSelectedParentView: View? = null
 
     private var centerContent: BezierView? = null
-    private var listener: FasationBottomNavigationItemsClickListener? = null
     //endregion Declare Views
 
     //region Custom Attributes
@@ -576,7 +577,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
             newSelectedImageView!!.animation.cancel()
     }
 
-    fun setClickListener(listener: FasationBottomNavigationItemsClickListener) {
+    fun setOnItemClickListener(listener: FasationBottomNavigationOnItemClickListener) {
         this.listener = listener
 
         if (defaultItemSelectedStatus)

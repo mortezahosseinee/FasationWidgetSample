@@ -1,11 +1,14 @@
 package ir.fasation.widget.main
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast.LENGTH_SHORT
+import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
+import ir.fasation.widget.FasationBottomNavigationOnItemClickListener
+import kotlinx.android.synthetic.main.fragment_fasation_bottom_navigation.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,7 +21,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class FasationBottomNavigationFragment : Fragment() {
+class FasationBottomNavigationFragment : Fragment(), FasationBottomNavigationOnItemClickListener {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,6 +38,16 @@ class FasationBottomNavigationFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fasation_bottom_navigation, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fasation_bottom_navigation.setOnItemClickListener(this)
+    }
+
+    override fun onFasationBottomNavigationItemClick(i: Int) {
+        makeText(context, "Hi ...", LENGTH_SHORT).show()
     }
 
     companion object {

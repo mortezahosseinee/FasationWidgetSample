@@ -7,6 +7,8 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
 import android.text.Editable
 import android.text.InputType
+import android.text.*
+import android.text.InputType.*
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
@@ -27,7 +29,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
     //region Declare Variables
     private var showPassword = false
-    private var initialInputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+    private var initialInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
     //endregion Declare Variables
 
     //region Declare Objects
@@ -48,7 +50,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private var fasationEditTextSize = 14f //sp
     private var fasationEditTextColor = ContextCompat.getColor(context, android.R.color.black)
     private var fasationEditTextStatus = 0
-    private var fasationEditTextInputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+    private var fasationEditTextInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
     private var fasationEditTextNormalColor = ContextCompat.getColor(context, R.color.grey)
     private var fasationEditTextActiveColor = ContextCompat.getColor(context, R.color.grey)
     private var fasationEditTextValidColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
@@ -76,10 +78,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         when (view.id) {
             R.id.img_fasation_edit_text_left -> {
                 if (fasationEditTextStatus == 1) {
-                    if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) {
+                    if (isInitialTypeAnyPassword()) {
                         if (fasationEditTextClearActionPosition == 0) {
                             edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
                             listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_CLEAR_ACTION_DRAWABLE)
@@ -96,10 +95,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                         }
                     }
                 } else {
-                    if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) {
+                    if (isInitialTypeAnyPassword()) {
                         if (fasationEditTextClearActionPosition == 0) {
                             if (fasationEditTextLeftImageSrc != -777)
                                 listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_BASIC_DRAWABLE) //Left Drawable image clicked
@@ -124,42 +120,42 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 //                    if (fasationEditTextClearActionPosition == 0) {
 //                        edt_fasation_edit_text_main.text!!.clear()
 //                    } else {
-//                        if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-//                                initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-//                                initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                                initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD)
+//                        if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
+//                                initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
+//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
+//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
 //                            if (showPassword) {
 //                                img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or initialInputType
+//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
 //                                edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
 //                            } else {
 //                                img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
 //
-//                                if (initialInputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-//                                    edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_NORMAL
+//                                if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
+//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
 //                                else
-//                                    edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
 //                            }
 //
 //                        showPassword = !showPassword
 //                        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
 //                    }
 //                } else {
-//                    if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-//                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-//                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD)
+//                    if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
+//                            initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
+//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
+//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
 //                        if (showPassword) {
 //                            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                            edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or initialInputType
+//                            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
 //                            edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
 //                        } else {
 //                            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
 //
-//                            if (initialInputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-//                                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_NORMAL
+//                            if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
+//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
 //                            else
-//                                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
 //                        }
 //
 //                    showPassword = !showPassword
@@ -170,10 +166,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             }
             R.id.img_fasation_edit_text_right -> {
                 if (fasationEditTextStatus == 1) {
-                    if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) {
+                    if (isInitialTypeAnyPassword()) {
                         if (fasationEditTextClearActionPosition == 0) {
                             passwordImageClicked(Position.Right) //Password image clicked
                         } else {
@@ -190,10 +183,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                         }
                     }
                 } else {
-                    if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) {
+                    if (isInitialTypeAnyPassword()) {
                         if (fasationEditTextClearActionPosition == 0) {
                             passwordImageClicked(Position.Right) //Password image clicked
                         } else {
@@ -218,42 +208,42 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 //                    if (fasationEditTextClearActionPosition == 1) {
 //                        edt_fasation_edit_text_main.text!!.clear()
 //                    } else {
-//                        if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-//                                initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-//                                initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                                initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD)
+//                        if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
+//                                initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
+//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
+//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
 //                            if (showPassword) {
 //                                img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or initialInputType
+//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
 //                                edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
 //                            } else {
 //                                img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
 //
-//                                if (initialInputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-//                                    edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_NORMAL
+//                                if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
+//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
 //                                else
-//                                    edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
 //                            }
 //
 //                        showPassword = !showPassword
 //                        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
 //                    }
 //                } else {
-//                    if (initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-//                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-//                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                            initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) {
+//                    if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
+//                            initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
+//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
+//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD) {
 //                        if (showPassword) {
 //                            img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                            edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or initialInputType
+//                            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
 //                            edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
 //                        } else {
 //                            img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
 //
-//                            if (initialInputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-//                                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_NORMAL
+//                            if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
+//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
 //                            else
-//                                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
 //                        }
 //
 //                        showPassword = !showPassword
@@ -371,10 +361,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         img_fasation_edit_text_left.visibility = INVISIBLE
         img_fasation_edit_text_right.visibility = INVISIBLE
 
-        if (!(initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD ||
-                        initialInputType == InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD ||
-                        initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-                        initialInputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD)) {
+        if (!(initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
+                        initialInputType == TYPE_CLASS_NUMBER or TYPE_NUMBER_VARIATION_PASSWORD ||
+                        initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
+                        initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)) {
             if (fasationEditTextStatus == 1) {
                 if (fasationEditTextClearActionPosition == 1) {
                     if (fasationEditTextLeftDrawableSpace) {
@@ -590,7 +580,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private fun passwordImageClicked(position: Position) {
         if (showPassword) {
             img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-            edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or initialInputType
+            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
             edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
 
             if (position == Position.Right)//RIGHT
@@ -600,10 +590,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         } else {
             img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
 
-            if (initialInputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_NUMBER_VARIATION_NORMAL
+            if (initialInputType == TYPE_CLASS_TEXT or  TYPE_NUMBER_VARIATION_PASSWORD)
+                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
             else
-                edt_fasation_edit_text_main.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
 
             if (position == Position.Right)
                 listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_SHOW_PASSWORD_DRAWABLE)
@@ -612,6 +602,13 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         }
 
         showPassword = !showPassword
+    }
+
+    private fun isInitialTypeAnyPassword(): Boolean {
+        return initialInputType == (TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD) ||
+                initialInputType == (TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD) ||
+                initialInputType == (TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) ||
+                initialInputType == (TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
     }
     //endregion Private Methods
 

@@ -4,8 +4,6 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
@@ -38,7 +36,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
     private var drawableSelectedItemIndex = 2
     private var lastSelectedIndex = -1
-    private var newSelectedIndex = 2
+    internal var newSelectedIndex = 2
     private var horizontallyOffset: Int = 0
 
     private var bezierWidth = 0
@@ -53,17 +51,17 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private var centerMainWidth = 0.9f
     private var besideMainWidth = 0.05
 
-    private var defaultItemSelectedStatus = false
+    internal var defaultItemSelectedStatus = false
 
-    private var firstItemFloatingStatus = true
-    private var secondItemFloatingStatus = true
-    private var thirdItemFloatingStatus = true
-    private var fourthItemFloatingStatus = true
-    private var fifthItemFloatingStatus = true
+    internal var firstItemFloatingStatus = true
+    internal var secondItemFloatingStatus = true
+    internal var thirdItemFloatingStatus = true
+    internal var fourthItemFloatingStatus = true
+    internal var fifthItemFloatingStatus = true
     //endregion Declare Variables
 
     //region Declare Objects
-    private var listener: FasationBottomNavigationOnItemClickListener? = null
+    internal var listener: FasationBottomNavigationOnItemClickListener? = null
 
     private var moveSelectedItemBackgroundAnimator: ObjectAnimator? = null
 
@@ -81,7 +79,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private var lastSelectedParentView: View? = null
     private var newSelectedParentView: View? = null
 
-    private var centerContent: BezierView? = null
+    internal var centerContent: BezierView? = null
     //endregion Declare Views
 
     //region Custom Attributes
@@ -109,9 +107,9 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private var fasationBottomNavigationIconActiveColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_active_item_icon_color)
     private var fasationBottomNavigationIconInactiveColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_inactive_item_icon_color)
 
-    private var fasationBottomNavigationDefaultSelectedItemIndex = 2
+    internal var fasationBottomNavigationDefaultSelectedItemIndex = 2
 
-    private var fasationBottomNavigationBackgroundColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_background_color)
+    internal var fasationBottomNavigationBackgroundColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_background_color)
     //endregion Custom Attributes
 
     //region Constructor
@@ -297,7 +295,6 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     }
 
     private fun prepareDeSelectItemAnimation() {
-
         lastSelectedImageView = getImageViewViewBasedIndex(lastSelectedIndex)
         lastSelectedParentView = getParentViewBasedIndex(lastSelectedIndex)
 
@@ -305,7 +302,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
             if (moveDeSelectedItemAnimator != null && moveDeSelectedItemAnimator!!.isRunning)
                 moveDeSelectedItemAnimator!!.end()
 
-            val mLayoutParams = lastSelectedParentView!!.layoutParams as ConstraintLayout.LayoutParams
+            val mLayoutParams = lastSelectedParentView!!.layoutParams as LayoutParams
             moveDeSelectedItemAnimator = ValueAnimator.ofInt(mLayoutParams.bottomMargin, convertDpToPx(defaultItemOffset))
             moveDeSelectedItemAnimator!!.addUpdateListener { valueAnimator ->
                 mLayoutParams.bottomMargin = valueAnimator.animatedValue as Int
@@ -318,7 +315,6 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     }
 
     private fun prepareSelectItemAnimation() {
-
         newSelectedImageView = getImageViewViewBasedIndex(newSelectedIndex)
         newSelectedParentView = getParentViewBasedIndex(newSelectedIndex)
 
@@ -326,7 +322,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
             if (moveSelectedItemAnimator != null && moveSelectedItemAnimator!!.isRunning)
                 moveSelectedItemAnimator!!.end()
 
-            val mLayoutParams = newSelectedParentView!!.layoutParams as ConstraintLayout.LayoutParams
+            val mLayoutParams = newSelectedParentView!!.layoutParams as LayoutParams
             moveSelectedItemAnimator = ValueAnimator.ofInt(mLayoutParams.bottomMargin,
                     convertDpToPx(getSelectedItemOffsetBasedIndex(newSelectedIndex)))
             moveSelectedItemAnimator!!.addUpdateListener { valueAnimator ->
@@ -340,7 +336,6 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     }
 
     private fun prepareSelectedItemBackgroundAnimation() {
-
         val xCurrentPosition = image_navigation_background_selected_item!!.left.toFloat()
         val xNewPosition = (selectedItemHorizontallyOffset + newSelectedIndex.toDouble() *
                 relative_layout_empty!!.width.toDouble() * centerMainWidth / 5).toFloat()
@@ -384,7 +379,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         }
     }
 
-    private fun getBadgeImageViewBasedIndex(index: Int): View? {
+    internal fun getBadgeImageViewBasedIndex(index: Int): View? {
         return when (index) {
             0 -> image_badge_navigation_items_first
             1 -> image_badge_navigation_items_second
@@ -504,66 +499,8 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         set.connect(image_navigation_background_selected_item.id, ConstraintSet.START, guide_line_second.id, ConstraintSet.END)
         set.applyTo(main_view)
     }
-    //endregion Declare Methods
 
-    //region Public Methods
-    fun changeBackgroundColor() {
-        centerContent?.setBackgroundColor(fasationBottomNavigationBackgroundColor)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            (relative_layout_empty.background as GradientDrawable).setColor(fasationBottomNavigationBackgroundColor)
-    }
-
-    fun changeSelectedItemBackgroundColor() {
-//        val layers = getResources().getDrawable(R.drawable.background_selected_item) as LayerDrawable
-//        val gradientDrawable = ContextCompat.getDrawable(context, R.drawable.rounded_corner_front) as GradientDrawable
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) gradientDrawable .setColor(fasationBottomNavigationBackgroundColor)
-//        relative_layout_empty.setBackgroundDrawable(gradientDrawable)
-//
-//        centerContent?.setBackgroundColor(fasationBottomNavigationBackgroundColor)
-//
-//        layers.setDrawableByLayerId(R.id.front_item, )
-//        layers.addLayer()
-    }
-
-    fun setItemFloatingStatus(index: Int, floatingStatus: Boolean) {
-        if (index == fasationBottomNavigationDefaultSelectedItemIndex || index !in 0..4)
-            return
-
-        when (index) {
-            0 -> firstItemFloatingStatus = floatingStatus
-            1 -> secondItemFloatingStatus = floatingStatus
-            2 -> thirdItemFloatingStatus = floatingStatus
-            3 -> fourthItemFloatingStatus = floatingStatus
-            4 -> fifthItemFloatingStatus = floatingStatus
-        }
-    }
-
-    fun isItemFloating(index: Int): Boolean {
-        if (index < 0 || index > 4)
-            return false
-
-        return when (index) {
-            0 -> firstItemFloatingStatus
-            1 -> secondItemFloatingStatus
-            2 -> thirdItemFloatingStatus
-            3 -> fourthItemFloatingStatus
-            4 -> fifthItemFloatingStatus
-            else -> false
-        }
-    }
-
-    fun enableBadgeOnItem(badgeIndex: Int) {
-        if (badgeIndex in 0..4)
-            getBadgeImageViewBasedIndex(badgeIndex)!!.visibility = View.VISIBLE
-    }
-
-    fun disableBadgeOnItem(badgeIndex: Int) {
-        if (badgeIndex in 0..4)
-            getBadgeImageViewBasedIndex(badgeIndex)!!.visibility = View.GONE
-    }
-
-    fun onDestroy() {
+    private fun onDestroy() {
         moveSelectedItemBackgroundAnimator!!.end()
 
         moveDeSelectedItemAnimator!!.end()
@@ -576,12 +513,5 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         if (newSelectedImageView!!.animation != null)
             newSelectedImageView!!.animation.cancel()
     }
-
-    fun setOnItemClickListener(listener: FasationBottomNavigationOnItemClickListener) {
-        this.listener = listener
-
-        if (defaultItemSelectedStatus)
-            this.listener!!.onFasationBottomNavigationItemClick(newSelectedIndex)
-    }
-    //endregion Public Methods
+    //endregion Declare Methods
 }

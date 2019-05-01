@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
-import ir.fasation.widget.LeftDrawableMode
-import ir.fasation.widget.FasationEditTextOnDrawableClickListener
-import ir.fasation.widget.RightDrawableMode
+import ir.fasation.widget.*
 import kotlinx.android.synthetic.main.fragment_fasation_edit_text.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,15 +43,40 @@ class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fasation_text_view_normal_non_pass.setTextFont("font/font_persian_default.ttf")
+
+
+        fasation_text_view_valid_non_pass_right_drawable.setOnDrawableClickListener(this)
+        fasation_text_view_valid_non_pass_non_right_drawable.setOnDrawableClickListener(this)
+        fasation_text_view_valid_pass_right_drawable.setOnDrawableClickListener(this)
         fasation_text_view_valid_non_pass_left_drawable.setOnDrawableClickListener(this)
+        fasation_text_view_valid_right_pass_left_drawable.setOnDrawableClickListener(this)
+        fasation_text_view_valid_left_pass.setOnDrawableClickListener(this)
+        fasation_text_view_valid_right_pass_left_drawable2.setOnDrawableClickListener(this)
     }
 
-    override fun onFasationEditTextLeftDrawableClick(lefT_CLEAR_ACTION_DRAWABLE: LeftDrawableMode) {
-        makeText(context, "This is left drawable.", Toast.LENGTH_SHORT).show()
+    override fun onFasationEditTextLeftDrawableClick(v: View, mode: LeftDrawableMode) {
+        when (v) {
+            fasation_text_view_valid_non_pass_right_drawable -> makeText(context, "This is left drawable. 1\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_non_pass_non_right_drawable -> makeText(context, "This is left drawable. 2\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_pass_right_drawable -> makeText(context, "This is left drawable. 3\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_non_pass_left_drawable -> makeText(context, "This is left drawable. 4\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_right_pass_left_drawable -> makeText(context, "This is left drawable. 5\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_left_pass -> makeText(context, "This is left drawable. 6\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_right_pass_left_drawable2 -> makeText(context, "This is left drawable. 7\n$mode", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun onFasationEditTextRightDrawableClick(righT_HIDE_PASSWORD_DRAWABLE: RightDrawableMode) {
-        makeText(context, "This is right drawable.", Toast.LENGTH_SHORT).show()
+    override fun onFasationEditTextRightDrawableClick(v: View, mode: RightDrawableMode) {
+        when (v) {
+            fasation_text_view_valid_non_pass_right_drawable ->  makeText(context, "This is right drawable. 1\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_non_pass_non_right_drawable ->  makeText(context, "This is right drawable. 2\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_pass_right_drawable ->  makeText(context, "This is right drawable. 3\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_non_pass_left_drawable ->  makeText(context, "This is right drawable. 4\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_right_pass_left_drawable ->  makeText(context, "This is right drawable. 5\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_left_pass ->  makeText(context, "This is right drawable. 6\n$mode", Toast.LENGTH_SHORT).show()
+            fasation_text_view_valid_right_pass_left_drawable2 ->  makeText(context, "This is right drawable. 7\n$mode", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {

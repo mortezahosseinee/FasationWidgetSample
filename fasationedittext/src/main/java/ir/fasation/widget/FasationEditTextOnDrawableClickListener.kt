@@ -1,7 +1,9 @@
 package ir.fasation.widget
 
-interface FasationEditTextOnDrawableClickListener {
-    fun onFasationEditTextLeftDrawableClick(lefT_CLEAR_ACTION_DRAWABLE: LeftDrawableMode)
+import android.view.View
 
-    fun onFasationEditTextRightDrawableClick(righT_HIDE_PASSWORD_DRAWABLE: RightDrawableMode)
+interface FasationEditTextOnDrawableClickListener {
+    fun onFasationEditTextLeftDrawableClick(v: View, mode: LeftDrawableMode)
+
+    fun onFasationEditTextRightDrawableClick(v: View, mode: RightDrawableMode)
 }

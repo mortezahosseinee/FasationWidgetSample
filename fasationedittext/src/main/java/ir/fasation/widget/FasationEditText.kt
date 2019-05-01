@@ -1,21 +1,21 @@
 package ir.fasation.widget
 
 import android.content.Context
-import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
 import android.text.Editable
-import android.text.InputType
-import android.text.*
 import android.text.InputType.*
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import ir.fasation.widget.LeftDrawableMode.*
+import ir.fasation.widget.Position.LEFT
+import ir.fasation.widget.Position.RIGHT
+import ir.fasation.widget.RightDrawableMode.*
+import ir.fasation.widget.Status.*
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
 
 class FasationEditText @JvmOverloads constructor(context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -29,11 +29,11 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
     //region Declare Variables
     private var showPassword = false
-    private var initialInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+    internal var initialInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
     //endregion Declare Variables
 
     //region Declare Objects
-    private var listener: FasationEditTextOnDrawableClickListener? = null
+    internal var listener: FasationEditTextOnDrawableClickListener? = null
     //endregion Declare Objects
 
     //region Declare Views
@@ -43,28 +43,29 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private var fasationEditTextSecurePasswordImageSrc = R.drawable.ic_secure
     private var fasationEditTextUnSecurePasswordImageSrc = R.drawable.ic_unsecure
     private var fasationEditTextClearActionImageSrc = R.drawable.ic_clear
-    private var fasationEditTextLeftImageSrc = -777
-    private var fasationEditTextRightImageSrc = -777
-    private var fasationEditTextMainText = ""
-    private var fasationEditTextHeight = 14f //dp
-    private var fasationEditTextSize = 14f //sp
-    private var fasationEditTextColor = ContextCompat.getColor(context, android.R.color.black)
-    private var fasationEditTextStatus = 0
+    internal var fasationEditTextLeftImageSrc = -777
+    internal var fasationEditTextRightImageSrc = -777
+    internal var fasationEditTextMainText = ""
+    internal var fasationEditTextMainTextFont = ""
+    internal var fasationEditTextHeight = 14f //dp
+    internal var fasationEditTextSize = 14f //sp
+    internal var fasationEditTextColor = ContextCompat.getColor(context, android.R.color.black)
+    internal var fasationEditTextStatus = NORMAL
     private var fasationEditTextInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-    private var fasationEditTextNormalColor = ContextCompat.getColor(context, R.color.grey)
-    private var fasationEditTextActiveColor = ContextCompat.getColor(context, R.color.grey)
-    private var fasationEditTextValidColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
-    private var fasationEditTextInvalidColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
-    private var fasationEditTextBorderWidth = 1f //dp
-    private var fasationEditTextClearActionPosition = 1
-    private var fasationEditTextDescriptionText = ""
-    private var fasationEditTextDescriptionTextColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
-    private var fasationEditTextDescriptionTextSize = 14f //sp
-    private var fasationEditTextDescriptionTextFont = ""
+    internal var fasationEditTextNormalColor = ContextCompat.getColor(context, R.color.grey)
+    internal var fasationEditTextActiveColor = ContextCompat.getColor(context, R.color.grey)
+    internal var fasationEditTextValidColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
+    internal var fasationEditTextInvalidColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
+    internal var fasationEditTextBorderWidth = 1f //dp
+    private var fasationEditTextClearActionPosition = LEFT
+    internal var fasationEditTextDescriptionText = ""
+    internal var fasationEditTextDescriptionTextColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
+    internal var fasationEditTextDescriptionTextSize = 14f //sp
+    internal var fasationEditTextDescriptionTextFont = ""
     private var fasationEditTextRightDrawableSpace = true
     private var fasationEditTextLeftDrawableSpace = true
-    private var fasationEditTextMainHint = ""
-    private var fasationEditTextHintColor = ContextCompat.getColor(context, android.R.color.darker_gray)
+    internal var fasationEditTextMainHint = ""
+    internal var fasationEditTextHintColor = ContextCompat.getColor(context, android.R.color.darker_gray)
     //endregion Custom Attributes
 
     //region Constructor
@@ -75,188 +76,138 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
     //region Main Callbacks
     override fun onClick(view: View) {
-        when (view.id) {
-            R.id.img_fasation_edit_text_left -> {
-                if (fasationEditTextStatus == 1) {
-                    if (isInitialTypeAnyPassword()) {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
-                            listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_CLEAR_ACTION_DRAWABLE)
+        when (view) {
+            img_fasation_edit_text_left -> {
+                when (fasationEditTextStatus) {
+                    ACTIVE -> {
+                        if (isInitialTypeAnyPassword()) {
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> {
+                                    if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+                                        if (fasationEditTextLeftImageSrc != -777)
+                                            listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                    } else {
+                                        edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
+
+                                        if (fasationEditTextLeftImageSrc != -777)
+                                            setLeftDrawableImage(fasationEditTextLeftImageSrc)
+                                        else
+                                            showLeftDrawableImage(false)
+
+                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_CLEAR_ACTION_DRAWABLE)
+                                    }
+                                }
+                                RIGHT -> passwordImageClicked(LEFT) //Password image clicked
+                            }
                         } else {
-                            passwordImageClicked(Position.Left) //Password image clicked
-                        }
-                    } else {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
-                            listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_CLEAR_ACTION_DRAWABLE)
-                        } else {
-                            if (fasationEditTextLeftImageSrc != -777)
-                                listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_BASIC_DRAWABLE) //Left Drawable image clicked
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> {
+                                    if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+                                        if (fasationEditTextLeftImageSrc != -777)
+                                            listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                    } else {
+                                        edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
+
+                                        if (fasationEditTextLeftImageSrc != -777)
+                                            setLeftDrawableImage(fasationEditTextLeftImageSrc)
+                                        else
+                                            showLeftDrawableImage(false)
+
+                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_CLEAR_ACTION_DRAWABLE)
+                                    }
+                                }
+                                RIGHT -> {
+                                    if (fasationEditTextLeftImageSrc != -777)
+                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                }
+                            }
                         }
                     }
-                } else {
-                    if (isInitialTypeAnyPassword()) {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            if (fasationEditTextLeftImageSrc != -777)
-                                listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_BASIC_DRAWABLE) //Left Drawable image clicked
-                        } else {
-                            passwordImageClicked(Position.Left) //Password image clicked
-                        }
-                    } else {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            if (fasationEditTextLeftImageSrc != -777)
-                                listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_BASIC_DRAWABLE) //Left Drawable image clicked
+                    else -> {
+                        if (isInitialTypeAnyPassword()) {
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> {
+                                    if (fasationEditTextLeftImageSrc != -777)
+                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                }
+                                RIGHT -> passwordImageClicked(LEFT) //Password image clicked
+                            }
                         } else {
                             if (fasationEditTextLeftImageSrc != -777)
-                                listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_BASIC_DRAWABLE) //Left Drawable image clicked
+                                listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
                         }
                     }
                 }
-
-                edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
-
-                //TODO
-//                if (fasationEditTextStatus == 1) {
-//                    if (fasationEditTextClearActionPosition == 0) {
-//                        edt_fasation_edit_text_main.text!!.clear()
-//                    } else {
-//                        if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
-//                                initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
-//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
-//                            if (showPassword) {
-//                                img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
-//                                edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
-//                            } else {
-//                                img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
-//
-//                                if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
-//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
-//                                else
-//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-//                            }
-//
-//                        showPassword = !showPassword
-//                        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
-//                    }
-//                } else {
-//                    if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
-//                            initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
-//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
-//                        if (showPassword) {
-//                            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
-//                            edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
-//                        } else {
-//                            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
-//
-//                            if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
-//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
-//                            else
-//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-//                        }
-//
-//                    showPassword = !showPassword
-//                    edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
-//                }
-//
-//                listener?.onFasationEditTextLeftDrawableClick()
             }
-            R.id.img_fasation_edit_text_right -> {
-                if (fasationEditTextStatus == 1) {
-                    if (isInitialTypeAnyPassword()) {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            passwordImageClicked(Position.Right) //Password image clicked
+            img_fasation_edit_text_right -> {
+                when (fasationEditTextStatus) {
+                    ACTIVE -> {
+                        if (isInitialTypeAnyPassword()) {
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> passwordImageClicked(RIGHT) //Password image clicked
+                                RIGHT -> {
+                                    if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+                                        if (fasationEditTextRightImageSrc != -777)
+                                            listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                    } else {
+                                        edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
+
+                                        if (fasationEditTextRightImageSrc != -777)
+                                            setRightDrawableImage(fasationEditTextRightImageSrc)
+                                        else
+                                            showRightDrawableImage(false)
+
+                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_CLEAR_ACTION_DRAWABLE)
+                                    }
+                                }
+                            }
                         } else {
-                            edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
-                            listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_CLEAR_ACTION_DRAWABLE)
-                        }
-                    } else {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            if (fasationEditTextRightImageSrc != -777)
-                                listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_BASIC_DRAWABLE) //Right Drawable image clicked
-                        } else {
-                            edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
-                            listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_CLEAR_ACTION_DRAWABLE)
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> {
+                                    if (fasationEditTextRightImageSrc != -777)
+                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                    else
+                                        showRightDrawableImage(false)
+                                }
+                                RIGHT -> {
+                                    if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+                                        if (fasationEditTextRightImageSrc != -777)
+                                            listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                        else
+                                            showRightDrawableImage(false)
+                                    } else {
+                                        edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
+
+                                        if (fasationEditTextRightImageSrc != -777)
+                                            setRightDrawableImage(fasationEditTextRightImageSrc)
+                                        else
+                                            showRightDrawableImage(false)
+
+                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_CLEAR_ACTION_DRAWABLE)
+                                    }
+                                }
+                            }
                         }
                     }
-                } else {
-                    if (isInitialTypeAnyPassword()) {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            passwordImageClicked(Position.Right) //Password image clicked
+                    else -> {
+                        if (isInitialTypeAnyPassword()) {
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> passwordImageClicked(RIGHT) //Password image clicked
+                                RIGHT -> {
+                                    if (fasationEditTextRightImageSrc != -777)
+                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                }
+                            }
                         } else {
                             if (fasationEditTextRightImageSrc != -777)
-                                listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_BASIC_DRAWABLE) //Right Drawable image clicked
-                        }
-                    } else {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            if (fasationEditTextRightImageSrc != -777)
-                                listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_BASIC_DRAWABLE) //Right Drawable image clicked
-                        } else {
-                            if (fasationEditTextRightImageSrc != -777)
-                                listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_BASIC_DRAWABLE) //Right Drawable image clicked
+                                listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
                         }
                     }
                 }
-
-                edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
-
-                //TODO
-//                if (fasationEditTextStatus == 1) {
-//                    if (fasationEditTextClearActionPosition == 1) {
-//                        edt_fasation_edit_text_main.text!!.clear()
-//                    } else {
-//                        if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
-//                                initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
-//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                                initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
-//                            if (showPassword) {
-//                                img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
-//                                edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
-//                            } else {
-//                                img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
-//
-//                                if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
-//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
-//                                else
-//                                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-//                            }
-//
-//                        showPassword = !showPassword
-//                        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
-//                    }
-//                } else {
-//                    if (initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
-//                            initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD ||
-//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-//                            initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD) {
-//                        if (showPassword) {
-//                            img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
-//                            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
-//                            edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
-//                        } else {
-//                            img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
-//
-//                            if (initialInputType == TYPE_NUMBER_VARIATION_PASSWORD)
-//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
-//                            else
-//                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-//                        }
-//
-//                        showPassword = !showPassword
-//                    } else {
-//
-//                    }
-//
-//                    edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
-//                }
-//
-//                listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_HIDE_PASSWORD_DRAWABLE)
             }
         }
+
+        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
     }
     //endregion Main Callbacks
 
@@ -293,6 +244,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                     typedArray.getString(R.styleable.FasationEditText_android_text)
                             ?: fasationEditTextMainText
 
+            fasationEditTextMainTextFont =
+                    typedArray.getString(R.styleable.FasationEditText_text_font)
+                            ?: fasationEditTextMainTextFont
+
             fasationEditTextSize =
                     typedArray.getDimension(R.styleable.FasationEditText_text_size, edt_fasation_edit_text_main.textSize)
 
@@ -304,13 +259,19 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                             ?: fasationEditTextMainHint
 
             fasationEditTextHintColor =
-                    typedArray.getColor(R.styleable.FasationEditText_hint_color, fasationEditTextHintColor)
+                    typedArray.getColor(R.styleable.FasationEditText_android_textColorHint, fasationEditTextHintColor)
 
             fasationEditTextHeight =
                     typedArray.getDimension(R.styleable.FasationEditText_text_height, fasationEditTextHeight)
 
             fasationEditTextStatus =
-                    typedArray.getInteger(R.styleable.FasationEditText_status, fasationEditTextStatus)
+                    when (typedArray.getInteger(R.styleable.FasationEditText_status, 0)) {
+                        0 -> NORMAL
+                        1 -> ACTIVE
+                        2 -> VALID
+                        3 -> INVALID
+                        else -> NORMAL
+                    }
 
             fasationEditTextNormalColor =
                     typedArray.getColor(R.styleable.FasationEditText_normal_color, fasationEditTextNormalColor)
@@ -328,7 +289,11 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                     typedArray.getDimension(R.styleable.FasationEditText_border_width, fasationEditTextBorderWidth)
 
             fasationEditTextClearActionPosition =
-                    typedArray.getInteger(R.styleable.FasationEditText_clear_action_position, fasationEditTextClearActionPosition)
+                    when (typedArray.getInteger(R.styleable.FasationEditText_clear_action_position, 1)) {
+                        0 -> LEFT
+                        1 -> RIGHT
+                        else -> RIGHT
+                    }
 
             fasationEditTextDescriptionText =
                     typedArray.getString(R.styleable.FasationEditText_description_text)
@@ -355,250 +320,169 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     }
 
     private fun initViews() {
-        initialInputType = fasationEditTextInputType
-        edt_fasation_edit_text_main.inputType = fasationEditTextInputType
+        setInputType(fasationEditTextInputType) //Set input type
+        setStatus(fasationEditTextStatus) //Set edit text status
+        setBorderWidth(fasationEditTextBorderWidth.toInt()) //Set main border width
+        setText(fasationEditTextMainText) //Set main text content
+        setTextSize(fasationEditTextSize) //Set main text size
+        setTextColor(fasationEditTextColor) //Set main text color
+        setTextFont(fasationEditTextMainTextFont) //Set main text font
+        setTextHeight(fasationEditTextHeight) //Set main text height
+        setHint(fasationEditTextMainHint) //Set main text hint
+        setHintColor(fasationEditTextHintColor) //Set main text hint color
+        setDescription(fasationEditTextDescriptionText) //Set description text
+        setDescriptionSize(fasationEditTextDescriptionTextSize) //Set description text
+        setDescriptionColor(fasationEditTextDescriptionTextColor) //Set description text
+        setDescriptionFont(fasationEditTextDescriptionTextFont) //Set description text font
 
-        img_fasation_edit_text_left.visibility = INVISIBLE
-        img_fasation_edit_text_right.visibility = INVISIBLE
-
-        if (!(initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD ||
-                        initialInputType == TYPE_CLASS_NUMBER or TYPE_NUMBER_VARIATION_PASSWORD ||
-                        initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
-                        initialInputType == TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)) {
-            if (fasationEditTextStatus == 1) {
-                if (fasationEditTextClearActionPosition == 1) {
+        if (isInitialTypeAnyPassword()) {
+            setPasswordImage()
+            when (fasationEditTextClearActionPosition) {
+                LEFT -> {
                     if (fasationEditTextLeftDrawableSpace) {
-                        if (fasationEditTextLeftImageSrc == -777)
-                            img_fasation_edit_text_left.visibility = INVISIBLE
-                        else {
-                            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextLeftImageSrc))
-                            img_fasation_edit_text_left.visibility = VISIBLE
+                        if (fasationEditTextLeftImageSrc != -777) {
+                            changeLeftDrawableImage(fasationEditTextLeftImageSrc)
+                            showLeftDrawableImage(true)
                         }
-                    }
+                    } else removeDrawable(LEFT)
                 }
-                else
-                    img_fasation_edit_text_right.visibility = INVISIBLE
-            } else {
-                if (fasationEditTextRightDrawableSpace) {
-                    if (fasationEditTextRightImageSrc == -777)
-                        img_fasation_edit_text_right.visibility = INVISIBLE
-                    else {
-                        img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextRightImageSrc))
-                        img_fasation_edit_text_right.visibility = VISIBLE
-                    }
-                }
-
-                if (fasationEditTextLeftDrawableSpace) {
-                    if (fasationEditTextLeftImageSrc == -777)
-                        img_fasation_edit_text_left.visibility = INVISIBLE
-                    else {
-                        img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextLeftImageSrc))
-                        img_fasation_edit_text_left.visibility = VISIBLE
-                    }
+                RIGHT -> {
+                    if (fasationEditTextRightDrawableSpace) {
+                        if (fasationEditTextRightImageSrc != -777) {
+                            changeRightDrawableImage(fasationEditTextRightImageSrc)
+                            showRightDrawableImage(true)
+                        }
+                    } else removeDrawable(RIGHT)
                 }
             }
         } else {
-            if (fasationEditTextClearActionPosition == 1) {
-                img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc)) //Set left image drawable
-                img_fasation_edit_text_left.visibility = VISIBLE
-
-                if (fasationEditTextStatus != 1)
-                    if (fasationEditTextRightImageSrc == -777)
-                        img_fasation_edit_text_right.visibility = INVISIBLE
-                    else {
-                        if (fasationEditTextRightDrawableSpace) {
-                            img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextRightImageSrc))
-                            img_fasation_edit_text_right.visibility = VISIBLE
-                        }
-                    }
-            } else {
-                if (fasationEditTextStatus != 1) {
-                    if (fasationEditTextLeftDrawableSpace) {
-                        if (fasationEditTextLeftImageSrc == -777)
-                            img_fasation_edit_text_left.visibility = INVISIBLE
-                        else {
-                            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextLeftImageSrc))
-                            img_fasation_edit_text_left.visibility = VISIBLE
-                        }
-                    }
+            if (fasationEditTextLeftDrawableSpace) {
+                if (fasationEditTextLeftImageSrc != -777) {
+                    changeLeftDrawableImage(fasationEditTextLeftImageSrc)
+                    showLeftDrawableImage(true)
                 }
-            }
+            } else removeDrawable(LEFT)
+
+            if (fasationEditTextRightDrawableSpace) {
+                if (fasationEditTextRightImageSrc != -777) {
+                    changeRightDrawableImage(fasationEditTextRightImageSrc)
+                    showRightDrawableImage(true)
+                }
+            } else removeDrawable(RIGHT)
         }
 
         img_fasation_edit_text_left!!.setOnClickListener(this) // Set left drawable CLickListener on this view
         img_fasation_edit_text_right!!.setOnClickListener(this) // Set right drawable CLickListener on this view
 
-        edt_fasation_edit_text_main.setText(fasationEditTextMainText)
-        edt_fasation_edit_text_main.hint = fasationEditTextMainHint
-        edt_fasation_edit_text_main.textSize = convertPxToSp(fasationEditTextSize)
-        edt_fasation_edit_text_main.setTextColor(fasationEditTextColor)
-        edt_fasation_edit_text_main.setHintTextColor(fasationEditTextHintColor)
-        edt_fasation_edit_text_main.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (fasationEditTextStatus == 1)
-                    if (!edt_fasation_edit_text_main.text.isNullOrEmpty()) {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            img_fasation_edit_text_left.setImageResource(fasationEditTextClearActionImageSrc)
-                            img_fasation_edit_text_left.visibility = VISIBLE
-                        } else {
-                            img_fasation_edit_text_right.setImageResource(fasationEditTextClearActionImageSrc)
-                            img_fasation_edit_text_right.visibility = VISIBLE
-                        }
-                    } else {
-                        if (fasationEditTextClearActionPosition == 0) {
-                            if (fasationEditTextLeftDrawableSpace) {
-                                if (fasationEditTextLeftImageSrc == -777)
-                                    img_fasation_edit_text_left.visibility = INVISIBLE
-                                else {
-                                    img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextLeftImageSrc))
-                                    img_fasation_edit_text_left.visibility = VISIBLE
+        edt_fasation_edit_text_main.addTextChangedListener(
+                object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        if (fasationEditTextStatus == ACTIVE)
+                            if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+                                when (fasationEditTextClearActionPosition) {
+                                    LEFT -> {
+                                        if (fasationEditTextLeftDrawableSpace) {
+                                            if (fasationEditTextLeftImageSrc == -777)
+                                                showLeftDrawableImage(false)
+                                            else {
+                                                setLeftDrawableImage(fasationEditTextLeftImageSrc)
+                                                showLeftDrawableImage(true)
+                                            }
+                                        } else
+                                            removeDrawable(LEFT)
+                                    }
+                                    RIGHT -> {
+                                        if (fasationEditTextRightDrawableSpace) {
+                                            if (fasationEditTextRightImageSrc == -777)
+                                                showRightDrawableImage(true)
+                                            else {
+                                                setRightDrawableImage(fasationEditTextRightImageSrc)
+                                                showRightDrawableImage(true)
+                                            }
+                                        } else
+                                            removeDrawable(RIGHT)
+                                    }
+                                }
+                            } else {
+                                when (fasationEditTextClearActionPosition) {
+                                    LEFT -> {
+                                        changeLeftDrawableImage(fasationEditTextClearActionImageSrc)
+                                        showLeftDrawableImage(true)
+                                    }
+                                    RIGHT -> {
+                                        changeRightDrawableImage(fasationEditTextClearActionImageSrc)
+                                        showRightDrawableImage(true)
+                                    }
                                 }
                             }
-                        } else {
-                            if (fasationEditTextRightDrawableSpace) {
-                                if (fasationEditTextRightImageSrc == -777)
-                                    img_fasation_edit_text_right.visibility = INVISIBLE
-                                else {
-                                    img_fasation_edit_text_right!!.setImageDrawable(getDrawable(context, fasationEditTextRightImageSrc))
-                                    img_fasation_edit_text_right.visibility = VISIBLE
-                                }
-                            }
-                        }
                     }
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    }
+                })
+    }
+
+    private fun setPasswordImage() {
+        when (fasationEditTextClearActionPosition) {
+            LEFT -> {
+                changeRightDrawableImage(fasationEditTextSecurePasswordImageSrc)
+                showRightDrawableImage(true)
             }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        if (fasationEditTextHeight >= convertDpToPx(14f)) {
-            val params = edt_fasation_edit_text_main.layoutParams
-            params.height = fasationEditTextHeight.toInt()
-            edt_fasation_edit_text_main.layoutParams = params
-            edt_fasation_edit_text_main.requestLayout()
-        }
-
-        if (fasationEditTextStatus == 1 && !edt_fasation_edit_text_main.text.isNullOrEmpty()) {
-            if (fasationEditTextClearActionPosition == 0) {
-                img_fasation_edit_text_left.setImageResource(fasationEditTextClearActionImageSrc)
-                img_fasation_edit_text_left.visibility = VISIBLE
-            } else {
-                img_fasation_edit_text_right.setImageResource(fasationEditTextClearActionImageSrc)
-                img_fasation_edit_text_right.visibility = VISIBLE
+            RIGHT -> {
+                changeLeftDrawableImage(fasationEditTextSecurePasswordImageSrc)
+                showLeftDrawableImage(true)
             }
         }
-
-        updateEditTextStatus()
-
-        if (fasationEditTextDescriptionTextFont.isNotEmpty())
-            txv_fasation_edit_text_description.typeface = Typeface.createFromAsset(context.assets, fasationEditTextDescriptionTextFont)
-
-        txv_fasation_edit_text_description.visibility = GONE
-        txv_fasation_edit_text_description.text = null
-        txv_fasation_edit_text_description.setTextColor(fasationEditTextDescriptionTextColor)
-
-        if (fasationEditTextDescriptionTextSize >= 14f)
-            txv_fasation_edit_text_description.textSize = convertPxToSp(fasationEditTextDescriptionTextSize)
-
-        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length) //Set Cursor end of text
-
-        setDescription(fasationEditTextDescriptionText)
-
-        if (!fasationEditTextRightDrawableSpace) {
-            img_fasation_edit_text_right.visibility = GONE
-
-            val params = edt_fasation_edit_text_main.layoutParams as LayoutParams
-            params.rightMargin = convertDpToPx(16f)
-
-            if (SDK_INT >= JELLY_BEAN_MR1)
-                params.marginEnd = convertDpToPx(16f)
-
-            edt_fasation_edit_text_main.layoutParams = params
-            edt_fasation_edit_text_main.requestLayout()
-        }
-    }
-
-    private fun updateEditTextStatus() {
-        when (fasationEditTextStatus) {
-            0 -> setEditTextBorderColor(fasationEditTextNormalColor)
-            1 -> setEditTextBorderColor(fasationEditTextActiveColor)
-            2 -> setEditTextBorderColor(fasationEditTextValidColor)
-            3 -> setEditTextBorderColor(fasationEditTextInvalidColor)
-        }
-    }
-
-    fun setEditTextBorderColor(color: Int) {
-        val drawable = getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
-        drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
-        invalidateDrawable(drawable)
-        ctl_fasation_edit_text_main.background = drawable
-        invalidate()
-    }
-
-    fun setEditTextBorderWidth() {
-        val drawable = ctl_fasation_edit_text_main.background as GradientDrawable
-        val tempColor = when (fasationEditTextStatus) {
-            0 -> fasationEditTextNormalColor
-            1 -> fasationEditTextActiveColor
-            2 -> fasationEditTextValidColor
-            3 -> fasationEditTextInvalidColor
-            else -> fasationEditTextNormalColor
-        }
-        drawable.setStroke(fasationEditTextBorderWidth.toInt(), tempColor)
-    }
-
-    fun setDescription(message: String) {
-        if (fasationEditTextDescriptionText.isNotEmpty()) {
-            txv_fasation_edit_text_description.text = message
-            txv_fasation_edit_text_description.visibility = VISIBLE
-        }
-    }
-
-    fun clearDescription() {
-        txv_fasation_edit_text_description.text = null
-        txv_fasation_edit_text_description.visibility = GONE
     }
 
     /**
      * This method converts dp unit to equivalent pixels, depending on device density.
      *
      * @param dp      A value in dp (density independent pixels) unit. Which we need to convert into pixels
-     * @param context Context to get resources and device specific display metrics
      * @return A float value to represent px equivalent to dp depending on device density
      */
-    private fun convertDpToPx(dp: Float): Int {
+    internal fun convertDpToPx(dp: Float): Int {
         return (dp * context!!.resources.displayMetrics.density).toInt()
     }
 
-    private fun convertPxToSp(px: Float): Float {
+    internal fun convertPxToSp(px: Float): Float {
         return px / resources.displayMetrics.scaledDensity
     }
 
     private fun passwordImageClicked(position: Position) {
         if (showPassword) {
-            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextSecurePasswordImageSrc))
             edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
             edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
 
-            if (position == Position.Right)//RIGHT
-                listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_HIDE_PASSWORD_DRAWABLE)
-            else
-                listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_HIDE_PASSWORD_DRAWABLE)
+            when (position) {
+                LEFT -> {
+                    changeLeftDrawableImage(fasationEditTextSecurePasswordImageSrc)
+                    listener?.onFasationEditTextLeftDrawableClick(this, LEFT_HIDE_PASSWORD_DRAWABLE)
+                }
+                RIGHT -> {
+                    changeRightDrawableImage(fasationEditTextSecurePasswordImageSrc)
+                    listener?.onFasationEditTextRightDrawableClick(this, RIGHT_HIDE_PASSWORD_DRAWABLE)
+                }
+            }
         } else {
-            img_fasation_edit_text_left!!.setImageDrawable(getDrawable(context, fasationEditTextUnSecurePasswordImageSrc))
-
-            if (initialInputType == TYPE_CLASS_TEXT or  TYPE_NUMBER_VARIATION_PASSWORD)
+            if (initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD)
                 edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
             else
                 edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
 
-            if (position == Position.Right)
-                listener?.onFasationEditTextRightDrawableClick(RightDrawableMode.RIGHT_SHOW_PASSWORD_DRAWABLE)
-            else
-                listener?.onFasationEditTextLeftDrawableClick(LeftDrawableMode.LEFT_SHOW_PASSWORD_DRAWABLE)
+            when (position) {
+                LEFT -> {
+                    changeLeftDrawableImage(fasationEditTextUnSecurePasswordImageSrc)
+                    listener?.onFasationEditTextLeftDrawableClick(this, LEFT_SHOW_PASSWORD_DRAWABLE)
+                }
+                RIGHT -> {
+                    changeRightDrawableImage(fasationEditTextUnSecurePasswordImageSrc)
+                    listener?.onFasationEditTextRightDrawableClick(this, RIGHT_SHOW_PASSWORD_DRAWABLE)
+                }
+            }
         }
 
         showPassword = !showPassword
@@ -610,11 +494,39 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                 initialInputType == (TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) ||
                 initialInputType == (TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
     }
-    //endregion Private Methods
 
-    //region Public Methods
-    fun setOnDrawableClickListener(listener: FasationEditTextOnDrawableClickListener) {
-        this.listener = listener
+    private fun changeLeftDrawableImage(resourceId: Int) {
+        img_fasation_edit_text_left!!.setImageResource(resourceId)
     }
-    //endregion Public Methods
+
+    private fun changeRightDrawableImage(resourceId: Int) {
+        img_fasation_edit_text_right!!.setImageResource(resourceId)
+    }
+
+    private fun removeDrawable(position: Position) {
+        val params = edt_fasation_edit_text_main.layoutParams as LayoutParams
+
+        when (position) {
+            LEFT -> {
+                img_fasation_edit_text_left.visibility = GONE
+
+                params.leftMargin = convertDpToPx(16f)
+
+                if (SDK_INT >= JELLY_BEAN_MR1)
+                    params.marginStart = convertDpToPx(16f)
+            }
+            RIGHT -> {
+                img_fasation_edit_text_right.visibility = GONE
+
+                params.rightMargin = convertDpToPx(16f)
+
+                if (SDK_INT >= JELLY_BEAN_MR1)
+                    params.marginEnd = convertDpToPx(16f)
+            }
+        }
+
+        edt_fasation_edit_text_main.layoutParams = params
+        edt_fasation_edit_text_main.requestLayout()
+    }
+    //endregion Private Methods
 }

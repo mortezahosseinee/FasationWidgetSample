@@ -1,0 +1,13 @@
+<resources>
+
+    <declare-styleable name="FasationCustomDialog">
+
+        <attr name="position" format="enum">
+            <enum name="CENTER_BOTTOM" value="0" />
+            <enum name="RIGHT_BOTTOM" value="1" />
+            <enum name="RIGHT_TOP" value="2" />
+        </attr>
+
+    </declare-styleable>
+
+</resources>

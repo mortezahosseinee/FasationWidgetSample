@@ -10,7 +10,7 @@ import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat.getColor
 import ir.fasation.widget.LeftDrawableMode.*
 import ir.fasation.widget.Position.LEFT
 import ir.fasation.widget.Position.RIGHT
@@ -49,23 +49,23 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     internal var fasationEditTextMainTextFont = ""
     internal var fasationEditTextHeight = 14f //dp
     internal var fasationEditTextSize = 14f //sp
-    internal var fasationEditTextColor = ContextCompat.getColor(context, android.R.color.black)
+    internal var fasationEditTextColor = getColor(resources, android.R.color.black, context.theme)
     internal var fasationEditTextStatus = NORMAL
     private var fasationEditTextInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-    internal var fasationEditTextNormalColor = ContextCompat.getColor(context, R.color.grey)
-    internal var fasationEditTextActiveColor = ContextCompat.getColor(context, R.color.grey)
-    internal var fasationEditTextValidColor = ContextCompat.getColor(context, android.R.color.holo_green_dark)
-    internal var fasationEditTextInvalidColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
+    internal var fasationEditTextNormalColor = getColor(resources, R.color.grey, context.theme)
+    internal var fasationEditTextActiveColor = getColor(resources, R.color.grey, context.theme)
+    internal var fasationEditTextValidColor = getColor(resources, android.R.color.holo_green_dark, context.theme)
+    internal var fasationEditTextInvalidColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
     internal var fasationEditTextBorderWidth = 1f //dp
     private var fasationEditTextClearActionPosition = LEFT
     internal var fasationEditTextDescriptionText = ""
-    internal var fasationEditTextDescriptionTextColor = ContextCompat.getColor(context, android.R.color.holo_red_dark)
+    internal var fasationEditTextDescriptionTextColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
     internal var fasationEditTextDescriptionTextSize = 14f //sp
     internal var fasationEditTextDescriptionTextFont = ""
     private var fasationEditTextRightDrawableSpace = true
     private var fasationEditTextLeftDrawableSpace = true
     internal var fasationEditTextMainHint = ""
-    internal var fasationEditTextHintColor = ContextCompat.getColor(context, android.R.color.darker_gray)
+    internal var fasationEditTextHintColor = getColor(resources, android.R.color.darker_gray, context.theme)
     //endregion Custom Attributes
 
     //region Constructor

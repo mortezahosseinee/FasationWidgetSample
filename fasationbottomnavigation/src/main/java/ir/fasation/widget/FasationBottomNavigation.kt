@@ -10,7 +10,8 @@ import android.view.animation.Animation
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat.getColor
+import androidx.core.content.res.ResourcesCompat.getDrawable
 import com.devs.vectorchildfinder.VectorChildFinder
 import kotlinx.android.synthetic.main.fasation_bottom_navigation.view.*
 
@@ -20,10 +21,10 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
     companion object {
         //region Declare Constants
-        private val BIGGER_SIZE = true
-        private val SMALLER_SIZE = false
+        private const val BIGGER_SIZE = true
+        private const val SMALLER_SIZE = false
 
-        private val defaultItemIconSize = 24 //dp
+        private const val defaultItemIconSize = 24 //dp
         //endregion Declare Constants
     }
 
@@ -104,12 +105,12 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     private var fasationBottomNavigationFifthItemIconWidth = defaultItemIconSize
     private var fasationBottomNavigationFifthItemIconHeight = defaultItemIconSize
 
-    private var fasationBottomNavigationIconActiveColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_active_item_icon_color)
-    private var fasationBottomNavigationIconInactiveColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_inactive_item_icon_color)
+    private var fasationBottomNavigationIconActiveColor = getColor(resources, R.color.fasation_bottom_navigation_active_item_icon_color, context.theme)
+    private var fasationBottomNavigationIconInactiveColor = getColor(resources, R.color.fasation_bottom_navigation_inactive_item_icon_color, context.theme)
 
     internal var fasationBottomNavigationDefaultSelectedItemIndex = 2
 
-    internal var fasationBottomNavigationBackgroundColor = ContextCompat.getColor(context, R.color.fasation_bottom_navigation_background_color)
+    internal var fasationBottomNavigationBackgroundColor = getColor(resources, R.color.fasation_bottom_navigation_background_color, context.theme)
     //endregion Custom Attributes
 
     //region Constructor
@@ -202,17 +203,17 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
 
             fasationBottomNavigationIconActiveColor =
                     typedArray.getColor(R.styleable.FasationBottomNavigation_icon_active_color,
-                            ContextCompat.getColor(context, R.color.fasation_bottom_navigation_active_item_icon_color))
+                            getColor(resources, R.color.fasation_bottom_navigation_active_item_icon_color, context.theme))
             fasationBottomNavigationIconInactiveColor =
                     typedArray.getColor(R.styleable.FasationBottomNavigation_icon_inactive_color,
-                            ContextCompat.getColor(context, R.color.fasation_bottom_navigation_inactive_item_icon_color))
+                            getColor(resources, R.color.fasation_bottom_navigation_inactive_item_icon_color, context.theme))
 
             fasationBottomNavigationDefaultSelectedItemIndex =
                     typedArray.getInteger(R.styleable.FasationBottomNavigation_default_selected_item_index, 2)
 
             fasationBottomNavigationBackgroundColor =
                     typedArray.getColor(R.styleable.FasationBottomNavigation_background_color,
-                            ContextCompat.getColor(context, R.color.fasation_bottom_navigation_background_color))
+                            getColor(resources, R.color.fasation_bottom_navigation_background_color, context.theme))
 
             typedArray.recycle()
         }
@@ -233,11 +234,11 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
         constraint_layout_navigation_items_fourth!!.setOnClickListener(this)
         constraint_layout_navigation_items_fifth!!.setOnClickListener(this)
 
-        image_navigation_items_first!!.setImageDrawable(ContextCompat.getDrawable(context, fasationBottomNavigationFirstImageSrc))
-        image_navigation_items_second!!.setImageDrawable(ContextCompat.getDrawable(context, fasationBottomNavigationSecondImageSrc))
-        image_navigation_items_third!!.setImageDrawable(ContextCompat.getDrawable(context, fasationBottomNavigationThirdImageSrc))
-        image_navigation_items_fourth!!.setImageDrawable(ContextCompat.getDrawable(context, fasationBottomNavigationFourthImageSrc))
-        image_navigation_items_fifth!!.setImageDrawable(ContextCompat.getDrawable(context, fasationBottomNavigationFifthImageSrc))
+        image_navigation_items_first!!.setImageDrawable(getDrawable(resources, fasationBottomNavigationFirstImageSrc, context.theme))
+        image_navigation_items_second!!.setImageDrawable(getDrawable(resources, fasationBottomNavigationSecondImageSrc, context.theme))
+        image_navigation_items_third!!.setImageDrawable(getDrawable(resources, fasationBottomNavigationThirdImageSrc, context.theme))
+        image_navigation_items_fourth!!.setImageDrawable(getDrawable(resources, fasationBottomNavigationFourthImageSrc, context.theme))
+        image_navigation_items_fifth!!.setImageDrawable(getDrawable(resources, fasationBottomNavigationFifthImageSrc, context.theme))
 
         firstItemOffset =
                 emptyRelativeLayoutHeight.toFloat() - defaultItemPadding.toFloat() - fasationBottomNavigationFirstItemIconHeight * imageBiggerScale / 2
@@ -449,7 +450,6 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
      * This method converts dp unit to equivalent pixels, depending on device density.
      *
      * @param dp      A value in dp (density independent pixels) unit. Which we need to convert into pixels
-     * @param context Context to get resources and device specific display metrics
      * @return A float value to represent px equivalent to dp depending on device density
      */
     private fun convertDpToPx(dp: Float): Int {
@@ -470,7 +470,7 @@ class FasationBottomNavigation @JvmOverloads constructor(context: Context, priva
     }
 
     private fun buildBezierView(): BezierView {
-        val bezierView = BezierView(context, ContextCompat.getColor(context!!, R.color.fasation_bottom_navigation_background_color))
+        val bezierView = BezierView(context, getColor(resources, R.color.fasation_bottom_navigation_background_color, context.theme))
         bezierView.build(bezierWidth, bezierHeight, false)
         return bezierView
     }

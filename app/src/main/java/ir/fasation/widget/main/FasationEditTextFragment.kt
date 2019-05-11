@@ -43,16 +43,16 @@ class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fasation_text_view_normal_non_pass.setTextFont("font/font_persian_default.ttf")
+//        fasation_text_view_normal_non_pass.setTextFont("font/font_persian_default.ttf")
 
 
-        fasation_text_view_valid_non_pass_right_drawable.setOnDrawableClickListener(this)
-        fasation_text_view_valid_non_pass_non_right_drawable.setOnDrawableClickListener(this)
-        fasation_text_view_valid_pass_right_drawable.setOnDrawableClickListener(this)
-        fasation_text_view_valid_non_pass_left_drawable.setOnDrawableClickListener(this)
-        fasation_text_view_valid_right_pass_left_drawable.setOnDrawableClickListener(this)
-        fasation_text_view_valid_left_pass.setOnDrawableClickListener(this)
-        fasation_text_view_valid_right_pass_left_drawable2.setOnDrawableClickListener(this)
+//        fasation_text_view_valid_non_pass_right_drawable.setOnDrawableClickListener(this)
+//        fasation_text_view_valid_non_pass_non_right_drawable.setOnDrawableClickListener(this)
+//        fasation_text_view_valid_pass_right_drawable.setOnDrawableClickListener(this)
+//        fasation_text_view_valid_non_pass_left_drawable.setOnDrawableClickListener(this)
+//        fasation_text_view_valid_right_pass_left_drawable.setOnDrawableClickListener(this)
+//        fasation_text_view_valid_left_pass.setOnDrawableClickListener(this)
+//        fasation_text_view_valid_right_pass_left_drawable2.setOnDrawableClickListener(this)
     }
 
     override fun onFasationEditTextLeftDrawableClick(v: View, mode: LeftDrawableMode) {

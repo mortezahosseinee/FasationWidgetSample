@@ -249,7 +249,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                             ?: fasationEditTextMainTextFont
 
             fasationEditTextSize =
-                    typedArray.getDimension(R.styleable.FasationEditText_text_size, edt_fasation_edit_text_main.textSize)
+                    typedArray.getDimension(R.styleable.FasationEditText_android_text_size, edt_fasation_edit_text_main.textSize)
 
             fasationEditTextColor =
                     typedArray.getColor(R.styleable.FasationEditText_text_color, fasationEditTextColor)

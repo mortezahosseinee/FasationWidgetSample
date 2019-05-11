@@ -7,7 +7,7 @@
 
         <attr name="android:text" format="string" />
         <attr name="text_color" format="color" />
-        <attr name="text_size" format="dimension" />
+        <attr name="android:text_size" format="dimension" />
         <attr name="text_height" format="dimension" />
         <attr name="text_font" format="string" />
 

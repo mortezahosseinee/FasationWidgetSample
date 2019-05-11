@@ -19,11 +19,12 @@
             app:background_color="@color/fasation_bottom_navigation_background_color"
             app:border_width="1dp"
             android:text="مرتضی حسینی"
+            android:singleLine="true"
             app:layout_constraintTop_toTopOf="parent"
             app:normal_color="@android:color/darker_gray"
             app:status="Normal"
             app:text_height="18dp"
-            app:text_size="14sp" />
+            android:textSize="14sp" />
 
         <ir.fasation.widget.FasationEditText
             android:id="@+id/fasation_text_view_invalid_non_pass"
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_marginTop="8dp"
+            android:maxLength="9"
             android:hint="اشتباه نوشتن"
             android:text="مرتضی حسینی"
             app:text_font="font/font_persian_default.ttf"
@@ -41,7 +43,7 @@
             app:status="Invalid"
             app:text_color="@android:color/holo_red_dark"
             app:text_height="18dp"
-            app:text_size="14sp" />
+            android:textSize="14sp" />
 
         <ir.fasation.widget.FasationEditText
             android:id="@+id/fasation_text_view_valid_non_pass"
@@ -55,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_invalid_non_pass"
             app:status="Valid"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -71,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_valid_non_pass"
             app:status="Active"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -90,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_active_non_pass"
             app:status="Normal"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -111,7 +113,7 @@
             app:status="Invalid"
             app:text_color="@android:color/holo_red_dark"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -131,7 +133,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_invalid_non_pass_with_description"
             app:status="Valid"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -151,7 +153,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_valid_non_pass_with_description"
             app:status="Active"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -167,7 +169,7 @@
             app:normal_color="@android:color/darker_gray"
             app:status="Normal"
             app:text_height="18dp"
-            app:text_size="14sp" />
+            android:textSize="14sp" />
 
         <ir.fasation.widget.FasationEditText
             android:id="@+id/fasation_text_view_invalid_pass"
@@ -184,7 +186,7 @@
             app:status="Invalid"
             app:text_color="@android:color/holo_red_dark"
             app:text_height="18dp"
-            app:text_size="14sp" />
+            android:textSize="14sp" />
 
         <ir.fasation.widget.FasationEditText
             android:id="@+id/fasation_text_view_valid_pass"
@@ -199,7 +201,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_invalid_pass"
             app:status="Valid"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -216,7 +218,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_valid_pass"
             app:status="Active"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -236,7 +238,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_active_pass"
             app:status="Normal"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -258,7 +260,7 @@
             app:status="Invalid"
             app:text_color="@android:color/holo_red_dark"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -279,7 +281,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_invalid_pass_with_description"
             app:status="Valid"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -300,7 +302,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_valid_pass_with_description"
             app:status="Active"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -321,7 +323,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fasation_text_view_active_pass_with_description_left"
             app:status="Active"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -342,7 +344,7 @@
             app:right_drawable="@drawable/ic_second"
             app:status="Valid"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -364,7 +366,7 @@
             app:right_drawable_space="false"
             app:status="Valid"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -385,7 +387,7 @@
             app:right_drawable="@drawable/ic_fourth"
             app:status="Normal"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -405,7 +407,7 @@
             app:left_drawable="@drawable/ic_mic"
             app:status="Normal"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -427,7 +429,7 @@
             app:left_drawable="@drawable/ic_mic"
             app:status="Active"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -449,7 +451,7 @@
             app:right_drawable_space="false"
             app:status="Active"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
         <ir.fasation.widget.FasationEditText
@@ -473,7 +475,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:text_height="18dp"
-            app:text_size="14sp"
+            android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

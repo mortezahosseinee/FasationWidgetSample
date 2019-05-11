@@ -64,6 +64,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     internal var fasationEditTextDescriptionTextFont = ""
     private var fasationEditTextRightDrawableSpace = true
     private var fasationEditTextLeftDrawableSpace = true
+    private var fasationEditTextSingleLine = false
+    private var fasationEditTextMaxLength = 1000
     internal var fasationEditTextMainHint = ""
     internal var fasationEditTextHintColor = getColor(resources, android.R.color.darker_gray, context.theme)
     //endregion Custom Attributes
@@ -249,7 +251,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                             ?: fasationEditTextMainTextFont
 
             fasationEditTextSize =
-                    typedArray.getDimension(R.styleable.FasationEditText_android_text_size, edt_fasation_edit_text_main.textSize)
+                    typedArray.getDimension(R.styleable.FasationEditText_android_textSize, edt_fasation_edit_text_main.textSize)
 
             fasationEditTextColor =
                     typedArray.getColor(R.styleable.FasationEditText_text_color, fasationEditTextColor)
@@ -315,6 +317,12 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             fasationEditTextLeftDrawableSpace =
                     typedArray.getBoolean(R.styleable.FasationEditText_left_drawable_space, fasationEditTextLeftDrawableSpace)
 
+            fasationEditTextSingleLine =
+                    typedArray.getBoolean(R.styleable.FasationEditText_android_singleLine, fasationEditTextSingleLine)
+
+            fasationEditTextMaxLength =
+                    typedArray.getInteger(R.styleable.FasationEditText_android_maxLength, fasationEditTextMaxLength)
+
             typedArray.recycle()
         }
     }
@@ -334,6 +342,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         setDescriptionSize(fasationEditTextDescriptionTextSize) //Set description text
         setDescriptionColor(fasationEditTextDescriptionTextColor) //Set description text
         setDescriptionFont(fasationEditTextDescriptionTextFont) //Set description text font
+        setSingleLine(fasationEditTextSingleLine) //Set text max line
+        setMaxLength(fasationEditTextMaxLength) //Set text max length
 
         if (isInitialTypeAnyPassword()) {
             setPasswordImage()

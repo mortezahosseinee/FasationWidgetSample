@@ -6,6 +6,9 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
+import android.text.InputFilter
+
+
 
 fun FasationEditText.showLeftDrawableImage(show: Boolean) {
     img_fasation_edit_text_left.visibility = if (show) View.VISIBLE else View.INVISIBLE
@@ -133,4 +136,12 @@ fun FasationEditText.showRightDrawableImage(show: Boolean) {
 
 fun FasationEditText.setOnDrawableClickListener(listener: FasationEditTextOnDrawableClickListener) {
     this.listener = listener
+}
+
+fun FasationEditText.setSingleLine(singleLine: Boolean) {
+    edt_fasation_edit_text_main.setSingleLine(singleLine)
+}
+
+fun FasationEditText.setMaxLength(maxLength: Int) {
+    edt_fasation_edit_text_main.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
 }

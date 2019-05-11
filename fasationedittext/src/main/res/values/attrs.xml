@@ -7,9 +7,11 @@
 
         <attr name="android:text" format="string" />
         <attr name="text_color" format="color" />
-        <attr name="android:text_size" format="dimension" />
+        <attr name="android:textSize" format="dimension" />
         <attr name="text_height" format="dimension" />
         <attr name="text_font" format="string" />
+        <attr name="android:maxLength" format="integer" />
+        <attr name="android:singleLine" format="boolean" />
 
         <attr name="android:hint" format="string" />
         <attr name="android:textColorHint" format="color" />

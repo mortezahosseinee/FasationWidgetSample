@@ -105,17 +105,20 @@ fun FasationEditText.setDescription(message: String) {
 fun FasationEditText.setDescriptionSize(size: Float) {
     fasationEditTextDescriptionTextSize = size
     txv_fasation_edit_text_description.textSize = convertPxToSp(fasationEditTextDescriptionTextSize) // Set description text size
+    clearDescription()
 }
 
 fun FasationEditText.setDescriptionColor(color: Int) {
     fasationEditTextDescriptionTextColor = color
     txv_fasation_edit_text_description.setTextColor(fasationEditTextDescriptionTextColor) //Set description text color
+    clearDescription()
 }
 
 fun FasationEditText.setDescriptionFont(font: String) {
     if (font.isNotEmpty()) { //Set description font
         fasationEditTextDescriptionTextFont = font
-        txv_fasation_edit_text_description.typeface = Typeface.createFromAsset(context.assets, fasationEditTextDescriptionTextFont)
+        txv_fasation_edit_text_description.typeface = createFromAsset(context.assets, fasationEditTextDescriptionTextFont)
+        clearDescription()
     }
 }
 

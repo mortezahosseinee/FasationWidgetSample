@@ -496,6 +496,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         }
 
         showPassword = !showPassword
+
+        setTextFont(fasationEditTextMainTextFont)
     }
 
     private fun isInitialTypeAnyPassword(): Boolean {

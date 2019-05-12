@@ -54,6 +54,10 @@ fun FasationEditText.setText(text: String) {
     edt_fasation_edit_text_main.setText(fasationEditTextMainText) //Set main text content
 }
 
+fun FasationEditText.getText() : String {
+    return edt_fasation_edit_text_main.text.toString()
+}
+
 fun FasationEditText.setTextSize(size: Float) {
     fasationEditTextSize = size
     edt_fasation_edit_text_main.textSize = convertPxToSp(fasationEditTextSize) // Set main text size

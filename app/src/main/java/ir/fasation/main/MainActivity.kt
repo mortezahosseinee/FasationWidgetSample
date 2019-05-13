@@ -1,4 +1,4 @@
-package ir.fasation.bottomnavigation.main
+package ir.fasation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

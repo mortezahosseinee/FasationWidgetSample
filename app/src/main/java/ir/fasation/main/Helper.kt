@@ -1,4 +1,4 @@
-package ir.fasation.bottomnavigation.main
+package ir.fasation.main
 
 import androidx.annotation.AnimRes
 import androidx.annotation.AnimatorRes

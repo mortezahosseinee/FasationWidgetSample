@@ -1,4 +1,4 @@
-package ir.fasation.bottomnavigation.main
+package ir.fasation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
-import ir.fasation.bottomnavigation.*
 import ir.fasation.edittext.FasationEditTextOnDrawableClickListener
 import ir.fasation.edittext.LeftDrawableMode
 import ir.fasation.edittext.RightDrawableMode

@@ -4,12 +4,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-ext {
-    PUBLISH_GROUP_ID = 'fasation.widget.ir'
-    PUBLISH_ARTIFACT_ID = 'fasationbottomnavigation'
-    PUBLISH_VERSION = '1.0'
-}
-
 android {
     compileSdkVersion 28
 
@@ -33,34 +27,6 @@ android {
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
-ext {
-    bintrayRepo = 'FasationWidget'
-    bintrayName = 'FasationBottomNavigation'
-
-    publishedGroupId = 'ir.fasation.widget'
-    libraryName = 'FasationBottomNavigation'
-    artifact = 'FasationBottomNavigation'
-
-    libraryDescription = 'This view is a bottom navigation has fix number of items until now, it is developing.'
-
-    siteUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample'
-    gitUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample.git'
-
-    libraryVersion = '1.0.0'
-
-    developerId = 'mortezahosseinee'
-    developerName = 'Morteza Hosseini'
-    developerEmail = 'mortezahosseinee@gmail.com'
-
-    developerId2 = 'AliKhoshraftar'
-    developerName2 = 'Ali Khoshraftar'
-    developerEmail2 = 'alikhoshraftar@live.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -78,11 +44,9 @@ buildscript {
     repositories {
         jcenter()
     }
+
     dependencies {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
-
-apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
-apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'

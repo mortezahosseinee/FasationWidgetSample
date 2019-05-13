@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context="ir.fasation.widget.main.FasationBottomNavigationFragment">
+    tools:context="ir.fasation.bottomnavigation.main.FasationBottomNavigationFragment">
 
-    <ir.fasation.widget.FasationBottomNavigation
+    <ir.fasation.bottomnavigation.FasationBottomNavigation
         android:id="@+id/fasation_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

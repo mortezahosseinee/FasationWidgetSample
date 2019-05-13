@@ -1,4 +1,4 @@
-package ir.fasation.widget
+package ir.fasation.edittext
 
 import android.view.View
 

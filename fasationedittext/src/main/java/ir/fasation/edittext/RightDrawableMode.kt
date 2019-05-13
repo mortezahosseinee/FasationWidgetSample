@@ -1,4 +1,4 @@
-package ir.fasation.widget
+package ir.fasation.edittext
 
 enum class RightDrawableMode(i: Int) {
     RIGHT_CLEAR_ACTION_DRAWABLE(0),

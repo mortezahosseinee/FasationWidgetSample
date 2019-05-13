@@ -1,4 +1,4 @@
-package ir.fasation.widget.main;
+package ir.fasation.bottomnavigation.main;
 
 import org.junit.Test;
 

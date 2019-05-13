@@ -1,4 +1,4 @@
-package ir.fasation.widget
+package ir.fasation.edittext
 
 import android.content.Context
 import android.os.Build.VERSION.SDK_INT
@@ -11,11 +11,11 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat.getColor
-import ir.fasation.widget.LeftDrawableMode.*
-import ir.fasation.widget.Position.LEFT
-import ir.fasation.widget.Position.RIGHT
-import ir.fasation.widget.RightDrawableMode.*
-import ir.fasation.widget.Status.*
+import ir.fasation.edittext.LeftDrawableMode.*
+import ir.fasation.edittext.Position.LEFT
+import ir.fasation.edittext.Position.RIGHT
+import ir.fasation.edittext.RightDrawableMode.*
+import ir.fasation.edittext.Status.*
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
 
 class FasationEditText @JvmOverloads constructor(context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0) :

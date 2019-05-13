@@ -1,4 +1,4 @@
-package ir.fasation.widget
+package ir.fasation.bottomnavigation
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Build

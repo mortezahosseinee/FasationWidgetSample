@@ -1,4 +1,4 @@
-package ir.fasation.widget
+package ir.fasation.bottomnavigation
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator

@@ -1,4 +1,4 @@
-package ir.fasation.widget.main
+package ir.fasation.bottomnavigation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package ir.fasation.widget
+package ir.fasation.edittext
 
 enum class Status(i: Int) {
     NORMAL(0),

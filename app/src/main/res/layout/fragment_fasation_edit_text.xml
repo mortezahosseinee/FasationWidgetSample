@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ir.fasation.widget.main.FasationEditTextFragment">
+    tools:context="ir.fasation.bottomnavigation.main.FasationEditTextFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="296dp">
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_normal_non_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             app:text_height="18dp"
             android:textSize="14sp" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_invalid_non_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             app:text_height="18dp"
             android:textSize="14sp" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_non_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_active_non_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_normal_non_pass_with_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_invalid_non_pass_with_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_non_pass_with_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_active_non_pass_with_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_normal_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
             app:text_height="18dp"
             android:textSize="14sp" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_invalid_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
             app:text_height="18dp"
             android:textSize="14sp" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_active_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_normal_pass_with_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -241,7 +241,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_invalid_pass_with_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_pass_with_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_active_pass_with_description_left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_active_pass_with_description_right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -326,7 +326,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_non_pass_right_drawable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -347,7 +347,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_non_pass_non_right_drawable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -369,7 +369,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_pass_right_drawable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -390,7 +390,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_non_pass_left_drawable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -410,7 +410,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_right_pass_left_drawable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -432,7 +432,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_left_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -454,7 +454,7 @@
             android:textSize="14sp"
             app:valid_color="@android:color/holo_green_dark" />
 
-        <ir.fasation.widget.FasationEditText
+        <ir.fasation.edittext.FasationEditText
             android:id="@+id/fasation_text_view_valid_right_pass_left_drawable2"
             android:layout_width="200dp"
             android:layout_height="wrap_content"

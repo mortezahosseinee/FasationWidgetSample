@@ -1,4 +1,4 @@
-package ir.fasation.widget.main
+package ir.fasation.bottomnavigation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast.LENGTH_SHORT
 import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
-import ir.fasation.widget.FasationBottomNavigationOnItemClickListener
-import ir.fasation.widget.setOnItemClickListener
+import ir.fasation.bottomnavigation.FasationBottomNavigationOnItemClickListener
+import ir.fasation.bottomnavigation.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_fasation_bottom_navigation.*
 
 // TODO: Rename parameter arguments, choose names that match

@@ -28,7 +28,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     }
 
     //region Declare Variables
-    private var showPassword = false
+    private var hidePassword = true
     internal var initialInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
     //endregion Declare Variables
 
@@ -347,6 +347,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
         if (isInitialTypeAnyPassword()) {
             setPasswordImage()
+            handlePasswordInputType()
+
             when (fasationEditTextClearActionPosition) {
                 LEFT -> {
                     if (fasationEditTextLeftDrawableSpace) {
@@ -463,10 +465,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     }
 
     private fun passwordImageClicked(position: Position) {
-        if (showPassword) {
-            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
-            edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
-
+        if (hidePassword) {
             when (position) {
                 LEFT -> {
                     changeLeftDrawableImage(fasationEditTextSecurePasswordImageSrc)
@@ -478,11 +477,6 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                 }
             }
         } else {
-            if (initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD)
-                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
-            else
-                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-
             when (position) {
                 LEFT -> {
                     changeLeftDrawableImage(fasationEditTextUnSecurePasswordImageSrc)
@@ -495,7 +489,21 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             }
         }
 
-        showPassword = !showPassword
+        handlePasswordInputType()
+    }
+
+    private fun handlePasswordInputType() {
+        if (hidePassword) {
+            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
+            edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
+        } else {
+            if (initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD)
+                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
+            else
+                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+        }
+
+        hidePassword = !hidePassword
 
         setTextFont(fasationEditTextMainTextFont)
     }

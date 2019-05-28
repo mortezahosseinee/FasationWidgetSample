@@ -2,10 +2,13 @@ package ir.fasation.edittext
 
 import android.graphics.Typeface.createFromAsset
 import android.graphics.drawable.GradientDrawable
-import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
-import kotlinx.android.synthetic.main.fasation_edit_text.view.*
 import android.text.InputFilter
+import android.view.View
+import android.widget.EditText
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import kotlinx.android.synthetic.main.fasation_edit_text.view.*
 
 fun FasationEditText.showLeftDrawableImage(show: Boolean) {
     img_fasation_edit_text_left.visibility = if (show) View.VISIBLE else View.INVISIBLE
@@ -148,4 +151,107 @@ fun FasationEditText.setSingleLine(singleLine: Boolean) {
 
 fun FasationEditText.setMaxLength(maxLength: Int) {
     edt_fasation_edit_text_main.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
+}
+
+fun FasationEditText.getEditText(): EditText? {
+    return edt_fasation_edit_text_main
+}
+
+fun FasationEditText.addBottomView(customView: View?) {
+    if (customView == null)
+        throw NullPointerException("customView must not be null.")
+
+    if (customView.id == -1)
+        throw NullPointerException("customView must have an Id.")
+
+    //add divider View
+    val view = View(context)
+    view.id = R.id.view_fasation_edit_text_bottom_divider
+    main_view.addView(view)
+
+    view.setBackgroundResource(fasationEditTextDividerImageSrc)
+
+    var params = view.layoutParams as ConstraintLayout.LayoutParams
+    params.width = 0
+    params.height = convertDpToPx(fasationEditTextDividerHeight)
+
+    params.setMargins(convertDpToPx(8f), convertDpToPx(16f), convertDpToPx(8f), convertDpToPx(8f))
+    view.layoutParams = params
+    view.requestLayout()
+
+    //add custom View
+    main_view.addView(customView)
+
+    params = customView.layoutParams as ConstraintLayout.LayoutParams
+    params.width = 0
+    params.height = customView.height
+
+    params.setMargins(convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f))
+    customView.layoutParams = params
+    customView.requestLayout()
+
+    val constraintSet = ConstraintSet()
+    constraintSet.clone(main_view)
+
+    //view constraints
+    constraintSet.connect(
+            view.id,
+            ConstraintSet.TOP,
+            R.id.txv_fasation_edit_text_description,
+            ConstraintSet.BOTTOM
+    )
+    constraintSet.connect(
+            view.id,
+            ConstraintSet.START,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.START
+    )
+    constraintSet.connect(
+            view.id,
+            ConstraintSet.END,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END
+    )
+
+    //customView constraints
+    constraintSet.connect(
+            customView.id,
+            ConstraintSet.TOP,
+            view.id,
+            ConstraintSet.BOTTOM
+    )
+    constraintSet.connect(
+            customView.id,
+            ConstraintSet.START,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.START
+    )
+    constraintSet.connect(
+            customView.id,
+            ConstraintSet.END,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END
+    )
+    constraintSet.connect(
+            customView.id,
+            ConstraintSet.BOTTOM,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.BOTTOM
+    )
+
+    //apply constraint to main view
+    constraintSet.applyTo(main_view)
+}
+
+fun FasationEditText.clearBottomView() {
+    if (main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider) != null) {
+        val position =  main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
+
+        main_view.removeViewAt(position)
+        main_view.removeViewAt(position)
+    }
+}
+
+fun FasationEditText.getBottomViewDividerId(): Int {
+    return R.id.view_fasation_edit_text_bottom_divider
 }

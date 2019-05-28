@@ -47,6 +47,9 @@
         <attr name="secure_password_drawable" format="reference" />
         <attr name="un_secure_password_drawable" format="reference" />
 
+        <attr name="divider" format="reference" />
+        <attr name="divider_height" format="integer" />
+
     </declare-styleable>
 
 </resources>

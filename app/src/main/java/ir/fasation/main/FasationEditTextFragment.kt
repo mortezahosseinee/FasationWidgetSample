@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
-import ir.fasation.edittext.FasationEditTextOnDrawableClickListener
-import ir.fasation.edittext.LeftDrawableMode
-import ir.fasation.edittext.RightDrawableMode
+import ir.fasation.edittext.*
 import kotlinx.android.synthetic.main.fragment_fasation_edit_text.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,6 +42,9 @@ class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fasation_text_view_normal_non_pass.addBottomView(View(context))
+        fasation_text_view_normal_non_pass.clearBottomView()
 
 //        fasation_text_view_normal_non_pass.setTextFont("font/font_persian_default.ttf")
 

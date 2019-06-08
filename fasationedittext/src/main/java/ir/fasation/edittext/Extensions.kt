@@ -16,7 +16,9 @@ fun FasationEditText.showLeftDrawableImage(show: Boolean) {
 
 fun FasationEditText.setInputType(inputType: Int) {
     initialInputType = inputType
-    edt_fasation_edit_text_main.inputType = inputType
+
+    if (edt_fasation_edit_text_main.text.isNotEmpty())
+        edt_fasation_edit_text_main.inputType = inputType
 }
 
 fun FasationEditText.setStatus(status: Status) {
@@ -254,4 +256,14 @@ fun FasationEditText.clearBottomView() {
 
 fun FasationEditText.getBottomViewDividerId(): Int {
     return R.id.view_fasation_edit_text_bottom_divider
+}
+
+fun FasationEditText.setImeOptions(fasationEditTextImeOptions: Int) {
+    this.fasationEditTextImeOptions = fasationEditTextImeOptions
+    edt_fasation_edit_text_main.imeOptions = fasationEditTextImeOptions
+}
+
+fun FasationEditText.setMaxLine(fasationEditTextMaxLine: Int) {
+    this.fasationEditTextMaxLines = fasationEditTextMaxLine
+    edt_fasation_edit_text_main.maxLines = fasationEditTextMaxLine
 }

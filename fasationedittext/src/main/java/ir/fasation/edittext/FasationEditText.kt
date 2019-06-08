@@ -18,6 +18,7 @@ import ir.fasation.edittext.RightDrawableMode.*
 import ir.fasation.edittext.Status.*
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
 
+
 class FasationEditText @JvmOverloads constructor(context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
         ConstraintLayout(context, attrs, defStyleAttr),
         View.OnClickListener {
@@ -68,8 +69,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private var fasationEditTextLeftDrawableSpace = true
     private var fasationEditTextSingleLine = false
     private var fasationEditTextMaxLength = 1000
+    internal var fasationEditTextMaxLines = 100
     internal var fasationEditTextMainHint = ""
     internal var fasationEditTextHintColor = getColor(resources, android.R.color.darker_gray, context.theme)
+    internal var fasationEditTextImeOptions = 0
     //endregion Custom Attributes
 
     //region Constructor
@@ -81,6 +84,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     //region Main Callbacks
     override fun onClick(view: View) {
         when (view) {
+            this -> edt_fasation_edit_text_main.requestFocus()
             img_fasation_edit_text_left -> {
                 when (fasationEditTextStatus) {
                     ACTIVE -> {
@@ -211,7 +215,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             }
         }
 
-        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
+        setCorrectCursorPlace()
     }
     //endregion Main Callbacks
 
@@ -305,6 +309,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                         else -> RIGHT
                     }
 
+            fasationEditTextImeOptions = typedArray.getInteger(R.styleable.FasationEditText_android_imeOptions, fasationEditTextImeOptions)
+
             fasationEditTextDescriptionText =
                     typedArray.getString(R.styleable.FasationEditText_description_text)
                             ?: fasationEditTextDescriptionText
@@ -331,6 +337,9 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             fasationEditTextMaxLength =
                     typedArray.getInteger(R.styleable.FasationEditText_android_maxLength, fasationEditTextMaxLength)
 
+            fasationEditTextMaxLines =
+                    typedArray.getInteger(R.styleable.FasationEditText_android_maxLines, fasationEditTextMaxLines)
+
             typedArray.recycle()
         }
     }
@@ -352,6 +361,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         setDescriptionFont(fasationEditTextDescriptionTextFont) //Set description text font
         setSingleLine(fasationEditTextSingleLine) //Set text max line
         setMaxLength(fasationEditTextMaxLength) //Set text max length
+        setMaxLine(fasationEditTextMaxLines) //Set text max line
+        setImeOptions(fasationEditTextImeOptions) //Set keyboard action as imeOptions
 
         if (isInitialTypeAnyPassword()) {
             setPasswordImage()
@@ -423,6 +434,9 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                             removeDrawable(RIGHT)
                                     }
                                 }
+
+                                //Need this lines because hint goes wrong place in some input type
+                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
                             } else {
                                 when (fasationEditTextClearActionPosition) {
                                     LEFT -> {
@@ -433,6 +447,12 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                         changeRightDrawableImage(fasationEditTextClearActionImageSrc)
                                         showRightDrawableImage(true)
                                     }
+                                }
+
+                                //Need these lines because hint goes wrong place in some input type, so do this just after length is one, just once
+                                if (edt_fasation_edit_text_main.text?.length == 1) {
+                                    edt_fasation_edit_text_main.inputType = initialInputType
+                                    setCorrectCursorPlace()
                                 }
                             }
                     }
@@ -501,19 +521,21 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     }
 
     private fun handlePasswordInputType() {
-        if (hidePassword) {
-            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
-            edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
-        } else {
-            if (initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD)
-                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
-            else
-                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+        if (edt_fasation_edit_text_main.text.isNotEmpty()) {
+            if (hidePassword) {
+                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
+                edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
+            } else {
+                if (initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD)
+                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
+                else
+                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+            }
+
+            hidePassword = !hidePassword
+
+            setTextFont(fasationEditTextMainTextFont)
         }
-
-        hidePassword = !hidePassword
-
-        setTextFont(fasationEditTextMainTextFont)
     }
 
     private fun isInitialTypeAnyPassword(): Boolean {
@@ -555,6 +577,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
         edt_fasation_edit_text_main.layoutParams = params
         edt_fasation_edit_text_main.requestLayout()
+    }
+
+    private fun setCorrectCursorPlace() {
+        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
     }
     //endregion Private Methods
 }

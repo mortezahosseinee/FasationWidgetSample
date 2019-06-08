@@ -43,8 +43,8 @@ class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fasation_text_view_normal_non_pass.addBottomView(View(context))
-        fasation_text_view_normal_non_pass.clearBottomView()
+//        fasation_text_view_normal_non_pass.addBottomView(View(context))
+//        fasation_text_view_normal_non_pass.clearBottomView()
 
 //        fasation_text_view_normal_non_pass.setTextFont("font/font_persian_default.ttf")
 

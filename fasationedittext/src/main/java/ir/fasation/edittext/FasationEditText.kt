@@ -1,15 +1,23 @@
 package ir.fasation.edittext
 
 import android.content.Context
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType.*
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.ViewGroup
+import android.widget.EditText
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat.getColor
 import ir.fasation.edittext.LeftDrawableMode.*
 import ir.fasation.edittext.Position.LEFT
@@ -17,7 +25,6 @@ import ir.fasation.edittext.Position.RIGHT
 import ir.fasation.edittext.RightDrawableMode.*
 import ir.fasation.edittext.Status.*
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
-
 
 class FasationEditText @JvmOverloads constructor(context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
         ConstraintLayout(context, attrs, defStyleAttr),
@@ -30,11 +37,12 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
     //region Declare Variables
     private var hidePassword = true
-    internal var initialInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+    private var initialInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+    private var lastStateOfEditTextEnabled = false
     //endregion Declare Variables
 
     //region Declare Objects
-    internal var listener: FasationEditTextOnDrawableClickListener? = null
+    private var listener: FasationEditTextListener? = null
     //endregion Declare Objects
 
     //region Declare Views
@@ -46,31 +54,31 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private var fasationEditTextClearActionImageSrc = R.drawable.ic_clear
     internal var fasationEditTextLeftImageSrc = -777
     internal var fasationEditTextRightImageSrc = -777
-    internal var fasationEditTextMainText = ""
-    internal var fasationEditTextMainTextFont = ""
-    internal var fasationEditTextHeight = 14f //dp
-    internal var fasationEditTextSize = 14f //sp
-    internal var fasationEditTextColor = getColor(resources, android.R.color.black, context.theme)
+    private var fasationEditTextMainText = ""
+    private var fasationEditTextMainTextFont = ""
+    private var fasationEditTextHeight = 14f //dp
+    private var fasationEditTextSize = 14f //sp
+    private var fasationEditTextColor = getColor(resources, android.R.color.black, context.theme)
     internal var fasationEditTextStatus = NORMAL
     private var fasationEditTextInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-    internal var fasationEditTextNormalColor = getColor(resources, R.color.grey, context.theme)
-    internal var fasationEditTextActiveColor = getColor(resources, R.color.grey, context.theme)
-    internal var fasationEditTextValidColor = getColor(resources, android.R.color.holo_green_dark, context.theme)
-    internal var fasationEditTextInvalidColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
-    internal var fasationEditTextBorderWidth = 1f //dp
+    private var fasationEditTextNormalColor = getColor(resources, R.color.grey, context.theme)
+    private var fasationEditTextActiveColor = getColor(resources, R.color.grey, context.theme)
+    private var fasationEditTextValidColor = getColor(resources, android.R.color.holo_green_dark, context.theme)
+    private var fasationEditTextInvalidColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
+    private var fasationEditTextBorderWidth = 1f //dp
     private var fasationEditTextClearActionPosition = LEFT
-    internal var fasationEditTextDescriptionText = ""
-    internal var fasationEditTextDescriptionTextColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
-    internal var fasationEditTextDescriptionTextSize = 14f //sp
-    internal var fasationEditTextDescriptionTextFont = ""
+    private var fasationEditTextDescriptionText = ""
+    private var fasationEditTextDescriptionTextColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
+    private var fasationEditTextDescriptionTextSize = 14f //sp
+    private var fasationEditTextDescriptionTextFont = ""
     private var fasationEditTextRightDrawableSpace = true
     private var fasationEditTextLeftDrawableSpace = true
     private var fasationEditTextSingleLine = false
     private var fasationEditTextMaxLength = 1000
-    internal var fasationEditTextMaxLines = 100
-    internal var fasationEditTextMainHint = ""
-    internal var fasationEditTextHintColor = getColor(resources, android.R.color.darker_gray, context.theme)
-    internal var fasationEditTextImeOptions = 0
+    private var fasationEditTextMaxLines = 100
+    private var fasationEditTextMainHint = ""
+    private var fasationEditTextHintColor = getColor(resources, android.R.color.darker_gray, context.theme)
+    private var fasationEditTextImeOptions = 0
     //endregion Custom Attributes
 
     //region Constructor
@@ -337,6 +345,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     }
 
     private fun initViews() {
+        setFocusChangeListenerForEditText()
         setInputType(fasationEditTextInputType) //Set input type
         setStatus(fasationEditTextStatus) //Set edit text status
         setBorderWidth(fasationEditTextBorderWidth.toInt()) //Set main border width
@@ -476,11 +485,11 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
      * @param dp      A value in dp (density independent pixels) unit. Which we need to convert into pixels
      * @return A float value to represent px equivalent to dp depending on device density
      */
-    internal fun convertDpToPx(dp: Float): Int {
+    private fun convertDpToPx(dp: Float): Int {
         return (dp * context!!.resources.displayMetrics.density).toInt()
     }
 
-    internal fun convertPxToSp(px: Float): Float {
+    private fun convertPxToSp(px: Float): Float {
         return px / resources.displayMetrics.scaledDensity
     }
 
@@ -570,5 +579,317 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         edt_fasation_edit_text_main.layoutParams = params
         edt_fasation_edit_text_main.requestLayout()
     }
+
+    private fun setFocusChangeListenerForEditText() {
+        edt_fasation_edit_text_main.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+            listener?.onFasationEditTextFocusChanged(this@FasationEditText, hasFocus)
+        }
+    }
     //endregion Private Methods
+
+    //region Public Methods
+    fun showLeftDrawableImage(show: Boolean) {
+        img_fasation_edit_text_left.visibility = if (show) View.VISIBLE else View.INVISIBLE
+    }
+
+    fun setInputType(inputType: Int) {
+        initialInputType = inputType
+
+        if (edt_fasation_edit_text_main.text.isNotEmpty())
+            edt_fasation_edit_text_main.inputType = inputType
+    }
+
+    fun setStatus(status: Status) {
+        when (status) {
+            NORMAL -> setBorderColor(fasationEditTextNormalColor)
+            ACTIVE -> setBorderColor(fasationEditTextActiveColor)
+            VALID -> setBorderColor(fasationEditTextValidColor)
+            INVALID -> setBorderColor(fasationEditTextInvalidColor)
+        }
+    }
+
+    /**
+     * @param color: send [androidx.core.content.res.getColor] as color param and DO NOT send id of color
+     */
+    fun setBorderColor(color: Int) {
+        val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
+        drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
+        invalidateDrawable(drawable)
+        ctl_fasation_edit_text_main.background = drawable
+        invalidate()
+    }
+
+    /**
+     * @param color: send [androidx.core.content.res.getColor] as color param and DO NOT send id of color
+     */
+    fun setWholeBorderColor(color: Int) {
+        ctl_fasation_edit_text_main.background = null
+
+        val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
+        drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
+        invalidateDrawable(drawable)
+        this.background = drawable
+
+        invalidate()
+    }
+
+    fun setBorderWidth(borderWidth: Int) {
+        fasationEditTextBorderWidth = borderWidth.toFloat()
+
+        val drawable = ctl_fasation_edit_text_main.background as GradientDrawable
+        val tempColor = when (fasationEditTextStatus) {
+            NORMAL -> fasationEditTextNormalColor
+            ACTIVE -> fasationEditTextActiveColor
+            VALID -> fasationEditTextValidColor
+            INVALID -> fasationEditTextInvalidColor
+        }
+        drawable.setStroke(borderWidth, tempColor)
+    }
+
+    fun setText(text: String) {
+        fasationEditTextMainText = text
+        edt_fasation_edit_text_main.setText(fasationEditTextMainText) //Set main text content
+        setCorrectCursorPlace()
+    }
+
+    fun getText(): String {
+        return edt_fasation_edit_text_main.text.toString()
+    }
+
+    fun setTextSize(size: Float) {
+        fasationEditTextSize = size
+        edt_fasation_edit_text_main.textSize = convertPxToSp(fasationEditTextSize) // Set main text size
+    }
+
+    fun setTextColor(color: Int) {
+        fasationEditTextColor = color
+        edt_fasation_edit_text_main.setTextColor(fasationEditTextColor) //Set main text color
+    }
+
+    fun setTextFont(font: String) {
+        if (font.isNotEmpty()) { //Set main text font
+            fasationEditTextMainTextFont = font
+            edt_fasation_edit_text_main.typeface = Typeface.createFromAsset(context.assets, fasationEditTextMainTextFont)
+        }
+    }
+
+    fun setTextHeight(height: Float) {
+        fasationEditTextHeight = height
+
+        if (fasationEditTextHeight >= convertDpToPx(14f)) { //Set main edit text height
+            val params = edt_fasation_edit_text_main.layoutParams
+            params.height = fasationEditTextHeight.toInt()
+            edt_fasation_edit_text_main.layoutParams = params
+            edt_fasation_edit_text_main.requestLayout()
+        }
+    }
+
+    fun setHint(hint: String) {
+        fasationEditTextMainHint = hint
+        edt_fasation_edit_text_main.hint = fasationEditTextMainHint //Set main text hint
+    }
+
+    fun setHintColor(color: Int) {
+        fasationEditTextHintColor = color
+        edt_fasation_edit_text_main.setHintTextColor(fasationEditTextHintColor) //Set main text hint color
+    }
+
+    fun setDescription(message: String) {
+        fasationEditTextDescriptionText = message
+        txv_fasation_edit_text_description.text = fasationEditTextDescriptionText //Set description content
+        txv_fasation_edit_text_description.visibility = View.VISIBLE
+    }
+
+    fun setDescriptionSize(size: Float) {
+        fasationEditTextDescriptionTextSize = size
+        txv_fasation_edit_text_description.textSize = convertPxToSp(fasationEditTextDescriptionTextSize) // Set description text size
+        clearDescription()
+    }
+
+    fun setDescriptionColor(color: Int) {
+        fasationEditTextDescriptionTextColor = color
+        txv_fasation_edit_text_description.setTextColor(fasationEditTextDescriptionTextColor) //Set description text color
+        clearDescription()
+    }
+
+    fun setDescriptionFont(font: String) {
+        if (font.isNotEmpty()) { //Set description font
+            fasationEditTextDescriptionTextFont = font
+            txv_fasation_edit_text_description.typeface = Typeface.createFromAsset(context.assets, fasationEditTextDescriptionTextFont)
+            clearDescription()
+        }
+    }
+
+    fun clearDescription() {
+        txv_fasation_edit_text_description.text = null
+        txv_fasation_edit_text_description.visibility = View.GONE
+    }
+
+    fun setLeftDrawableImage(resourceId: Int) {
+        fasationEditTextLeftImageSrc = resourceId
+        img_fasation_edit_text_left.setImageResource(resourceId)
+    }
+
+    fun setRightDrawableImage(resourceId: Int) {
+        fasationEditTextRightImageSrc = resourceId
+        img_fasation_edit_text_right.setImageResource(resourceId)
+    }
+
+    fun showRightDrawableImage(show: Boolean) {
+        img_fasation_edit_text_right.visibility = if (show) View.VISIBLE else View.INVISIBLE
+    }
+
+    @Deprecated(level = DeprecationLevel.ERROR,
+            message = "We are going to replace with setListener(YOUR_LISTENER)",
+            replaceWith = ReplaceWith(expression = "YOUR_VIEW.setListener(this)", imports = ["ir.fasation.edittext.setListener"]))
+    fun setOnDrawableClickListener(listener: FasationEditTextListener) {
+        this.listener = listener
+    }
+
+    fun setListener(listener: FasationEditTextListener) {
+        this.listener = listener
+    }
+
+    fun setSingleLine(singleLine: Boolean) {
+        edt_fasation_edit_text_main.setSingleLine(singleLine)
+    }
+
+    fun setMaxLength(maxLength: Int) {
+        edt_fasation_edit_text_main.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
+    }
+
+    fun getEditText(): EditText? {
+        return edt_fasation_edit_text_main
+    }
+
+    fun addBottomView(customView: View?, width: Int?, height: Int?, dividerColor: Int?, dividerHeight: Float?) {
+        if (customView == null)
+            throw NullPointerException("customView must not be null.")
+
+        if (customView.id == -1)
+            throw NullPointerException("customView must have an Id.")
+
+        var view: View?
+
+        //if custom View exists, remove it first
+        view = main_view.findViewById(R.id.view_fasation_edit_text_bottom_divider)
+        if (view != null) {
+            val position = main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
+
+            main_view.removeViewAt(position + 1)
+        } else {
+            //add divider View if not exists
+            view = View(context)
+            view.id = R.id.view_fasation_edit_text_bottom_divider
+            main_view.addView(view)
+
+            view.setBackgroundColor(dividerColor
+                    ?: getColor(resources, R.color.default_bottom_view_divider_color, context.theme))
+
+            val params = view.layoutParams as ConstraintLayout.LayoutParams
+            params.width = 0
+            params.height = convertDpToPx(dividerHeight ?: 1f)
+
+            params.setMargins(convertDpToPx(16f), convertDpToPx(8f), convertDpToPx(16f), convertDpToPx(8f))
+            view.layoutParams = params
+            view.requestLayout()
+        }
+
+        //add custom View
+        main_view.addView(customView)
+
+        val params = customView.layoutParams as ConstraintLayout.LayoutParams
+        params.width = width ?: 0
+        params.height = height ?: ViewGroup.LayoutParams.WRAP_CONTENT
+
+        params.setMargins(convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f))
+        customView.layoutParams = params
+        customView.requestLayout()
+
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(main_view)
+
+        //view constraints
+        constraintSet.connect(
+                view.id,
+                ConstraintSet.TOP,
+                R.id.txv_fasation_edit_text_description,
+                ConstraintSet.BOTTOM
+        )
+        constraintSet.connect(
+                view.id,
+                ConstraintSet.START,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.START
+        )
+        constraintSet.connect(
+                view.id,
+                ConstraintSet.END,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.END
+        )
+
+        //customView constraints
+        constraintSet.connect(
+                customView.id,
+                ConstraintSet.TOP,
+                view.id,
+                ConstraintSet.BOTTOM
+        )
+        constraintSet.connect(
+                customView.id,
+                ConstraintSet.START,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.START
+        )
+        constraintSet.connect(
+                customView.id,
+                ConstraintSet.END,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.END
+        )
+        constraintSet.connect(
+                customView.id,
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM
+        )
+
+        //apply constraint to main view
+        constraintSet.applyTo(main_view)
+    }
+
+    fun clearBottomView() {
+        if (main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider) != null) {
+            val position = main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
+
+            main_view.removeViewAt(position)
+            main_view.removeViewAt(position)
+        }
+    }
+
+    fun getBottomViewDividerId(): Int {
+        return R.id.view_fasation_edit_text_bottom_divider
+    }
+
+    fun setImeOptions(fasationEditTextImeOptions: Int) {
+        this.fasationEditTextImeOptions = fasationEditTextImeOptions
+        edt_fasation_edit_text_main.imeOptions = fasationEditTextImeOptions
+    }
+
+    fun setMaxLine(fasationEditTextMaxLine: Int) {
+        this.fasationEditTextMaxLines = fasationEditTextMaxLine
+        edt_fasation_edit_text_main.maxLines = fasationEditTextMaxLine
+    }
+
+    fun setCorrectCursorPlace() {
+        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
+    }
+
+    fun setEditTextEnabled(enable: Boolean) {
+        edt_fasation_edit_text_main.isEnabled = enable
+        img_fasation_edit_text_left.isEnabled = enable
+        img_fasation_edit_text_right.isEnabled = enable
+    }
+    //endregion Public Methods
 }

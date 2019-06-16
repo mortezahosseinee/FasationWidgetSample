@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat.getColor
@@ -24,7 +25,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickListener {
+class FasationEditTextFragment : Fragment(), FasationEditTextListener {
+
+    override fun onFasationEditTextFocusChanged(v: View?, hasFocus: Boolean) {
+        makeText(context, "$hasFocus", LENGTH_LONG).show()
+    }
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -45,6 +50,11 @@ class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fasation_text_view_normal_non_pass.setListener(this)
+
+        fasation_text_view_active_non_pass.setText("سلام چطوری")
+        fasation_text_view_active_non_pass.setEditTextEnabled(false)
 
         val view = RecyclerView(context!!)
         view.id = R.id.view_fasation_edit_text_bottom_divider_me

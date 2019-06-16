@@ -52,7 +52,11 @@
             app:layout_constraintEnd_toStartOf="@+id/img_fasation_edit_text_right"
             app:layout_constraintStart_toEndOf="@+id/img_fasation_edit_text_left"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="جا متنی ..." />
+            android:text="جا متنی ...">
+
+            <requestFocus />
+
+        </EditText>
 
         <ImageView
             android:id="@+id/img_fasation_edit_text_right"

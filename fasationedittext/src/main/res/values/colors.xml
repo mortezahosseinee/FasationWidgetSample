@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="grey">#535353</color>
+    <color name="default_bottom_view_divider_color">#D5D5D5</color>
 </resources>

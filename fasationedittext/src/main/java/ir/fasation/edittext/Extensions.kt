@@ -4,10 +4,12 @@ import android.graphics.Typeface.createFromAsset
 import android.graphics.drawable.GradientDrawable
 import android.text.InputFilter
 import android.view.View
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.res.ResourcesCompat.getColor
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
 
 fun FasationEditText.showLeftDrawableImage(show: Boolean) {
@@ -30,11 +32,28 @@ fun FasationEditText.setStatus(status: Status) {
     }
 }
 
+/**
+ * @param color: send [androidx.core.content.res.getColor] as color param and DO NOT send id of color
+ */
 fun FasationEditText.setBorderColor(color: Int) {
     val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
     drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
     invalidateDrawable(drawable)
     ctl_fasation_edit_text_main.background = drawable
+    invalidate()
+}
+
+/**
+ * @param color: send [androidx.core.content.res.getColor] as color param and DO NOT send id of color
+ */
+fun FasationEditText.setWholeBorderColor(color: Int) {
+    ctl_fasation_edit_text_main.background = null
+
+    val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
+    drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
+    invalidateDrawable(drawable)
+    this.background = drawable
+
     invalidate()
 }
 
@@ -54,6 +73,7 @@ fun FasationEditText.setBorderWidth(borderWidth: Int) {
 fun FasationEditText.setText(text: String) {
     fasationEditTextMainText = text
     edt_fasation_edit_text_main.setText(fasationEditTextMainText) //Set main text content
+    setCorrectCursorPlace()
 }
 
 fun FasationEditText.getText() : String {
@@ -159,34 +179,45 @@ fun FasationEditText.getEditText(): EditText? {
     return edt_fasation_edit_text_main
 }
 
-fun FasationEditText.addBottomView(customView: View?) {
+fun FasationEditText.addBottomView(customView: View?, width: Int?, height: Int?, dividerColor: Int?, dividerHeight: Float?) {
     if (customView == null)
         throw NullPointerException("customView must not be null.")
 
     if (customView.id == -1)
         throw NullPointerException("customView must have an Id.")
 
-    //add divider View
-    val view = View(context)
-    view.id = R.id.view_fasation_edit_text_bottom_divider
-    main_view.addView(view)
+    var view: View?
 
-    view.setBackgroundResource(fasationEditTextDividerImageSrc)
+    //if custom View exists, remove it first
+    view = main_view.findViewById(R.id.view_fasation_edit_text_bottom_divider)
+    if (view != null) {
+        val position = main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
 
-    var params = view.layoutParams as ConstraintLayout.LayoutParams
-    params.width = 0
-    params.height = convertDpToPx(fasationEditTextDividerHeight)
+        main_view.removeViewAt(position + 1)
+    } else {
+        //add divider View if not exists
+        view = View(context)
+        view.id = R.id.view_fasation_edit_text_bottom_divider
+        main_view.addView(view)
 
-    params.setMargins(convertDpToPx(8f), convertDpToPx(16f), convertDpToPx(8f), convertDpToPx(8f))
-    view.layoutParams = params
-    view.requestLayout()
+        view.setBackgroundColor(dividerColor
+                ?: getColor(resources, R.color.default_bottom_view_divider_color, context.theme))
+
+        val params = view.layoutParams as ConstraintLayout.LayoutParams
+        params.width = 0
+        params.height = convertDpToPx(dividerHeight ?: 1f)
+
+        params.setMargins(convertDpToPx(16f), convertDpToPx(8f), convertDpToPx(16f), convertDpToPx(8f))
+        view.layoutParams = params
+        view.requestLayout()
+    }
 
     //add custom View
     main_view.addView(customView)
 
-    params = customView.layoutParams as ConstraintLayout.LayoutParams
-    params.width = 0
-    params.height = customView.height
+    val params = customView.layoutParams as ConstraintLayout.LayoutParams
+    params.width = width ?: 0
+    params.height = height ?: WRAP_CONTENT
 
     params.setMargins(convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f))
     customView.layoutParams = params
@@ -266,4 +297,12 @@ fun FasationEditText.setImeOptions(fasationEditTextImeOptions: Int) {
 fun FasationEditText.setMaxLine(fasationEditTextMaxLine: Int) {
     this.fasationEditTextMaxLines = fasationEditTextMaxLine
     edt_fasation_edit_text_main.maxLines = fasationEditTextMaxLine
+}
+
+fun FasationEditText.setCorrectCursorPlace() {
+    edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
+}
+
+fun FasationEditText.setEditTextEnabled(enable: Boolean) {
+    edt_fasation_edit_text_main.isEnabled = enable
 }

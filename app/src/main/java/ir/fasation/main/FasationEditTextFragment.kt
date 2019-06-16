@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import ir.fasation.edittext.*
 import kotlinx.android.synthetic.main.fragment_fasation_edit_text.*
 
@@ -42,6 +45,22 @@ class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val view = RecyclerView(context!!)
+        view.id = R.id.view_fasation_edit_text_bottom_divider_me
+        fasation_text_view_valid_pass_right_drawable.addBottomView(view, null, null, null, null)
+
+        view.setBackgroundResource(R.drawable.bg_vertical_divider)
+
+        val params = view.layoutParams as ConstraintLayout.LayoutParams
+        params.width = 0
+        params.height = convertDpToPx(100f)
+
+        params.setMargins(convertDpToPx(8f), convertDpToPx(16f), convertDpToPx(8f), convertDpToPx(8f))
+        view.layoutParams = params
+        view.requestLayout()
+
+        fasation_text_view_valid_pass_right_drawable.setWholeBorderColor(getColor(resources, android.R.color.holo_orange_light, context!!.theme))
 
 //        fasation_text_view_normal_non_pass.addBottomView(View(context))
 //        fasation_text_view_normal_non_pass.clearBottomView()
@@ -102,5 +121,9 @@ class FasationEditTextFragment : Fragment(), FasationEditTextOnDrawableClickList
                 }
 
         fun newInstance() = FasationEditTextFragment()
+    }
+
+    fun convertDpToPx(dp: Float): Int {
+        return (dp * context!!.resources.displayMetrics.density).toInt()
     }
 }

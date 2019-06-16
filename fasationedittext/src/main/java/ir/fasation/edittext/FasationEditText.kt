@@ -44,8 +44,6 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private var fasationEditTextSecurePasswordImageSrc = R.drawable.ic_secure
     private var fasationEditTextUnSecurePasswordImageSrc = R.drawable.ic_unsecure
     private var fasationEditTextClearActionImageSrc = R.drawable.ic_clear
-    internal var fasationEditTextDividerImageSrc = R.drawable.bg_vertical_divider
-    internal var fasationEditTextDividerHeight = 4f //dp
     internal var fasationEditTextLeftImageSrc = -777
     internal var fasationEditTextRightImageSrc = -777
     internal var fasationEditTextMainText = ""
@@ -245,9 +243,6 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             fasationEditTextLeftImageSrc =
                     typedArray.getResourceId(R.styleable.FasationEditText_left_drawable, fasationEditTextLeftImageSrc)
 
-            fasationEditTextDividerImageSrc =
-                    typedArray.getResourceId(R.styleable.FasationEditText_divider, fasationEditTextDividerImageSrc)
-
             fasationEditTextInputType =
                     typedArray.getInteger(R.styleable.FasationEditText_android_inputType, fasationEditTextInputType)
 
@@ -274,9 +269,6 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
             fasationEditTextHeight =
                     typedArray.getDimension(R.styleable.FasationEditText_text_height, fasationEditTextHeight)
-
-            fasationEditTextDividerHeight =
-                    typedArray.getDimension(R.styleable.FasationEditText_divider_height, fasationEditTextDividerHeight)
 
             fasationEditTextStatus =
                     when (typedArray.getInteger(R.styleable.FasationEditText_status, 0)) {
@@ -577,10 +569,6 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
         edt_fasation_edit_text_main.layoutParams = params
         edt_fasation_edit_text_main.requestLayout()
-    }
-
-    private fun setCorrectCursorPlace() {
-        edt_fasation_edit_text_main.setSelection(edt_fasation_edit_text_main.text!!.length)
     }
     //endregion Private Methods
 }

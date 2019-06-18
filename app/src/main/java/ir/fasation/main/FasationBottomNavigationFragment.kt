@@ -8,7 +8,6 @@ import android.widget.Toast.LENGTH_SHORT
 import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
 import ir.fasation.bottomnavigation.FasationBottomNavigationOnItemClickListener
-import ir.fasation.bottomnavigation.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_fasation_bottom_navigation.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,6 +27,8 @@ class FasationBottomNavigationFragment : Fragment(), FasationBottomNavigationOnI
     private var param1: String? = null
     private var param2: String? = null
 
+    private var i = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,6 +46,7 @@ class FasationBottomNavigationFragment : Fragment(), FasationBottomNavigationOnI
         super.onViewCreated(view, savedInstanceState)
 
         fasation_bottom_navigation.setOnItemClickListener(this)
+        sample_button.setOnClickListener { fasation_bottom_navigation.selectItem(i++ % 5, false) }
     }
 
     override fun onFasationBottomNavigationItemClick(i: Int) {

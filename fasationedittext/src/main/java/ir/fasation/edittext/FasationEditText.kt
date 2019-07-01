@@ -11,6 +11,7 @@ import android.text.InputType.*
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
+import android.view.Gravity.CENTER_VERTICAL
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
@@ -26,9 +27,13 @@ import ir.fasation.edittext.RightDrawableMode.*
 import ir.fasation.edittext.Status.*
 import kotlinx.android.synthetic.main.fasation_edit_text.view.*
 
-class FasationEditText @JvmOverloads constructor(context: Context, private val attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-        ConstraintLayout(context, attrs, defStyleAttr),
-        View.OnClickListener {
+class FasationEditText @JvmOverloads constructor(
+    context: Context,
+    private val attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
+    ConstraintLayout(context, attrs, defStyleAttr),
+    View.OnClickListener {
 
     companion object {
         //region Declare Constants
@@ -38,7 +43,6 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     //region Declare Variables
     private var hidePassword = true
     private var initialInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-    private var lastStateOfEditTextEnabled = false
     //endregion Declare Variables
 
     //region Declare Objects
@@ -57,6 +61,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     private var fasationEditTextMainText = ""
     private var fasationEditTextMainTextFont = ""
     private var fasationEditTextHeight = 14f //dp
+    private var fasationEditTextGravity = CENTER_VERTICAL //dp
     private var fasationEditTextSize = 14f //sp
     private var fasationEditTextColor = getColor(resources, android.R.color.black, context.theme)
     internal var fasationEditTextStatus = NORMAL
@@ -99,7 +104,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                 LEFT -> {
                                     if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
                                         if (fasationEditTextLeftImageSrc != -777)
-                                            listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                            listener?.onFasationEditTextLeftDrawableClick(
+                                                this,
+                                                LEFT_BASIC_DRAWABLE
+                                            ) //LEFT Drawable image clicked
                                     } else {
                                         edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
 
@@ -118,7 +126,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                 LEFT -> {
                                     if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
                                         if (fasationEditTextLeftImageSrc != -777)
-                                            listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                            listener?.onFasationEditTextLeftDrawableClick(
+                                                this,
+                                                LEFT_BASIC_DRAWABLE
+                                            ) //LEFT Drawable image clicked
                                     } else {
                                         edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
 
@@ -132,7 +143,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                 }
                                 RIGHT -> {
                                     if (fasationEditTextLeftImageSrc != -777)
-                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                        listener?.onFasationEditTextLeftDrawableClick(
+                                            this,
+                                            LEFT_BASIC_DRAWABLE
+                                        ) //LEFT Drawable image clicked
                                 }
                             }
                         }
@@ -142,13 +156,19 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                             when (fasationEditTextClearActionPosition) {
                                 LEFT -> {
                                     if (fasationEditTextLeftImageSrc != -777)
-                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                        listener?.onFasationEditTextLeftDrawableClick(
+                                            this,
+                                            LEFT_BASIC_DRAWABLE
+                                        ) //LEFT Drawable image clicked
                                 }
                                 RIGHT -> passwordImageClicked(LEFT) //Password image clicked
                             }
                         } else {
                             if (fasationEditTextLeftImageSrc != -777)
-                                listener?.onFasationEditTextLeftDrawableClick(this, LEFT_BASIC_DRAWABLE) //LEFT Drawable image clicked
+                                listener?.onFasationEditTextLeftDrawableClick(
+                                    this,
+                                    LEFT_BASIC_DRAWABLE
+                                ) //LEFT Drawable image clicked
                         }
                     }
                 }
@@ -162,7 +182,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                 RIGHT -> {
                                     if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
                                         if (fasationEditTextRightImageSrc != -777)
-                                            listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                            listener?.onFasationEditTextRightDrawableClick(
+                                                this,
+                                                RIGHT_BASIC_DRAWABLE
+                                            ) //RIGHT Drawable image clicked
                                     } else {
                                         edt_fasation_edit_text_main.text!!.clear() //Clear image clicked
 
@@ -171,7 +194,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                         else
                                             showRightDrawableImage(false)
 
-                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_CLEAR_ACTION_DRAWABLE)
+                                        listener?.onFasationEditTextRightDrawableClick(
+                                            this,
+                                            RIGHT_CLEAR_ACTION_DRAWABLE
+                                        )
                                     }
                                 }
                             }
@@ -179,14 +205,20 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                             when (fasationEditTextClearActionPosition) {
                                 LEFT -> {
                                     if (fasationEditTextRightImageSrc != -777)
-                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                        listener?.onFasationEditTextRightDrawableClick(
+                                            this,
+                                            RIGHT_BASIC_DRAWABLE
+                                        ) //RIGHT Drawable image clicked
                                     else
                                         showRightDrawableImage(false)
                                 }
                                 RIGHT -> {
                                     if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
                                         if (fasationEditTextRightImageSrc != -777)
-                                            listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                            listener?.onFasationEditTextRightDrawableClick(
+                                                this,
+                                                RIGHT_BASIC_DRAWABLE
+                                            ) //RIGHT Drawable image clicked
                                         else
                                             showRightDrawableImage(false)
                                     } else {
@@ -197,7 +229,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                         else
                                             showRightDrawableImage(false)
 
-                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_CLEAR_ACTION_DRAWABLE)
+                                        listener?.onFasationEditTextRightDrawableClick(
+                                            this,
+                                            RIGHT_CLEAR_ACTION_DRAWABLE
+                                        )
                                     }
                                 }
                             }
@@ -209,12 +244,18 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
                                 LEFT -> passwordImageClicked(RIGHT) //Password image clicked
                                 RIGHT -> {
                                     if (fasationEditTextRightImageSrc != -777)
-                                        listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                        listener?.onFasationEditTextRightDrawableClick(
+                                            this,
+                                            RIGHT_BASIC_DRAWABLE
+                                        ) //RIGHT Drawable image clicked
                                 }
                             }
                         } else {
                             if (fasationEditTextRightImageSrc != -777)
-                                listener?.onFasationEditTextRightDrawableClick(this, RIGHT_BASIC_DRAWABLE) //RIGHT Drawable image clicked
+                                listener?.onFasationEditTextRightDrawableClick(
+                                    this,
+                                    RIGHT_BASIC_DRAWABLE
+                                ) //RIGHT Drawable image clicked
                         }
                     }
                 }
@@ -237,108 +278,136 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             val typedArray = context.obtainStyledAttributes(it, R.styleable.FasationEditText, 0, 0)
 
             fasationEditTextSecurePasswordImageSrc =
-                    typedArray.getResourceId(R.styleable.FasationEditText_secure_password_drawable, fasationEditTextSecurePasswordImageSrc)
+                typedArray.getResourceId(
+                    R.styleable.FasationEditText_secure_password_drawable,
+                    fasationEditTextSecurePasswordImageSrc
+                )
 
             fasationEditTextUnSecurePasswordImageSrc =
-                    typedArray.getResourceId(R.styleable.FasationEditText_un_secure_password_drawable, fasationEditTextUnSecurePasswordImageSrc)
+                typedArray.getResourceId(
+                    R.styleable.FasationEditText_un_secure_password_drawable,
+                    fasationEditTextUnSecurePasswordImageSrc
+                )
 
             fasationEditTextClearActionImageSrc =
-                    typedArray.getResourceId(R.styleable.FasationEditText_clear_action_drawable, fasationEditTextClearActionImageSrc)
+                typedArray.getResourceId(
+                    R.styleable.FasationEditText_clear_action_drawable,
+                    fasationEditTextClearActionImageSrc
+                )
 
             fasationEditTextRightImageSrc =
-                    typedArray.getResourceId(R.styleable.FasationEditText_right_drawable, fasationEditTextRightImageSrc)
+                typedArray.getResourceId(R.styleable.FasationEditText_right_drawable, fasationEditTextRightImageSrc)
 
             fasationEditTextLeftImageSrc =
-                    typedArray.getResourceId(R.styleable.FasationEditText_left_drawable, fasationEditTextLeftImageSrc)
+                typedArray.getResourceId(R.styleable.FasationEditText_left_drawable, fasationEditTextLeftImageSrc)
 
             fasationEditTextInputType =
-                    typedArray.getInteger(R.styleable.FasationEditText_android_inputType, fasationEditTextInputType)
+                typedArray.getInteger(R.styleable.FasationEditText_android_inputType, fasationEditTextInputType)
 
             fasationEditTextMainText =
-                    typedArray.getString(R.styleable.FasationEditText_android_text)
-                            ?: fasationEditTextMainText
+                typedArray.getString(R.styleable.FasationEditText_android_text)
+                    ?: fasationEditTextMainText
 
             fasationEditTextMainTextFont =
-                    typedArray.getString(R.styleable.FasationEditText_text_font)
-                            ?: fasationEditTextMainTextFont
+                typedArray.getString(R.styleable.FasationEditText_text_font)
+                    ?: fasationEditTextMainTextFont
 
             fasationEditTextSize =
-                    typedArray.getDimension(R.styleable.FasationEditText_android_textSize, edt_fasation_edit_text_main.textSize)
+                typedArray.getDimension(
+                    R.styleable.FasationEditText_android_textSize,
+                    edt_fasation_edit_text_main.textSize
+                )
 
             fasationEditTextColor =
-                    typedArray.getColor(R.styleable.FasationEditText_text_color, fasationEditTextColor)
+                typedArray.getColor(R.styleable.FasationEditText_text_color, fasationEditTextColor)
 
             fasationEditTextMainHint =
-                    typedArray.getString(R.styleable.FasationEditText_android_hint)
-                            ?: fasationEditTextMainHint
+                typedArray.getString(R.styleable.FasationEditText_android_hint)
+                    ?: fasationEditTextMainHint
 
             fasationEditTextHintColor =
-                    typedArray.getColor(R.styleable.FasationEditText_android_textColorHint, fasationEditTextHintColor)
+                typedArray.getColor(R.styleable.FasationEditText_android_textColorHint, fasationEditTextHintColor)
 
             fasationEditTextHeight =
-                    typedArray.getDimension(R.styleable.FasationEditText_text_height, fasationEditTextHeight)
+                typedArray.getDimension(R.styleable.FasationEditText_text_height, fasationEditTextHeight)
+
+            fasationEditTextGravity =
+                typedArray.getInt(R.styleable.FasationEditText_text_gravity, fasationEditTextGravity)
 
             fasationEditTextStatus =
-                    when (typedArray.getInteger(R.styleable.FasationEditText_status, 0)) {
-                        0 -> NORMAL
-                        1 -> ACTIVE
-                        2 -> VALID
-                        3 -> INVALID
-                        else -> NORMAL
-                    }
+                when (typedArray.getInteger(R.styleable.FasationEditText_status, 0)) {
+                    0 -> NORMAL
+                    1 -> ACTIVE
+                    2 -> VALID
+                    3 -> INVALID
+                    else -> NORMAL
+                }
 
             fasationEditTextNormalColor =
-                    typedArray.getColor(R.styleable.FasationEditText_normal_color, fasationEditTextNormalColor)
+                typedArray.getColor(R.styleable.FasationEditText_normal_color, fasationEditTextNormalColor)
 
             fasationEditTextActiveColor =
-                    typedArray.getColor(R.styleable.FasationEditText_active_color, fasationEditTextActiveColor)
+                typedArray.getColor(R.styleable.FasationEditText_active_color, fasationEditTextActiveColor)
 
             fasationEditTextValidColor =
-                    typedArray.getColor(R.styleable.FasationEditText_valid_color, fasationEditTextValidColor)
+                typedArray.getColor(R.styleable.FasationEditText_valid_color, fasationEditTextValidColor)
 
             fasationEditTextInvalidColor =
-                    typedArray.getColor(R.styleable.FasationEditText_invalid_color, fasationEditTextInvalidColor)
+                typedArray.getColor(R.styleable.FasationEditText_invalid_color, fasationEditTextInvalidColor)
 
             fasationEditTextBorderWidth =
-                    typedArray.getDimension(R.styleable.FasationEditText_border_width, fasationEditTextBorderWidth)
+                typedArray.getDimension(R.styleable.FasationEditText_border_width, fasationEditTextBorderWidth)
 
             fasationEditTextClearActionPosition =
-                    when (typedArray.getInteger(R.styleable.FasationEditText_clear_action_position, 1)) {
-                        0 -> LEFT
-                        1 -> RIGHT
-                        else -> RIGHT
-                    }
+                when (typedArray.getInteger(R.styleable.FasationEditText_clear_action_position, 1)) {
+                    0 -> LEFT
+                    1 -> RIGHT
+                    else -> RIGHT
+                }
 
-            fasationEditTextImeOptions = typedArray.getInteger(R.styleable.FasationEditText_android_imeOptions, fasationEditTextImeOptions)
+            fasationEditTextImeOptions =
+                typedArray.getInteger(R.styleable.FasationEditText_android_imeOptions, fasationEditTextImeOptions)
 
             fasationEditTextDescriptionText =
-                    typedArray.getString(R.styleable.FasationEditText_description_text)
-                            ?: fasationEditTextDescriptionText
+                typedArray.getString(R.styleable.FasationEditText_description_text)
+                    ?: fasationEditTextDescriptionText
 
             fasationEditTextDescriptionTextColor =
-                    typedArray.getColor(R.styleable.FasationEditText_description_text_color, fasationEditTextDescriptionTextColor)
+                typedArray.getColor(
+                    R.styleable.FasationEditText_description_text_color,
+                    fasationEditTextDescriptionTextColor
+                )
 
             fasationEditTextDescriptionTextSize =
-                    typedArray.getDimension(R.styleable.FasationEditText_description_text_size, fasationEditTextDescriptionTextSize)
+                typedArray.getDimension(
+                    R.styleable.FasationEditText_description_text_size,
+                    fasationEditTextDescriptionTextSize
+                )
 
             fasationEditTextDescriptionTextFont =
-                    typedArray.getString(R.styleable.FasationEditText_description_text_font)
-                            ?: fasationEditTextDescriptionTextFont
+                typedArray.getString(R.styleable.FasationEditText_description_text_font)
+                    ?: fasationEditTextDescriptionTextFont
 
             fasationEditTextRightDrawableSpace =
-                    typedArray.getBoolean(R.styleable.FasationEditText_right_drawable_space, fasationEditTextRightDrawableSpace)
+                typedArray.getBoolean(
+                    R.styleable.FasationEditText_right_drawable_space,
+                    fasationEditTextRightDrawableSpace
+                )
 
             fasationEditTextLeftDrawableSpace =
-                    typedArray.getBoolean(R.styleable.FasationEditText_left_drawable_space, fasationEditTextLeftDrawableSpace)
+                typedArray.getBoolean(
+                    R.styleable.FasationEditText_left_drawable_space,
+                    fasationEditTextLeftDrawableSpace
+                )
 
             fasationEditTextSingleLine =
-                    typedArray.getBoolean(R.styleable.FasationEditText_android_singleLine, fasationEditTextSingleLine)
+                typedArray.getBoolean(R.styleable.FasationEditText_android_singleLine, fasationEditTextSingleLine)
 
             fasationEditTextMaxLength =
-                    typedArray.getInteger(R.styleable.FasationEditText_android_maxLength, fasationEditTextMaxLength)
+                typedArray.getInteger(R.styleable.FasationEditText_android_maxLength, fasationEditTextMaxLength)
 
             fasationEditTextMaxLines =
-                    typedArray.getInteger(R.styleable.FasationEditText_android_maxLines, fasationEditTextMaxLines)
+                typedArray.getInteger(R.styleable.FasationEditText_android_maxLines, fasationEditTextMaxLines)
 
             typedArray.recycle()
         }
@@ -354,6 +423,7 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         setTextColor(fasationEditTextColor) //Set main text color
         setTextFont(fasationEditTextMainTextFont) //Set main text font
         setTextHeight(fasationEditTextHeight) //Set main text height
+        setTextGravity(fasationEditTextGravity) //Set main text gravity
         setHint(fasationEditTextMainHint) //Set main text hint
         setHintColor(fasationEditTextHintColor) //Set main text hint color
         setDescription(fasationEditTextDescriptionText) //Set description text
@@ -407,63 +477,63 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         img_fasation_edit_text_right!!.setOnClickListener(this) // Set right drawable CLickListener on this view
 
         edt_fasation_edit_text_main.addTextChangedListener(
-                object : TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {
-                        if (fasationEditTextStatus == ACTIVE)
-                            if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
-                                when (fasationEditTextClearActionPosition) {
-                                    LEFT -> {
-                                        if (fasationEditTextLeftDrawableSpace) {
-                                            if (fasationEditTextLeftImageSrc == -777)
-                                                showLeftDrawableImage(false)
-                                            else {
-                                                setLeftDrawableImage(fasationEditTextLeftImageSrc)
-                                                showLeftDrawableImage(true)
-                                            }
-                                        } else
-                                            removeDrawable(LEFT)
-                                    }
-                                    RIGHT -> {
-                                        if (fasationEditTextRightDrawableSpace) {
-                                            if (fasationEditTextRightImageSrc == -777)
-                                                showRightDrawableImage(true)
-                                            else {
-                                                setRightDrawableImage(fasationEditTextRightImageSrc)
-                                                showRightDrawableImage(true)
-                                            }
-                                        } else
-                                            removeDrawable(RIGHT)
-                                    }
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    if (fasationEditTextStatus == ACTIVE)
+                        if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> {
+                                    if (fasationEditTextLeftDrawableSpace) {
+                                        if (fasationEditTextLeftImageSrc == -777)
+                                            showLeftDrawableImage(false)
+                                        else {
+                                            setLeftDrawableImage(fasationEditTextLeftImageSrc)
+                                            showLeftDrawableImage(true)
+                                        }
+                                    } else
+                                        removeDrawable(LEFT)
                                 }
-
-                                //Need this lines because hint goes wrong place in some input type
-                                edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
-                            } else {
-                                when (fasationEditTextClearActionPosition) {
-                                    LEFT -> {
-                                        changeLeftDrawableImage(fasationEditTextClearActionImageSrc)
-                                        showLeftDrawableImage(true)
-                                    }
-                                    RIGHT -> {
-                                        changeRightDrawableImage(fasationEditTextClearActionImageSrc)
-                                        showRightDrawableImage(true)
-                                    }
-                                }
-
-                                //Need these lines because hint goes wrong place in some input type, so do this just after length is one, just once
-                                if (edt_fasation_edit_text_main.text?.length == 1) {
-                                    edt_fasation_edit_text_main.inputType = initialInputType
-                                    setCorrectCursorPlace()
+                                RIGHT -> {
+                                    if (fasationEditTextRightDrawableSpace) {
+                                        if (fasationEditTextRightImageSrc == -777)
+                                            showRightDrawableImage(true)
+                                        else {
+                                            setRightDrawableImage(fasationEditTextRightImageSrc)
+                                            showRightDrawableImage(true)
+                                        }
+                                    } else
+                                        removeDrawable(RIGHT)
                                 }
                             }
-                    }
 
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                    }
+                            //Need this lines because hint goes wrong place in some input type
+                            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+                        } else {
+                            when (fasationEditTextClearActionPosition) {
+                                LEFT -> {
+                                    changeLeftDrawableImage(fasationEditTextClearActionImageSrc)
+                                    showLeftDrawableImage(true)
+                                }
+                                RIGHT -> {
+                                    changeRightDrawableImage(fasationEditTextClearActionImageSrc)
+                                    showRightDrawableImage(true)
+                                }
+                            }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    }
-                })
+                            //Need these lines because hint goes wrong place in some input type, so do this just after length is one, just once
+                            if (edt_fasation_edit_text_main.text?.length == 1) {
+                                edt_fasation_edit_text_main.inputType = initialInputType
+                                setCorrectCursorPlace()
+                            }
+                        }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+            })
     }
 
     private fun setPasswordImage() {
@@ -649,6 +719,13 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     fun setText(text: String) {
         fasationEditTextMainText = text
         edt_fasation_edit_text_main.setText(fasationEditTextMainText) //Set main text content
+
+        if (fasationEditTextStatus == ACTIVE && !edt_fasation_edit_text_main.text.isNullOrEmpty())
+            when (fasationEditTextClearActionPosition) {
+                LEFT -> showLeftDrawableImage(true)
+                RIGHT -> showRightDrawableImage(true)
+            }
+
         setCorrectCursorPlace()
     }
 
@@ -669,7 +746,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     fun setTextFont(font: String) {
         if (font.isNotEmpty()) { //Set main text font
             fasationEditTextMainTextFont = font
-            edt_fasation_edit_text_main.typeface = Typeface.createFromAsset(context.assets, fasationEditTextMainTextFont)
+            edt_fasation_edit_text_main.typeface =
+                Typeface.createFromAsset(context.assets, fasationEditTextMainTextFont)
         }
     }
 
@@ -682,6 +760,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             edt_fasation_edit_text_main.layoutParams = params
             edt_fasation_edit_text_main.requestLayout()
         }
+    }
+
+    private fun setTextGravity(gravity: Int) {
+        edt_fasation_edit_text_main.gravity = gravity
     }
 
     fun setHint(hint: String) {
@@ -702,7 +784,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
     fun setDescriptionSize(size: Float) {
         fasationEditTextDescriptionTextSize = size
-        txv_fasation_edit_text_description.textSize = convertPxToSp(fasationEditTextDescriptionTextSize) // Set description text size
+        txv_fasation_edit_text_description.textSize =
+            convertPxToSp(fasationEditTextDescriptionTextSize) // Set description text size
         clearDescription()
     }
 
@@ -715,7 +798,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
     fun setDescriptionFont(font: String) {
         if (font.isNotEmpty()) { //Set description font
             fasationEditTextDescriptionTextFont = font
-            txv_fasation_edit_text_description.typeface = Typeface.createFromAsset(context.assets, fasationEditTextDescriptionTextFont)
+            txv_fasation_edit_text_description.typeface =
+                Typeface.createFromAsset(context.assets, fasationEditTextDescriptionTextFont)
             clearDescription()
         }
     }
@@ -739,9 +823,14 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         img_fasation_edit_text_right.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
-    @Deprecated(level = DeprecationLevel.ERROR,
-            message = "We are going to replace with setListener(YOUR_LISTENER)",
-            replaceWith = ReplaceWith(expression = "YOUR_VIEW.setListener(this)", imports = ["ir.fasation.edittext.setListener"]))
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "We are going to replace with setListener(YOUR_LISTENER)",
+        replaceWith = ReplaceWith(
+            expression = "YOUR_VIEW.setListener(this)",
+            imports = ["ir.fasation.edittext.setListener"]
+        )
+    )
     fun setOnDrawableClickListener(listener: FasationEditTextListener) {
         this.listener = listener
     }
@@ -774,7 +863,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
         //if custom View exists, remove it first
         view = main_view.findViewById(R.id.view_fasation_edit_text_bottom_divider)
         if (view != null) {
-            val position = main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
+            val position =
+                main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
 
             main_view.removeViewAt(position + 1)
         } else {
@@ -783,8 +873,10 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
             view.id = R.id.view_fasation_edit_text_bottom_divider
             main_view.addView(view)
 
-            view.setBackgroundColor(dividerColor
-                    ?: getColor(resources, R.color.default_bottom_view_divider_color, context.theme))
+            view.setBackgroundColor(
+                dividerColor
+                    ?: getColor(resources, R.color.default_bottom_view_divider_color, context.theme)
+            )
 
             val params = view.layoutParams as ConstraintLayout.LayoutParams
             params.width = 0
@@ -811,48 +903,48 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
         //view constraints
         constraintSet.connect(
-                view.id,
-                ConstraintSet.TOP,
-                R.id.txv_fasation_edit_text_description,
-                ConstraintSet.BOTTOM
+            view.id,
+            ConstraintSet.TOP,
+            R.id.txv_fasation_edit_text_description,
+            ConstraintSet.BOTTOM
         )
         constraintSet.connect(
-                view.id,
-                ConstraintSet.START,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.START
+            view.id,
+            ConstraintSet.START,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.START
         )
         constraintSet.connect(
-                view.id,
-                ConstraintSet.END,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.END
+            view.id,
+            ConstraintSet.END,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END
         )
 
         //customView constraints
         constraintSet.connect(
-                customView.id,
-                ConstraintSet.TOP,
-                view.id,
-                ConstraintSet.BOTTOM
+            customView.id,
+            ConstraintSet.TOP,
+            view.id,
+            ConstraintSet.BOTTOM
         )
         constraintSet.connect(
-                customView.id,
-                ConstraintSet.START,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.START
+            customView.id,
+            ConstraintSet.START,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.START
         )
         constraintSet.connect(
-                customView.id,
-                ConstraintSet.END,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.END
+            customView.id,
+            ConstraintSet.END,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END
         )
         constraintSet.connect(
-                customView.id,
-                ConstraintSet.BOTTOM,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.BOTTOM
+            customView.id,
+            ConstraintSet.BOTTOM,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.BOTTOM
         )
 
         //apply constraint to main view
@@ -861,7 +953,8 @@ class FasationEditText @JvmOverloads constructor(context: Context, private val a
 
     fun clearBottomView() {
         if (main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider) != null) {
-            val position = main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
+            val position =
+                main_view.indexOfChild(main_view.findViewById<View>(R.id.view_fasation_edit_text_bottom_divider))
 
             main_view.removeViewAt(position)
             main_view.removeViewAt(position)

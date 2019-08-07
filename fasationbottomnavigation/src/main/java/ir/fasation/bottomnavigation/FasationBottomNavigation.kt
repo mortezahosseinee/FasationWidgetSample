@@ -754,5 +754,9 @@ class FasationBottomNavigation @JvmOverloads constructor(
         if (clickEvent)
             listener?.onFasationBottomNavigationItemClick(newSelectedIndex)
     }
+
+    fun getSelectedItemIndex(): Int {
+        return newSelectedIndex
+    }
     //endregion Public Methods
 }

@@ -505,9 +505,6 @@ class FasationEditText @JvmOverloads constructor(
                                         removeDrawable(RIGHT)
                                 }
                             }
-
-                            //Need this lines because hint goes wrong place in some input type
-                            edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
                         } else {
                             when (fasationEditTextClearActionPosition) {
                                 LEFT -> {
@@ -519,12 +516,6 @@ class FasationEditText @JvmOverloads constructor(
                                     showRightDrawableImage(true)
                                 }
                             }
-
-                            //Need these lines because hint goes wrong place in some input type, so do this just after length is one, just once
-                            if (edt_fasation_edit_text_main.text?.length == 1) {
-                                edt_fasation_edit_text_main.inputType = initialInputType
-                                setCorrectCursorPlace()
-                            }
                         }
                 }
 
@@ -534,6 +525,23 @@ class FasationEditText @JvmOverloads constructor(
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
+
+        //Need these lines because hint goes wrong place in some input type, so do this just after length is one, just once
+//        edt_fasation_edit_text_main.setOnFocusChangeListener { _, hasFocus ->
+//            if (isInitialTypeNumberOrPhone())
+//                if (hasFocus) {
+//                    if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
+//                        edt_fasation_edit_text_main.hint = ""
+//                        edt_fasation_edit_text_main.inputType = initialInputType
+//                        edt_fasation_edit_text_main.isActivated = true
+//                        edt_fasation_edit_text_main.isPressed = true
+//                    }
+//                } else {
+//                    if (edt_fasation_edit_text_main.text.isNullOrEmpty())
+//                        edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+//                    setHint(fasationEditTextMainHint) //Set main text hint
+//                }
+//        }
     }
 
     private fun setPasswordImage() {
@@ -616,6 +624,14 @@ class FasationEditText @JvmOverloads constructor(
                 initialInputType == (TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_WEB_PASSWORD)
     }
 
+//    private fun isInitialTypeNumberOrPhone(): Boolean {
+//        return initialInputType == (TYPE_CLASS_TEXT or TYPE_NUMBER_FLAG_DECIMAL) ||
+//                initialInputType == (TYPE_CLASS_TEXT or TYPE_NUMBER_FLAG_SIGNED) ||
+//                initialInputType == (TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL) ||
+//                initialInputType == (TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD) ||
+//                initialInputType == (TYPE_CLASS_TEXT or TYPE_CLASS_PHONE)
+//    }
+
     private fun changeLeftDrawableImage(resourceId: Int) {
         img_fasation_edit_text_left!!.setImageResource(resourceId)
     }
@@ -665,7 +681,7 @@ class FasationEditText @JvmOverloads constructor(
     fun setInputType(inputType: Int) {
         initialInputType = inputType
 
-        if (edt_fasation_edit_text_main.text.isNotEmpty())
+//        if (edt_fasation_edit_text_main.isFocused)
             edt_fasation_edit_text_main.inputType = inputType
     }
 

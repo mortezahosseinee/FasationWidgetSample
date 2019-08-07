@@ -61,7 +61,7 @@ ext {
     siteUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample'
     gitUrl = 'https://github.com/mortezahosseinee/FasationWidgetSample.git'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = '0.1.4'
 
     developerId = 'mortezahosseini'
     developerName = 'Morteza Hosseini'

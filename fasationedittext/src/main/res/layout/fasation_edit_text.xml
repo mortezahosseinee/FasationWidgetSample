@@ -36,7 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_fasation_edit_text_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
 
             <requestFocus/>
 
-        </EditText>
+        </androidx.appcompat.widget.AppCompatEditText>
 
         <ImageView
                 android:id="@+id/img_fasation_edit_text_right"

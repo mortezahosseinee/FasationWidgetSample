@@ -68,12 +68,15 @@ class FasationEditText @JvmOverloads constructor(
     private var fasationEditTextInputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
     private var fasationEditTextNormalColor = getColor(resources, R.color.grey, context.theme)
     private var fasationEditTextActiveColor = getColor(resources, R.color.grey, context.theme)
-    private var fasationEditTextValidColor = getColor(resources, android.R.color.holo_green_dark, context.theme)
-    private var fasationEditTextInvalidColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
+    private var fasationEditTextValidColor =
+        getColor(resources, android.R.color.holo_green_dark, context.theme)
+    private var fasationEditTextInvalidColor =
+        getColor(resources, android.R.color.holo_red_dark, context.theme)
     private var fasationEditTextBorderWidth = 1f //dp
     private var fasationEditTextClearActionPosition = LEFT
     private var fasationEditTextDescriptionText = ""
-    private var fasationEditTextDescriptionTextColor = getColor(resources, android.R.color.holo_red_dark, context.theme)
+    private var fasationEditTextDescriptionTextColor =
+        getColor(resources, android.R.color.holo_red_dark, context.theme)
     private var fasationEditTextDescriptionTextSize = 14f //sp
     private var fasationEditTextDescriptionTextFont = ""
     private var fasationEditTextRightDrawableSpace = true
@@ -82,7 +85,8 @@ class FasationEditText @JvmOverloads constructor(
     private var fasationEditTextMaxLength = 1000
     private var fasationEditTextMaxLines = 100
     private var fasationEditTextMainHint = ""
-    private var fasationEditTextHintColor = getColor(resources, android.R.color.darker_gray, context.theme)
+    private var fasationEditTextHintColor =
+        getColor(resources, android.R.color.darker_gray, context.theme)
     private var fasationEditTextImeOptions = 0
     //endregion Custom Attributes
 
@@ -116,7 +120,10 @@ class FasationEditText @JvmOverloads constructor(
                                         else
                                             showLeftDrawableImage(false)
 
-                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_CLEAR_ACTION_DRAWABLE)
+                                        listener?.onFasationEditTextLeftDrawableClick(
+                                            this,
+                                            LEFT_CLEAR_ACTION_DRAWABLE
+                                        )
                                     }
                                 }
                                 RIGHT -> passwordImageClicked(LEFT) //Password image clicked
@@ -138,7 +145,10 @@ class FasationEditText @JvmOverloads constructor(
                                         else
                                             showLeftDrawableImage(false)
 
-                                        listener?.onFasationEditTextLeftDrawableClick(this, LEFT_CLEAR_ACTION_DRAWABLE)
+                                        listener?.onFasationEditTextLeftDrawableClick(
+                                            this,
+                                            LEFT_CLEAR_ACTION_DRAWABLE
+                                        )
                                     }
                                 }
                                 RIGHT -> {
@@ -296,13 +306,22 @@ class FasationEditText @JvmOverloads constructor(
                 )
 
             fasationEditTextRightImageSrc =
-                typedArray.getResourceId(R.styleable.FasationEditText_right_drawable, fasationEditTextRightImageSrc)
+                typedArray.getResourceId(
+                    R.styleable.FasationEditText_right_drawable,
+                    fasationEditTextRightImageSrc
+                )
 
             fasationEditTextLeftImageSrc =
-                typedArray.getResourceId(R.styleable.FasationEditText_left_drawable, fasationEditTextLeftImageSrc)
+                typedArray.getResourceId(
+                    R.styleable.FasationEditText_left_drawable,
+                    fasationEditTextLeftImageSrc
+                )
 
             fasationEditTextInputType =
-                typedArray.getInteger(R.styleable.FasationEditText_android_inputType, fasationEditTextInputType)
+                typedArray.getInteger(
+                    R.styleable.FasationEditText_android_inputType,
+                    fasationEditTextInputType
+                )
 
             fasationEditTextMainText =
                 typedArray.getString(R.styleable.FasationEditText_android_text)
@@ -326,13 +345,22 @@ class FasationEditText @JvmOverloads constructor(
                     ?: fasationEditTextMainHint
 
             fasationEditTextHintColor =
-                typedArray.getColor(R.styleable.FasationEditText_android_textColorHint, fasationEditTextHintColor)
+                typedArray.getColor(
+                    R.styleable.FasationEditText_android_textColorHint,
+                    fasationEditTextHintColor
+                )
 
             fasationEditTextHeight =
-                typedArray.getDimension(R.styleable.FasationEditText_text_height, fasationEditTextHeight)
+                typedArray.getDimension(
+                    R.styleable.FasationEditText_text_height,
+                    fasationEditTextHeight
+                )
 
             fasationEditTextGravity =
-                typedArray.getInt(R.styleable.FasationEditText_text_gravity, fasationEditTextGravity)
+                typedArray.getInt(
+                    R.styleable.FasationEditText_text_gravity,
+                    fasationEditTextGravity
+                )
 
             fasationEditTextStatus =
                 when (typedArray.getInteger(R.styleable.FasationEditText_status, 0)) {
@@ -344,29 +372,50 @@ class FasationEditText @JvmOverloads constructor(
                 }
 
             fasationEditTextNormalColor =
-                typedArray.getColor(R.styleable.FasationEditText_normal_color, fasationEditTextNormalColor)
+                typedArray.getColor(
+                    R.styleable.FasationEditText_normal_color,
+                    fasationEditTextNormalColor
+                )
 
             fasationEditTextActiveColor =
-                typedArray.getColor(R.styleable.FasationEditText_active_color, fasationEditTextActiveColor)
+                typedArray.getColor(
+                    R.styleable.FasationEditText_active_color,
+                    fasationEditTextActiveColor
+                )
 
             fasationEditTextValidColor =
-                typedArray.getColor(R.styleable.FasationEditText_valid_color, fasationEditTextValidColor)
+                typedArray.getColor(
+                    R.styleable.FasationEditText_valid_color,
+                    fasationEditTextValidColor
+                )
 
             fasationEditTextInvalidColor =
-                typedArray.getColor(R.styleable.FasationEditText_invalid_color, fasationEditTextInvalidColor)
+                typedArray.getColor(
+                    R.styleable.FasationEditText_invalid_color,
+                    fasationEditTextInvalidColor
+                )
 
             fasationEditTextBorderWidth =
-                typedArray.getDimension(R.styleable.FasationEditText_border_width, fasationEditTextBorderWidth)
+                typedArray.getDimension(
+                    R.styleable.FasationEditText_border_width,
+                    fasationEditTextBorderWidth
+                )
 
             fasationEditTextClearActionPosition =
-                when (typedArray.getInteger(R.styleable.FasationEditText_clear_action_position, 1)) {
+                when (typedArray.getInteger(
+                    R.styleable.FasationEditText_clear_action_position,
+                    1
+                )) {
                     0 -> LEFT
                     1 -> RIGHT
                     else -> RIGHT
                 }
 
             fasationEditTextImeOptions =
-                typedArray.getInteger(R.styleable.FasationEditText_android_imeOptions, fasationEditTextImeOptions)
+                typedArray.getInteger(
+                    R.styleable.FasationEditText_android_imeOptions,
+                    fasationEditTextImeOptions
+                )
 
             fasationEditTextDescriptionText =
                 typedArray.getString(R.styleable.FasationEditText_description_text)
@@ -401,13 +450,22 @@ class FasationEditText @JvmOverloads constructor(
                 )
 
             fasationEditTextSingleLine =
-                typedArray.getBoolean(R.styleable.FasationEditText_android_singleLine, fasationEditTextSingleLine)
+                typedArray.getBoolean(
+                    R.styleable.FasationEditText_android_singleLine,
+                    fasationEditTextSingleLine
+                )
 
             fasationEditTextMaxLength =
-                typedArray.getInteger(R.styleable.FasationEditText_android_maxLength, fasationEditTextMaxLength)
+                typedArray.getInteger(
+                    R.styleable.FasationEditText_android_maxLength,
+                    fasationEditTextMaxLength
+                )
 
             fasationEditTextMaxLines =
-                typedArray.getInteger(R.styleable.FasationEditText_android_maxLines, fasationEditTextMaxLines)
+                typedArray.getInteger(
+                    R.styleable.FasationEditText_android_maxLines,
+                    fasationEditTextMaxLines
+                )
 
             typedArray.recycle()
         }
@@ -519,7 +577,12 @@ class FasationEditText @JvmOverloads constructor(
                         }
                 }
 
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -580,7 +643,10 @@ class FasationEditText @JvmOverloads constructor(
                 }
                 RIGHT -> {
                     changeRightDrawableImage(fasationEditTextSecurePasswordImageSrc)
-                    listener?.onFasationEditTextRightDrawableClick(this, RIGHT_HIDE_PASSWORD_DRAWABLE)
+                    listener?.onFasationEditTextRightDrawableClick(
+                        this,
+                        RIGHT_HIDE_PASSWORD_DRAWABLE
+                    )
                 }
             }
         } else {
@@ -591,7 +657,10 @@ class FasationEditText @JvmOverloads constructor(
                 }
                 RIGHT -> {
                     changeRightDrawableImage(fasationEditTextUnSecurePasswordImageSrc)
-                    listener?.onFasationEditTextRightDrawableClick(this, RIGHT_SHOW_PASSWORD_DRAWABLE)
+                    listener?.onFasationEditTextRightDrawableClick(
+                        this,
+                        RIGHT_SHOW_PASSWORD_DRAWABLE
+                    )
                 }
             }
         }
@@ -600,15 +669,18 @@ class FasationEditText @JvmOverloads constructor(
     }
 
     private fun handlePasswordInputType() {
-        if (edt_fasation_edit_text_main.text.isNotEmpty()) {
+        if (edt_fasation_edit_text_main.text.isNullOrEmpty()) {
             if (hidePassword) {
                 edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or initialInputType
-                edt_fasation_edit_text_main.transformationMethod = PasswordTransformationMethod.getInstance()
+                edt_fasation_edit_text_main.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
             } else {
                 if (initialInputType == TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_PASSWORD)
-                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
+                    edt_fasation_edit_text_main.inputType =
+                        TYPE_CLASS_TEXT or TYPE_NUMBER_VARIATION_NORMAL
                 else
-                    edt_fasation_edit_text_main.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
+                    edt_fasation_edit_text_main.inputType =
+                        TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_NORMAL
             }
 
             hidePassword = !hidePassword
@@ -682,7 +754,7 @@ class FasationEditText @JvmOverloads constructor(
         initialInputType = inputType
 
 //        if (edt_fasation_edit_text_main.isFocused)
-            edt_fasation_edit_text_main.inputType = inputType
+        edt_fasation_edit_text_main.inputType = inputType
     }
 
     fun setStatus(status: Status) {
@@ -698,7 +770,10 @@ class FasationEditText @JvmOverloads constructor(
      * @param color: send [androidx.core.content.res.getColor] as color param and DO NOT send id of color
      */
     fun setBorderColor(color: Int) {
-        val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
+        val drawable = AppCompatResources.getDrawable(
+            context,
+            R.drawable.rounded_corner_background
+        ) as GradientDrawable
         drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
         invalidateDrawable(drawable)
         ctl_fasation_edit_text_main.background = drawable
@@ -711,7 +786,10 @@ class FasationEditText @JvmOverloads constructor(
     fun setWholeBorderColor(color: Int) {
         ctl_fasation_edit_text_main.background = null
 
-        val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_corner_background) as GradientDrawable
+        val drawable = AppCompatResources.getDrawable(
+            context,
+            R.drawable.rounded_corner_background
+        ) as GradientDrawable
         drawable.setStroke(fasationEditTextBorderWidth.toInt(), color)
         invalidateDrawable(drawable)
         this.background = drawable
@@ -751,7 +829,8 @@ class FasationEditText @JvmOverloads constructor(
 
     fun setTextSize(size: Float) {
         fasationEditTextSize = size
-        edt_fasation_edit_text_main.textSize = convertPxToSp(fasationEditTextSize) // Set main text size
+        edt_fasation_edit_text_main.textSize =
+            convertPxToSp(fasationEditTextSize) // Set main text size
     }
 
     fun setTextColor(color: Int) {
@@ -794,7 +873,8 @@ class FasationEditText @JvmOverloads constructor(
 
     fun setDescription(message: String) {
         fasationEditTextDescriptionText = message
-        txv_fasation_edit_text_description.text = fasationEditTextDescriptionText //Set description content
+        txv_fasation_edit_text_description.text =
+            fasationEditTextDescriptionText //Set description content
         txv_fasation_edit_text_description.visibility = View.VISIBLE
     }
 
@@ -860,14 +940,21 @@ class FasationEditText @JvmOverloads constructor(
     }
 
     fun setMaxLength(maxLength: Int) {
-        edt_fasation_edit_text_main.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
+        edt_fasation_edit_text_main.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
     }
 
     fun getEditText(): EditText? {
         return edt_fasation_edit_text_main
     }
 
-    fun addBottomView(customView: View?, width: Int?, height: Int?, dividerColor: Int?, dividerHeight: Float?) {
+    fun addBottomView(
+        customView: View?,
+        width: Int?,
+        height: Int?,
+        dividerColor: Int?,
+        dividerHeight: Float?
+    ) {
         if (customView == null)
             throw NullPointerException("customView must not be null.")
 
@@ -898,7 +985,12 @@ class FasationEditText @JvmOverloads constructor(
             params.width = 0
             params.height = convertDpToPx(dividerHeight ?: 1f)
 
-            params.setMargins(convertDpToPx(16f), convertDpToPx(8f), convertDpToPx(16f), convertDpToPx(8f))
+            params.setMargins(
+                convertDpToPx(16f),
+                convertDpToPx(8f),
+                convertDpToPx(16f),
+                convertDpToPx(8f)
+            )
             view.layoutParams = params
             view.requestLayout()
         }
@@ -910,7 +1002,12 @@ class FasationEditText @JvmOverloads constructor(
         params.width = width ?: 0
         params.height = height ?: ViewGroup.LayoutParams.WRAP_CONTENT
 
-        params.setMargins(convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f), convertDpToPx(8f))
+        params.setMargins(
+            convertDpToPx(8f),
+            convertDpToPx(8f),
+            convertDpToPx(8f),
+            convertDpToPx(8f)
+        )
         customView.layoutParams = params
         customView.requestLayout()
 

@@ -16,6 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                app:editable="false"
                 android:hint="جا متنی ..."
                 app:background_color="@color/fasation_bottom_navigation_background_color"
                 app:border_width="1dp"

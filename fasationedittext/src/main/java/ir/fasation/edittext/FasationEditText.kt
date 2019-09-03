@@ -88,6 +88,7 @@ class FasationEditText @JvmOverloads constructor(
     private var fasationEditTextHintColor =
         getColor(resources, android.R.color.darker_gray, context.theme)
     private var fasationEditTextImeOptions = 0
+    private var fasationEditTextEditable = true
     //endregion Custom Attributes
 
     //region Constructor
@@ -443,6 +444,12 @@ class FasationEditText @JvmOverloads constructor(
                     fasationEditTextRightDrawableSpace
                 )
 
+            fasationEditTextEditable =
+                typedArray.getBoolean(
+                    R.styleable.FasationEditText_editable,
+                    fasationEditTextEditable
+                )
+
             fasationEditTextLeftDrawableSpace =
                 typedArray.getBoolean(
                     R.styleable.FasationEditText_left_drawable_space,
@@ -492,6 +499,7 @@ class FasationEditText @JvmOverloads constructor(
         setMaxLength(fasationEditTextMaxLength) //Set text max length
         setMaxLine(fasationEditTextMaxLines) //Set text max line
         setImeOptions(fasationEditTextImeOptions) //Set keyboard action as imeOptions
+        setEditable(fasationEditTextEditable) //Set editable for edittext
 
         if (isInitialTypeAnyPassword()) {
             setPasswordImage()
@@ -1096,6 +1104,25 @@ class FasationEditText @JvmOverloads constructor(
         edt_fasation_edit_text_main.isEnabled = enable
         img_fasation_edit_text_left.isEnabled = enable
         img_fasation_edit_text_right.isEnabled = enable
+    }
+
+    fun setEditable(editTextEditable: Boolean) {
+        edt_fasation_edit_text_main.isEnabled = editTextEditable
+
+        if (!editTextEditable) {
+            img_fasation_edit_text_left.isEnabled = false
+            img_fasation_edit_text_right.isEnabled = false
+        } else {
+            if (isInitialTypeAnyPassword()) {
+                when (fasationEditTextClearActionPosition) {
+                    LEFT -> img_fasation_edit_text_right.isEnabled = true
+                    RIGHT -> img_fasation_edit_text_left.isEnabled = true
+                }
+            }
+
+            if (fasationEditTextLeftDrawableSpace) img_fasation_edit_text_left.isEnabled = true
+            if (fasationEditTextRightDrawableSpace) img_fasation_edit_text_right.isEnabled = true
+        }
     }
     //endregion Public Methods
 }
